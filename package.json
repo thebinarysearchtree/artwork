@@ -1,0 +1,15 @@
+{
+  "name": "artwork",
+  "version": "0.1.0",
+  "description": "A front-end framework.",
+  "author": "Andrew Jones",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "npm run dev"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "http-proxy-middleware": "2.0.2"
+  }
+}
