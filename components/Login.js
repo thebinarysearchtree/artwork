@@ -1,18 +1,20 @@
-import { input, form, h3, makeElement } from '../artwork.js';
+import { p, input, form, h3, makeElement } from '../artwork.js';
 import textField from './TextField.js';
 import ElementArt from '../ElementArt.js';
 import client from '../client.js';
 
+const styles = `
+  .error {
+    color: red;
+  }`;
+
 class LoginPage extends ElementArt {
   constructor() {
     super();
+    this.styles = styles;
   }
 
   render() {
-    const p = this.styled.p({ 
-      color: 'red' 
-    });
-
     const login = form({ noValidate: true });
     const heading = h3('Log in');
 
@@ -27,7 +29,10 @@ class LoginPage extends ElementArt {
       label: 'Password' 
     });
     
-    const error = p('Invalid username or password');
+    const error = p({
+      className: 'error',
+      innerText: 'Invalid username or password'
+    });
     error.style.visibility = 'hidden';
 
     const submit = input({ 

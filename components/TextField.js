@@ -1,27 +1,41 @@
-import { label, input, makeElement } from '../artwork.js';
+import { div, label, input, makeElement } from '../artwork.js';
 import FormInput from '../FormInput.js';
+
+const styles = `
+  .root {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    padding-bottom: 10px;
+  }`;
+
+const className = 'root';
 
 class TextField extends FormInput {
   constructor() {
     super();
+    this.styles = styles;
   }
 
   render() {
-    const div = this.styled.div({
-      display: 'flex',
-      flexDirection: 'column',
-      width: '200px',
-      paddingBottom: '10px'
-    });
-
     const { id, type, label: innerText } = this.state;
 
-    const fieldLabel = label({ htmlFor: id, innerText });
-    const fieldInput = input({ id, type, name: id, required: true });
+    const fieldLabel = label({ 
+      htmlFor: id, 
+      innerText 
+    });
+    const fieldInput = input({ 
+      id, 
+      type, 
+      name: id, 
+      required: true 
+    });
 
     this.input = fieldInput;
 
-    const field = div();
+    const field = div({
+      className
+    });
     field.append(fieldLabel, fieldInput);
     
     return field;

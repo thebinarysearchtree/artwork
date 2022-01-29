@@ -1,43 +1,40 @@
-import { button, makeElement } from '../artwork.js';
+import { button, div, makeElement } from '../artwork.js';
 import ElementArt from '../ElementArt.js';
 
+const styles = `
+  .root {
+    display: flex;
+  }`;
+
+const className = 'root';
+
 class PageButtons extends ElementArt {
+  back;
+  forward;
+
   constructor() {
     super();
+    this.styles = styles;
+  }
+
+  onBack(onBack) {
+    this.back.addEventListener('click', onBack);
+  }
+
+  onForward(onForward) {
+    this.forward.addEventListener('click', onForward);
   }
 
   render() {
-    const container = this.styled.div({
-      display: 'flex'
-    });
-    const back = button({ innerText: '<' });
-    const forward = button({ innerText: '>' });
+    const container = div({ className });
+    this.back = button('<');
+    this.forward = button('>');
 
-    const {
-      findUsers,
-      query,
-      itemsPerPage
-    } = this.state;
+    this.back.disabled = true;
+    
+    container.append(this.back, this.forward);
 
-    if (query.page === 0) {
-      back.disabled = true;
-    }
-
-    back.addEventListener('click', async (e) => {
-      query.page--;
-      await findUsers();
-      back.disabled = query.page === 0;
-    });
-    forward.addEventListener('click', async (e) => {
-      query.page++;
-      back.disabled = false;
-      await findUsers();
-      forward.disabled = itemsPerPage * (query.page + 1) >= query.count;
-    });
-    const pageButtons = container();
-    pageButtons.append(back, forward);
-
-    return pageButtons;
+    return container;
   }
 }
 

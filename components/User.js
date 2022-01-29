@@ -1,4 +1,4 @@
-import { h3, form, makeAsyncElement } from '../artwork.js';
+import { div, span, h3, form, makeAsyncElement } from '../artwork.js';
 import textField from './TextField.js';
 import AsyncElementArt from '../AsyncElementArt.js';
 import client from '../client.js';
@@ -8,68 +8,74 @@ import userAvatar from './UserAvatar.js';
 import { routerLink } from '../router.js';
 import pageButtons from './PageButtons.js';
 
+const styles = `
+  .root {
+    display: flex;
+    flex-direction: column;
+  }
+  .user {
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+  }
+  .details {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-right: 10px;
+    align-items: flex-start;
+  }
+  .area {
+    color: grey;
+  }
+  .roles {
+    flex: 1;
+    margin-right: 10px;
+  }
+  .booked {
+    flex: 2;
+    color: grey;
+    margin-right: 10px;
+  }`;
+
 class UserPage extends AsyncElementArt {
   constructor() {
     super();
+    this.styles = styles;
   }
 
   async render() {
-    const styled = this.styled;
-
-    const root = styled.div({
-      display: 'flex',
-      flexDirection: 'column'
-    });
-    const userDiv = styled.div({
-      display: 'flex',
-      padding: '10px',
-      justifyContent: 'space-between'
-    });
-    const detailsDiv = styled.div({
-      display: 'flex',
-      flexDirection: 'column',
-      flex: 1,
-      marginRight: '10px',
-      alignItems: 'flex-start'
-    });
-    const span = styled.span({
-      color: 'grey'
-    });
-    const rolesDiv = styled.div({
-      flex: 1,
-      marginRight: '10px'
-    });
-    const bookedDiv = styled.div({
-      flex: 2,
-      color: 'grey',
-      marginRight: '10px'
-    });
-
     let roles = [];
     let areas = [];
-    const query = {
-      searchTerm: '',
-      roleId: -1,
-      areaId: -1,
-      page: 0,
-      count: null
-    }
+    let searchTerm = '';
+    let roleId = -1;
+    let areaId = -1;
+    let page = 0;
+    let count = null;
     let users = [];
 
     const usersHandler = (returnedUsers) => {
       users = returnedUsers;
       if (users.length === 0) {
-        query.count = 0;
+        count = 0;
       }
       else if (users[0].totalCount) {
-        query.count = users[0].totalCount;
+        count = users[0].totalCount;
       }
     }
     const rolesHandler = (returnedRoles) => roles = returnedRoles;
     const areasHandler = (returnedAreas) => areas = returnedAreas;
 
+    const data = {
+      searchTerm,
+      roleId,
+      areaId,
+      page,
+      count
+    };
+
     await fetchMany([
-      { url: '/users/find', handler: usersHandler, data: query },
+      { url: '/users/find', handler: usersHandler, data },
       { url: '/roles/getSelectListItems', handler: rolesHandler },
       { url: '/areas/getSelectListItems', handler: areasHandler }
     ]);
@@ -107,13 +113,25 @@ class UserPage extends AsyncElementArt {
           const shiftName = booked === 1 ? 'shift' : 'shifts';
           bookedText = `${booked} ${shiftName} booked and ${attended} attended`;
         }
-        const container = userDiv();
+        const container = div({ 
+          className: 'user' 
+        });
         const avatar = userAvatar(user);
-        const details = detailsDiv();
+        const details = div({ 
+          className: 'details' 
+        });
         const userLink = routerLink({ href, innerText: name });
-        const area = span(areaNames[0]);
-        const rolesContainer = rolesDiv();
-        const bookedContainer = bookedDiv(bookedText);
+        const area = span({
+          className: 'area',
+          innerText: areaNames[0]
+        });
+        const rolesContainer = div({
+          className: 'roles'
+        });
+        const bookedContainer = div({
+          className: 'booked',
+          innerText: bookedText
+        });
 
         details.append(userLink, area);
         rolesContainer.append(...roleChips);
@@ -124,22 +142,40 @@ class UserPage extends AsyncElementArt {
       return elements;
     }
     const userElements = await makeElements(users);
-    const usersContainer = root();
+    const usersContainer = div({ className: 'root' });
     const findUsers = async () => {
-      await fetchMany([{ url: '/users/find', handler: usersHandler, data: query }]);
+      const data = {
+        searchTerm,
+        roleId,
+        areaId,
+        page,
+        count
+      };
+      await fetchMany([{ url: '/users/find', handler: usersHandler, data }]);
       const userElements = await makeElements(users);
       usersContainer.replaceChildren(...userElements);
     }
-    const pagination = pageButtons({
-      findUsers,
-      query,
-      itemsPerPage: 10
+    const pagination = pageButtons();
+    const { back, forward } = pagination;
+    const itemsPerPage = 10;
+    pagination.onBack(async () => {
+      page--;
+      await findUsers();
+      back.disabled = page === 0;
     });
+    pagination.onForward(async () => {
+      page++;
+      back.disabled = false;
+      await findUsers();
+      forward.disabled = itemsPerPage * (page + 1) >= count;
+    })
     usersContainer.append(...userElements);
-    const rootContainer = root();
-    rootContainer.append(usersContainer, pagination);
+    const root = div({
+      className: 'root'
+    });
+    root.append(usersContainer, pagination);
 
-    return rootContainer;
+    return root;
   }
 }
 

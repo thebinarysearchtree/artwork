@@ -1,24 +1,30 @@
-import { makeElement } from '../artwork.js';
+import { img, makeElement } from '../artwork.js';
 import ElementArt from '../ElementArt.js';
 import { routerLink } from '../router.js';
+
+const styles = `
+  .root {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    margin-right: 10px;
+  }`;
+
+const className = 'root';
 
 class UserAvatar extends ElementArt {
   constructor() {
     super();
+    this.styles = styles;
   }
 
   render() {
-    const img = this.styled.img({
-      width: '30px',
-      height: '30px',
-      borderRadius: '15px',
-      marginRight: '10px'
-    });
     const { id } = this.state;
     const src = '/avatar.jpg';
     const href = `/users/${id}`;
 
     const avatar = img({
+      className,
       src
     });
     const link = routerLink({ 

@@ -1,7 +1,5 @@
-import { Styled } from './artwork.js';
-
 class ElementArt extends HTMLElement {
-  styled = new Styled();
+  styles;
   state;
 
   constructor() {
@@ -15,10 +13,6 @@ class ElementArt extends HTMLElement {
     }
   }
 
-  makeStyle(attributes) {
-    return this.styled.makeStyle(attributes);
-  }
-
   afterRender() {
     return null;
   }
@@ -26,8 +20,9 @@ class ElementArt extends HTMLElement {
   renderShadow() {
     const element = this.render();
     this.afterRender();
-    const style = this.styled.element;
-    if (style.innerText) {
+    if (this.styles) {
+      const style = document.createElement('style');
+      style.innerText = this.styles;
       this.shadowRoot.append(style, element);
     }
     else {
