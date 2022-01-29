@@ -1,20 +1,13 @@
 import { div, label, input, makeElement } from '../artwork.js';
 import FormInput from '../FormInput.js';
-
-const styles = `
-  .root {
-    display: flex;
-    flex-direction: column;
-    width: 200px;
-    padding-bottom: 10px;
-  }`;
+import styles from './TextField.css' assert { type: 'css' };
 
 const className = 'root';
 
 class TextField extends FormInput {
   constructor() {
     super();
-    this.styles = styles;
+    this.adoptedStyles = styles;
   }
 
   render() {

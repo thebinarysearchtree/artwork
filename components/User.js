@@ -7,41 +7,12 @@ import roleChip from './RoleChip.js';
 import userAvatar from './UserAvatar.js';
 import { routerLink } from '../router.js';
 import pageButtons from './PageButtons.js';
-
-const styles = `
-  .root {
-    display: flex;
-    flex-direction: column;
-  }
-  .user {
-    display: flex;
-    padding: 10px;
-    justify-content: space-between;
-  }
-  .details {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    margin-right: 10px;
-    align-items: flex-start;
-  }
-  .area {
-    color: grey;
-  }
-  .roles {
-    flex: 1;
-    margin-right: 10px;
-  }
-  .booked {
-    flex: 2;
-    color: grey;
-    margin-right: 10px;
-  }`;
+import styles from './User.css' assert { type: 'css' };
 
 class UserPage extends AsyncElementArt {
   constructor() {
     super();
-    this.styles = styles;
+    this.adoptedStyles = styles;
   }
 
   async render() {

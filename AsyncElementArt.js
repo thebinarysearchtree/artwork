@@ -1,4 +1,5 @@
 class AsyncElementArt extends HTMLElement {
+  adoptedStyles;
   styles;
   state;
 
@@ -24,6 +25,10 @@ class AsyncElementArt extends HTMLElement {
       const style = document.createElement('style');
       style.innerText = this.styles;
       this.shadowRoot.append(style, element);
+    }
+    else if (this.adoptedStyles) {
+      this.shadowRoot.adoptedStyleSheets = [this.adoptedStyles];
+      this.shadowRoot.append(element);
     }
     else {
       this.shadowRoot.append(element);

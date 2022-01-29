@@ -1,10 +1,6 @@
 import { button, div, makeElement } from '../artwork.js';
 import ElementArt from '../ElementArt.js';
-
-const styles = `
-  .root {
-    display: flex;
-  }`;
+import styles from './PageButtons.css' assert { type: 'css' };
 
 const className = 'root';
 
@@ -14,7 +10,7 @@ class PageButtons extends ElementArt {
 
   constructor() {
     super();
-    this.styles = styles;
+    this.adoptedStyles = styles;
   }
 
   onBack(onBack) {
@@ -31,7 +27,7 @@ class PageButtons extends ElementArt {
     this.forward = button('>');
 
     this.back.disabled = true;
-    
+
     container.append(this.back, this.forward);
 
     return container;

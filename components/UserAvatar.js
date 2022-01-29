@@ -1,21 +1,14 @@
 import { img, makeElement } from '../artwork.js';
 import ElementArt from '../ElementArt.js';
 import { routerLink } from '../router.js';
-
-const styles = `
-  .root {
-    width: 30px;
-    height: 30px;
-    border-radius: 15px;
-    margin-right: 10px;
-  }`;
+import styles from './UserAvatar.css' assert { type: 'css' };
 
 const className = 'root';
 
 class UserAvatar extends ElementArt {
   constructor() {
     super();
-    this.styles = styles;
+    this.adoptedStyles = styles;
   }
 
   render() {

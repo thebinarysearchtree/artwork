@@ -1,20 +1,13 @@
 import { div, makeElement } from '../artwork.js';
 import ElementArt from '../ElementArt.js';
-
-const styles = `
-  .root {
-    padding: 5px 10px;
-    border-radius: 15px;
-    color: white;
-    display: inherit
-  }`;
+import styles from './RoleChip.css' assert { type: 'css' };
 
 const className = 'root';
 
 class RoleChip extends ElementArt {
   constructor() {
     super();
-    this.styles = styles;
+    this.adoptedStyles = styles;
   }
 
   render() {

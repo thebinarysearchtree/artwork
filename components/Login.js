@@ -2,16 +2,12 @@ import { p, input, form, h3, makeElement } from '../artwork.js';
 import textField from './TextField.js';
 import ElementArt from '../ElementArt.js';
 import client from '../client.js';
-
-const styles = `
-  .error {
-    color: red;
-  }`;
+import styles from './Login.css' assert { type: 'css' };
 
 class LoginPage extends ElementArt {
   constructor() {
     super();
-    this.styles = styles;
+    this.adoptedStyles = styles;
   }
 
   render() {
