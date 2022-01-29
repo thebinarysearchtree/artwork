@@ -37,16 +37,16 @@ class UserPage extends AsyncElementArt {
     const rolesHandler = (returnedRoles) => roles = returnedRoles;
     const areasHandler = (returnedAreas) => areas = returnedAreas;
 
-    const data = {
+    const makeData = () => ({
       searchTerm,
       roleId,
       areaId,
       page,
       count
-    };
+    });
 
     await fetchMany([
-      { url: '/users/find', handler: usersHandler, data },
+      { url: '/users/find', handler: usersHandler, data: makeData() },
       { url: '/roles/getSelectListItems', handler: rolesHandler },
       { url: '/areas/getSelectListItems', handler: areasHandler }
     ]);
@@ -84,24 +84,18 @@ class UserPage extends AsyncElementArt {
           const shiftName = booked === 1 ? 'shift' : 'shifts';
           bookedText = `${booked} ${shiftName} booked and ${attended} attended`;
         }
-        const container = div({ 
-          className: 'user' 
-        });
+        const {
+          user: container,
+          details,
+          roles: rolesContainer,
+          booked: bookedContainer
+        } = this.makeDivs();
+        bookedContainer.innerText = bookedText;
         const avatar = userAvatar(user);
-        const details = div({ 
-          className: 'details' 
-        });
         const userLink = routerLink({ href, innerText: name });
         const area = span({
           className: 'area',
           innerText: areaNames[0]
-        });
-        const rolesContainer = div({
-          className: 'roles'
-        });
-        const bookedContainer = div({
-          className: 'booked',
-          innerText: bookedText
         });
 
         details.append(userLink, area);
@@ -115,14 +109,7 @@ class UserPage extends AsyncElementArt {
     const userElements = await makeElements(users);
     const usersContainer = div({ className: 'root' });
     const findUsers = async () => {
-      const data = {
-        searchTerm,
-        roleId,
-        areaId,
-        page,
-        count
-      };
-      await fetchMany([{ url: '/users/find', handler: usersHandler, data }]);
+      await fetchMany([{ url: '/users/find', handler: usersHandler, data: makeData() }]);
       const userElements = await makeElements(users);
       usersContainer.replaceChildren(...userElements);
     }
@@ -139,7 +126,7 @@ class UserPage extends AsyncElementArt {
       back.disabled = false;
       await findUsers();
       forward.disabled = itemsPerPage * (page + 1) >= count;
-    })
+    });
     usersContainer.append(...userElements);
     const root = div({
       className: 'root'

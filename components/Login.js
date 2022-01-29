@@ -25,10 +25,7 @@ class LoginPage extends ElementArt {
       label: 'Password' 
     });
     
-    const error = p({
-      className: 'error',
-      innerText: 'Invalid username or password'
-    });
+    const error = p('Invalid username or password');
     error.style.visibility = 'hidden';
 
     const submit = input({ 
