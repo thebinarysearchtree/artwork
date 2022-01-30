@@ -8,12 +8,6 @@ class AsyncElementArt extends HTMLElement {
     this.attachShadow({ mode: 'open' });
   }
 
-  makeProperties(properties) {
-    for (const [name, get] of Object.entries(properties)) {
-      Object.defineProperty(this, name, { get });
-    }
-  }
-
   afterRender() {
     return null;
   }

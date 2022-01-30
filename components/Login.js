@@ -1,4 +1,4 @@
-import { p, input, form, h3, makeElement } from '../artwork.js';
+import { p, input, form, h3, makeElement, makeState } from '../artwork.js';
 import textField from './TextField.js';
 import ElementArt from '../ElementArt.js';
 import client from '../client.js';
@@ -24,6 +24,11 @@ class LoginPage extends ElementArt {
       type: 'password', 
       label: 'Password' 
     });
+
+    const state = makeState({ 
+      email, 
+      password 
+    });
     
     const error = p('Invalid username or password');
     error.style.visibility = 'hidden';
@@ -37,13 +42,17 @@ class LoginPage extends ElementArt {
     login.append(heading, email, password, error, submit);
 
     login.addEventListener('input', (e) => {
-      submit.disabled = !email.value || !password.value;
+      const { email, password } = state;
+      
+      submit.disabled = !email || !password;
       error.style.visibility = 'hidden';
     });
 
     login.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const user = await client.logIn(email.value, password.value);
+      const { email, password } = state;
+
+      const user = await client.logIn(email, password);
       if (user) {
         console.log('Logged in!');
       }

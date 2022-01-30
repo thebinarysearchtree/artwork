@@ -9,8 +9,17 @@ let pageId = 1;
 
 history.scrollRestoration = 'manual';
 
-const push = (match, handler) => {
+const add = (match, handler) => {
   routes.set(match, handler);
+}
+
+const push = (url, state) => {
+  const parsed = new URL(`${location.origin}${url}`);
+  const handler = routes.get(parsed.pathname);
+  history.pushState(state, '', url);
+  component.remove();
+  component = handler();
+  document.body.appendChild(component);
 }
 
 const start = () => {
@@ -53,6 +62,7 @@ const routerLink = (properties) => {
 }
 
 const router = {
+  add,
   push,
   start
 };

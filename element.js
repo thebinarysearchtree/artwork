@@ -20,6 +20,36 @@ const makeAsyncElement = (elementClass, name) => {
   }
 }
 
+const makeState = (o) => {
+  const state = {};
+  for (const [key, value] of Object.entries(o)) {
+    if (typeof value === 'function') {
+      Object.defineProperty(state, key, { get: value });
+    }
+    else {
+      let get;
+      const element = value;
+      switch (element.type) {
+        case 'number':
+        case 'range':
+          get = () => Number(element.value);
+          break;
+        case 'checkbox':
+          get = () => element.checked;
+          break;
+        case 'date':
+        case 'datetime-local':
+          get = () => new Date(element.value);
+          break;
+        default:
+          get = () => element.value;
+      }
+      Object.defineProperty(state, key, { get });
+    }
+  }
+  return state;
+}
+
 const addProperty = (divs, className) => {
   const propertyName = className.replace(/([a-z])-([a-z])/, (s1, s2) => `${s1}${s2.toUpperCase()}`);
   const get = () => {
@@ -70,5 +100,6 @@ export {
   createElement,
   makeAsyncElement,
   makeElement,
-  makeDivs
+  makeDivs,
+  makeState
 };
