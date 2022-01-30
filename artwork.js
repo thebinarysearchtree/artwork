@@ -1,4 +1,4 @@
-import { makeElement, makeAsyncElement, createElement } from './element.js';
+import { makeDivs, makeElement, makeAsyncElement, createElement } from './element.js';
 
 const html = (textOrAttributes) => createElement('html', textOrAttributes);
 const base = (textOrAttributes) => createElement('base', textOrAttributes);
@@ -118,6 +118,7 @@ const template = (textOrAttributes) => createElement('template', textOrAttribute
 export {
   makeAsyncElement,
   makeElement,
+  makeDivs,
   html,
   base,
   head,

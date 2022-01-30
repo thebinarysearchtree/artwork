@@ -1,4 +1,4 @@
-import { div, span, h3, form, makeAsyncElement } from '../artwork.js';
+import { div, span, h3, form, makeAsyncElement, makeDivs } from '../artwork.js';
 import textField from './TextField.js';
 import AsyncElementArt from '../AsyncElementArt.js';
 import client from '../client.js';
@@ -8,6 +8,8 @@ import userAvatar from './UserAvatar.js';
 import { routerLink } from '../router.js';
 import pageButtons from './PageButtons.js';
 import styles from './User.css' assert { type: 'css' };
+
+const divs = makeDivs(styles);
 
 class UserPage extends AsyncElementArt {
   constructor() {
@@ -89,7 +91,7 @@ class UserPage extends AsyncElementArt {
           details,
           roles: rolesContainer,
           booked: bookedContainer
-        } = this.makeDivs();
+        } = divs;
         bookedContainer.innerText = bookedText;
         const avatar = userAvatar(user);
         const userLink = routerLink({ href, innerText: name });
