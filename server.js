@@ -3,7 +3,7 @@ import { createProxyMiddleware } from 'http-proxy-middleware';
 
 const app = express();
 
-const proxy = createProxyMiddleware('!/', {
+const proxy = createProxyMiddleware('!(/|/users)', {
   target: 'http://localhost:8080',
   changeOrigin: true,
   logLevel: 'silent'
@@ -12,7 +12,7 @@ const proxy = createProxyMiddleware('!/', {
 app.use('/', express.static('/Users/andrew/Projects/Artwork'));
 app.use('*', proxy);
 
-app.get('/', (req, res) => res.sendFile('/Users/andrew/Projects/Artwork/index.html'));
+app.use('*', (req, res) => res.sendFile('/Users/andrew/Projects/Artwork/index.html'));
 
 const server = app.listen(3000);
 

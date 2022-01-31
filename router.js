@@ -1,11 +1,8 @@
 import { a } from './artwork.js';
 
 const routes = new Map();
-const scrollPositions = new Map();
 
-let component = null;
-
-let pageId = 1;
+const root = document.getElementById('root');
 
 history.scrollRestoration = 'manual';
 
@@ -17,30 +14,26 @@ const push = (url, state) => {
   const parsed = new URL(`${location.origin}${url}`);
   const handler = routes.get(parsed.pathname);
   history.pushState(state, '', url);
-  component.remove();
-  component = handler();
-  document.body.appendChild(component);
+  const component = handler();
+  root.replaceChildren(component);
 }
 
 const start = () => {
   const handler = routes.get(window.location.pathname);
-  component = handler();
-  document.body.appendChild(component);
+  const component = handler();
+  root.appendChild(component);
   window.onpopstate = (e) => {
-    const pageId = e.state.pageId;
     const handler = routes.get(window.location.pathname);
-    const scrollPosition = scrollPositions.get(pageId);
-    if (scrollPosition) {
-      scrollPositions.delete(pageId);
-    }
-    component.remove();
-    component = handler(scrollPosition);
-    document.body.appendChild(component);
+    const component = handler();
+    root.replaceChildren(component);
+    const { x, y } = e.state.scroll;
+    window.scrollTo(x, y);
   }
 }
 
 const routerLink = (properties) => {
   const anchor = a(properties);
+  const href = anchor.href;
   anchor.addEventListener('click', (e) => {
     const leftClick = e.button === 0;
     const relevantTarget = !properties.target || properties.target === '_self';
@@ -48,14 +41,16 @@ const routerLink = (properties) => {
 
     if (leftClick && relevantTarget && !modifierPressed) {
       e.preventDefault();
-      scrollPositions.set(pageId, { x: window.scrollX, y: window.scrollY });
-      const state = properties.state ? {...properties.state, pageId } : { pageId };
-      history.pushState(state, '', a.href);
-      pageId++;
-      component.remove();
-      const handler = routes.get(a.href);
-      component = handler();
-      document.body.appendChild(component);
+      const scroll = {
+        x: window.scrollX,
+        y: window.scrollY
+      };
+      history.replaceState({...history.state, scroll }, '');
+      history.pushState(properties.state, '', href);
+      const url = new URL(href);
+      const handler = routes.get(url.pathname);
+      const component = handler();
+      root.replaceChildren(component);
     }
   });
   return anchor;

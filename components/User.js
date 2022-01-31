@@ -65,11 +65,8 @@ class UserPage extends AsyncElementArt {
           attended,
           attendedTime
         } = user;
-        const href = `/users/${id}`;
-        const roleChips = roles.map(role => {
-          const { name, colour } = role;
-          return roleChip({ name, colour });
-        });
+        const href = `/user?id=${id}`;
+        const roleChips = roles.map(role => roleChip(role));
         let bookedText;
         if (booked === 0) {
           bookedText = 'No shifts booked';

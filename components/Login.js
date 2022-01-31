@@ -1,4 +1,4 @@
-import { p, input, form, h3, makeElement, makeState } from '../artwork.js';
+import { p, input, form, h1, h3, makeElement, makeState } from '../artwork.js';
 import textField from './TextField.js';
 import ElementArt from '../ElementArt.js';
 import client from '../client.js';
@@ -17,7 +17,7 @@ class LoginPage extends ElementArt {
     const email = textField({ 
       id: 'email', 
       type: 'email', 
-      label: 'Email' 
+      label: 'Email'
     });
     const password = textField({ 
       id: 'password', 
