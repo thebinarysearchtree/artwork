@@ -19,13 +19,6 @@ const makeReviver = (parser) => {
   }
 }
 
-const dateParser = (key, value) => {
-  if ((key === 'start_time' || key === 'end_time') && value !== null) {
-    return new Date(value);
-  }
-  return value;
-}
-
 const defaultReviver = makeReviver();
 
 const parse = async (response, reviver = defaultReviver) => {
@@ -35,6 +28,5 @@ const parse = async (response, reviver = defaultReviver) => {
 
 export {
   makeReviver,
-  dateParser,
   parse
 };
