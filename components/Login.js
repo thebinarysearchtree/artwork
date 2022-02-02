@@ -1,4 +1,4 @@
-import { p, input, form, h1, h3, makeElement, makeState } from '../artwork.js';
+import { p, input, form, h3, makeElement, makeState } from '../artwork.js';
 import textField from './TextField.js';
 import ElementArt from '../ElementArt.js';
 import client from '../client.js';

@@ -1,7 +1,5 @@
-import { div, span, h3, form, makeAsyncElement, makeDivs } from '../artwork.js';
-import textField from './TextField.js';
+import { div, span, makeAsyncElement, makeDivs } from '../artwork.js';
 import AsyncElementArt from '../AsyncElementArt.js';
-import client from '../client.js';
 import fetchMany from '../fetchMany.js';
 import roleChip from './RoleChip.js';
 import userAvatar from './UserAvatar.js';

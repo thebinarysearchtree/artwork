@@ -1,7 +1,7 @@
 import { makeReviver } from './data.js';
 import cache from './cache.js';
 import client from './client.js';
-import { router } from './router.js';
+import { pushState } from './router.js';
 
 const defaultReviver = makeReviver();
 
@@ -31,10 +31,10 @@ const fetchMany = async (requests) => {
     .map(r => r.text());
   if (responsePromises.length !== requests.length) {
     if (responses.some(r => r.status === 401)) {
-      router.push('/login');
+      pushState('/login');
     }
     else {
-      router.push('/error');
+      pushState('/error');
     }
   }
   const states = await Promise.all(responsePromises);

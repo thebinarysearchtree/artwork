@@ -51,7 +51,7 @@ const makeState = (o) => {
 }
 
 const addProperty = (divs, className) => {
-  const propertyName = className.replace(/([a-z])-([a-z])/, (s1, s2) => `${s1}${s2.toUpperCase()}`);
+  const propertyName = className.replace(/([a-z])-([a-z])/, (s1, s2, s3) => `${s2}${s3.toUpperCase()}`);
   const get = () => {
     const div = document.createElement('div');
     div.className = className;

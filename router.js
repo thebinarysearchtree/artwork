@@ -1,33 +1,101 @@
 import { a } from './artwork.js';
 
-const routes = new Map();
-
-const root = document.getElementById('root');
+const routers = [];
 
 history.scrollRestoration = 'manual';
 
-const add = (match, handler) => {
-  routes.set(match, handler);
+const getRoute = (url) => {
+  for (let i = routers.length - 1; i >= 0; i--) {
+    const router = routers[i];
+    const route = router.getRoute(url);
+    if (route) {
+      return route;
+    }
+  }
 }
 
-const push = (url, state) => {
-  const parsed = new URL(`${location.origin}${url}`);
-  const handler = routes.get(parsed.pathname);
+const makeParams = (searchParams) => {
+  const params = {};
+  for (const [key, value] of searchParams) {
+    params[key] = value;
+  }
+  return params;
+}
+
+const processRoute = (url) => {
+  const parsed = new URL(url);
+  const { pathname, searchParams } = parsed;
+  const route = getRoute(pathname);
+  if (route) {
+    const { handler, groups } = route;
+    const params = {
+      ...makeParams(searchParams), 
+      ...groups
+    };
+    handler(params);
+  }
+}
+
+const pushState = (url, state) => {
   history.pushState(state, '', url);
-  const component = handler();
-  root.replaceChildren(component);
+  processRoute(`${location.origin}${url}`);
 }
 
 const start = () => {
-  const handler = routes.get(window.location.pathname);
-  const component = handler();
-  root.appendChild(component);
-  window.onpopstate = (e) => {
-    const handler = routes.get(window.location.pathname);
-    const component = handler();
-    root.replaceChildren(component);
-    const { x, y } = e.state.scroll;
-    window.scrollTo(x, y);
+  processRoute(window.location.href);
+}
+
+window.addEventListener('popstate', (e) => {
+  processRoute(window.location.href);
+  const { x, y } = e.state.scroll;
+  window.scrollTo(x, y);
+});
+
+window.addEventListener('clickart', (e) => {
+  processRoute(e.href);
+});
+
+class Router {
+  stringRoutes = new Map();
+  regexRoutes = [];
+
+  constructor() {
+    routers.push(this);
+  }
+
+  add(match, handler) {
+    if (typeof match === 'string') {
+      this.stringRoutes.set(match, handler);
+    }
+    else {
+      this.regexRoutes.push({ match, handler });
+    }
+  }
+
+  getRoute(url) {
+    const handler = this.stringRoutes.get(url);
+    if (handler) {
+      return {
+        handler,
+        groups: null
+      };
+    }
+    if (!handler) {
+      for (const route of this.regexRoutes) {
+        const { match, handler } = route;
+        const result = match.exec(url);
+        if (result) {
+          return {
+            handler,
+            groups: result.groups
+          }
+        }
+      }
+    }
+  }
+
+  remove() {
+    routers.splice(routers.findIndex(r => r === this));
   }
 }
 
@@ -47,22 +115,17 @@ const routerLink = (properties) => {
       };
       history.replaceState({...history.state, scroll }, '');
       history.pushState(properties.state, '', href);
-      const url = new URL(href);
-      const handler = routes.get(url.pathname);
-      const component = handler();
-      root.replaceChildren(component);
+      const event = new Event('clickart');
+      event.href = href;
+      window.dispatchEvent(event);
     }
   });
   return anchor;
 }
 
-const router = {
-  add,
-  push,
-  start
-};
-
 export {
-  router,
+  Router,
+  pushState,
+  start,
   routerLink
 };

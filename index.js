@@ -1,11 +1,15 @@
 import loginPage from './components/Login.js';
 import userPage from './components/User.js';
-import { router } from './router.js';
+import { Router, start, pushState } from './router.js';
 import client from './client.js';
+
+const router = new Router();
+
+const root = document.getElementById('root');
 
 const asyncPrivate = (component) => {
   if (!client.user) {
-    router.push('/');
+    pushState('/');
   }
   return (params, state) => {
     const loading = document.createElement('div');
@@ -16,18 +20,20 @@ const asyncPrivate = (component) => {
       loading.replaceWith(page);
     };
     loadPage();
-    return loading;
+    root.replaceChildren(loading);
   }
 }
 
 router.add('/', () => {
-  return loginPage();
+  const component = loginPage();
+  root.replaceChildren(component);
 });
 
 router.add('/user', () => {
-  return loginPage();
+  const component = loginPage();
+  root.replaceChildren(component);
 });
 
 router.add('/users', asyncPrivate(userPage));
 
-router.start();
+start();
