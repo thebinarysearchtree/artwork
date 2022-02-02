@@ -80,15 +80,13 @@ class Router {
         groups: null
       };
     }
-    if (!handler) {
-      for (const route of this.regexRoutes) {
-        const { match, handler } = route;
-        const result = match.exec(url);
-        if (result) {
-          return {
-            handler,
-            groups: result.groups
-          }
+    for (const route of this.regexRoutes) {
+      const { match, handler } = route;
+      const result = match.exec(url);
+      if (result) {
+        return {
+          handler,
+          groups: result.groups
         }
       }
     }
