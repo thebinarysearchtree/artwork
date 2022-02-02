@@ -1,4 +1,4 @@
-import { makeState, makeDivs, makeElement, makeAsyncElement, createElement } from './element.js';
+import { makeState, makeDivs, makeArt, makeAsyncArt, createElement } from './element.js';
 
 const html = (textOrAttributes) => createElement('html', textOrAttributes);
 const base = (textOrAttributes) => createElement('base', textOrAttributes);
@@ -116,8 +116,8 @@ const slot = (textOrAttributes) => createElement('slot', textOrAttributes);
 const template = (textOrAttributes) => createElement('template', textOrAttributes);
 
 export {
-  makeAsyncElement,
-  makeElement,
+  makeAsyncArt,
+  makeArt,
   makeState,
   makeDivs,
   html,

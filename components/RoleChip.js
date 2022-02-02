@@ -1,4 +1,4 @@
-import { div, makeElement } from '../artwork.js';
+import { div, makeArt } from '../artwork.js';
 import ElementArt from '../ElementArt.js';
 import styles from './RoleChip.css' assert { type: 'css' };
 
@@ -22,6 +22,6 @@ class RoleChip extends ElementArt {
   }
 }
 
-const roleChip = makeElement(RoleChip);
+const roleChip = makeArt(RoleChip);
 
 export default roleChip;

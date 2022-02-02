@@ -1,4 +1,4 @@
-import { div, span, makeAsyncElement, makeDivs } from '../artwork.js';
+import { span, makeAsyncArt, makeDivs } from '../artwork.js';
 import AsyncElementArt from '../AsyncElementArt.js';
 import fetchMany from '../fetchMany.js';
 import roleChip from './RoleChip.js';
@@ -82,10 +82,10 @@ class UserPage extends AsyncElementArt {
           bookedText = `${booked} ${shiftName} booked and ${attended} attended`;
         }
         const {
-          user: container,
+          container,
           details,
-          roles: rolesContainer,
-          booked: bookedContainer
+          rolesContainer,
+          bookedContainer
         } = divs;
         bookedContainer.innerText = bookedText;
         const avatar = userAvatar(user);
@@ -104,7 +104,9 @@ class UserPage extends AsyncElementArt {
       return elements;
     }
     const userElements = await makeElements(users);
-    const usersContainer = div({ className: 'root' });
+    const {
+      root: usersContainer
+    } = divs;
     const findUsers = async () => {
       await fetchMany([{ url: '/users/find', handler: usersHandler, data: makeData() }]);
       const userElements = await makeElements(users);
@@ -125,15 +127,13 @@ class UserPage extends AsyncElementArt {
       forward.disabled = itemsPerPage * (page + 1) >= count;
     });
     usersContainer.append(...userElements);
-    const root = div({
-      className: 'root'
-    });
+    const { root } = divs;
     root.append(usersContainer, pagination);
 
     return root;
   }
 }
 
-const userPage = makeAsyncElement(UserPage);
+const userPage = makeAsyncArt(UserPage);
 
 export default userPage;

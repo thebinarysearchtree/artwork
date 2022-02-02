@@ -1,4 +1,4 @@
-import { img, makeElement } from '../artwork.js';
+import { img, makeArt } from '../artwork.js';
 import ElementArt from '../ElementArt.js';
 import { routerLink } from '../router.js';
 import styles from './UserAvatar.css' assert { type: 'css' };
@@ -29,6 +29,6 @@ class UserAvatar extends ElementArt {
   }
 }
 
-const userAvatar = makeElement(UserAvatar);
+const userAvatar = makeArt(UserAvatar);
 
 export default userAvatar;

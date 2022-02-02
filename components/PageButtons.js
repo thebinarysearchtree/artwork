@@ -1,4 +1,4 @@
-import { button, div, makeElement } from '../artwork.js';
+import { button, div, makeArt } from '../artwork.js';
 import ElementArt from '../ElementArt.js';
 import styles from './PageButtons.css' assert { type: 'css' };
 
@@ -34,6 +34,6 @@ class PageButtons extends ElementArt {
   }
 }
 
-const pageButtons = makeElement(PageButtons);
+const pageButtons = makeArt(PageButtons);
 
 export default pageButtons;

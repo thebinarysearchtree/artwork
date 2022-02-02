@@ -3,7 +3,7 @@
   flex-direction: column;
 }
 
-.user {
+.container {
   display: flex;
   padding: 10px;
   justify-content: space-between;
@@ -21,12 +21,12 @@
   color: grey;
 }
 
-.roles {
+.roles-container {
   flex: 1;
   margin-right: 10px;
 }
 
-.booked {
+.booked-container {
   flex: 2;
   color: grey;
   margin-right: 10px;

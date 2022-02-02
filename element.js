@@ -1,4 +1,4 @@
-const makeElement = (elementClass, name) => {
+const makeArt = (elementClass, name) => {
   name = name ? name : elementClass.name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
   customElements.define(name, elementClass);
   return (state) => {
@@ -9,7 +9,7 @@ const makeElement = (elementClass, name) => {
   }
 }
 
-const makeAsyncElement = (elementClass, name) => {
+const makeAsyncArt = (elementClass, name) => {
   name = name ? name : elementClass.name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
   customElements.define(name, elementClass);
   return async (state) => {
@@ -51,7 +51,7 @@ const makeState = (o) => {
 }
 
 const addProperty = (divs, className) => {
-  const propertyName = className.replace(/([a-z])-([a-z])/, (s1, s2, s3) => `${s2}${s3.toUpperCase()}`);
+  const propertyName = className.replace(/([a-z])-([a-z])/, (m, g1, g2) => `${g1}${g2.toUpperCase()}`);
   const get = () => {
     const div = document.createElement('div');
     div.className = className;
@@ -98,8 +98,8 @@ const createElement = (tag, textOrProperties) => {
 
 export {
   createElement,
-  makeAsyncElement,
-  makeElement,
+  makeAsyncArt,
+  makeArt,
   makeDivs,
   makeState
 };

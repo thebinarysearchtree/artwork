@@ -1,4 +1,4 @@
-import { div, label, input, makeElement } from '../artwork.js';
+import { div, label, input, makeArt } from '../artwork.js';
 import FormInput from '../FormInput.js';
 import styles from './TextField.css' assert { type: 'css' };
 
@@ -35,6 +35,6 @@ class TextField extends FormInput {
   }
 }
 
-const textField = makeElement(TextField);
+const textField = makeArt(TextField);
 
 export default textField;
