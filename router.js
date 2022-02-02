@@ -1,17 +1,29 @@
-import { a } from './artwork.js';
+import { a, p } from './artwork.js';
 
 const routers = [];
 
 history.scrollRestoration = 'manual';
+
+const notFound = () => p('Page not found');
 
 const getRoute = (url) => {
   for (let i = routers.length - 1; i >= 0; i--) {
     const router = routers[i];
     const route = router.getRoute(url);
     if (route) {
-      return route;
+      return {
+        route,
+        router
+      };
     }
   }
+  return {
+    route: {
+      handler: notFound,
+      groups: null
+    },
+    router: routers[0]
+  };
 }
 
 const makeParams = (searchParams) => {
@@ -25,14 +37,16 @@ const makeParams = (searchParams) => {
 const processRoute = (url) => {
   const parsed = new URL(url);
   const { pathname, searchParams } = parsed;
-  const route = getRoute(pathname);
-  if (route) {
-    const { handler, groups } = route;
-    const params = {
-      ...makeParams(searchParams), 
-      ...groups
-    };
-    handler(params);
+  const { route, router } = getRoute(pathname);
+  const { handler, groups } = route;
+  const params = {
+    ...makeParams(searchParams), 
+    ...groups
+  };
+  const component = handler(params);
+  const { root } = router;
+  if (root) {
+    root.replaceChildren(component);
   }
 }
 
@@ -58,8 +72,10 @@ window.addEventListener('clickart', (e) => {
 class Router {
   stringRoutes = new Map();
   regexRoutes = [];
+  root;
 
-  constructor() {
+  constructor(root) {
+    this.root = root;
     routers.push(this);
   }
 

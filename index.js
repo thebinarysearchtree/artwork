@@ -3,9 +3,9 @@ import userPage from './components/User.js';
 import { Router, start, pushState } from './router.js';
 import client from './client.js';
 
-const router = new Router();
-
 const root = document.getElementById('root');
+
+const router = new Router(root);
 
 const asyncPrivate = (component) => {
   if (!client.user) {
@@ -20,19 +20,13 @@ const asyncPrivate = (component) => {
       loading.replaceWith(page);
     };
     loadPage();
-    root.replaceChildren(loading);
+    return loading;
   }
 }
 
-router.add('/', () => {
-  const component = loginPage();
-  root.replaceChildren(component);
-});
+router.add('/', () => loginPage());
 
-router.add('/user', () => {
-  const component = loginPage();
-  root.replaceChildren(component);
-});
+router.add('/user', () => loginPage());
 
 router.add('/users', asyncPrivate(userPage));
 
