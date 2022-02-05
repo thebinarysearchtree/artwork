@@ -79,18 +79,15 @@ const makeDivs = (styles) => {
   return divs;
 }
 
-const createElement = (tag, textOrProperties) => {
-  if (tag === 'variable') {
-    tag = 'var';
-  }
+const createElement = (tag, properties) => {
   const element = document.createElement(tag);
-  if (typeof textOrProperties === 'string') {
-    element.innerText = textOrProperties;
+  if (typeof properties === 'string') {
+    element.innerText = properties;
   }
-  if (!textOrProperties) {
+  if (!properties) {
     return element;
   }
-  for (const [key, value] of Object.entries(textOrProperties)) {
+  for (const [key, value] of Object.entries(properties)) {
     element[key] = value;
   }
   return element;

@@ -4,7 +4,11 @@ const routers = [];
 
 history.scrollRestoration = 'manual';
 
-const notFound = () => p('Page not found');
+let notFound = () => p('Page not found');
+
+const setNotFound = (element) => {
+  notFound = () => element;
+}
 
 const getRoute = (url) => {
   for (let i = routers.length - 1; i >= 0; i--) {
@@ -141,5 +145,6 @@ export {
   Router,
   pushState,
   start,
-  routerLink
+  routerLink,
+  setNotFound
 };

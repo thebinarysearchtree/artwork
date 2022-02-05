@@ -27,7 +27,7 @@ class LoginPage extends ElementArt {
 
     const state = makeState({ 
       email, 
-      password 
+      password
     });
     
     const error = p('Invalid username or password');

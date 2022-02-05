@@ -4,6 +4,7 @@
   "description": "A front-end framework.",
   "author": "Andrew Jones",
   "type": "module",
+  "main": "./artwork.js",
   "scripts": {
     "dev": "node server.js",
     "start": "npm run dev"

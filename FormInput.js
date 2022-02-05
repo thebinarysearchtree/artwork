@@ -6,6 +6,10 @@ class FormInput extends ElementArt {
   static formAssociated = true;
   input;
 
+  get type() {
+    return this.input.type;
+  }
+
   get value() {
     return this.input.value;
   }
