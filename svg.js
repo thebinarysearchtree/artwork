@@ -82,7 +82,6 @@ export {
   clipPath,
   defs,
   desc,
-  discard,
   ellipse,
   feBlend,
   feColorMatrix,

@@ -2,6 +2,8 @@ class ElementArt extends HTMLElement {
   adoptedStyles;
   styles;
   state;
+  connected;
+  disconnected;
 
   constructor() {
     super();
@@ -31,6 +33,18 @@ class ElementArt extends HTMLElement {
 
   render() {
     return null;
+  }
+
+  connectedCallback() {
+    if (this.connected) {
+      this.connected();
+    }
+  }
+
+  disconnectedCallback() {
+    if (this.disconnected) {
+      this.disconnected();
+    }
   }
 }
 

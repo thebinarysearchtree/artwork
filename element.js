@@ -79,6 +79,21 @@ const makeDivs = (styles) => {
   return divs;
 }
 
+const make = (tags) => {
+  const elements = {};
+  for (const [key, value] of Object.entries(tags)) {
+    Object.defineProperty(elements, key, { get: () => value() });
+  }
+  return elements;
+}
+
+const style = (elements) => {
+  for (const [key, value] of Object.entries(elements)) {
+    const className = key.replace(/([a-z])([A-Z])/, '$1-$2').toLowerCase();
+    value.className = className;
+  }
+}
+
 const createElement = (tag, properties) => {
   const element = document.createElement(tag);
   if (typeof properties === 'string') {
@@ -98,5 +113,7 @@ export {
   makeAsyncArt,
   makeArt,
   makeDivs,
-  makeState
+  makeState,
+  make,
+  style
 };

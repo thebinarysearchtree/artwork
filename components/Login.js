@@ -26,7 +26,7 @@ class LoginPage extends ElementArt {
     });
 
     const state = makeState({ 
-      email, 
+      email,
       password
     });
     
