@@ -4,13 +4,19 @@
   "description": "A front-end framework.",
   "author": "Andrew Jones",
   "type": "module",
-  "main": "./artwork.js",
-  "scripts": {
-    "dev": "node server.js",
-    "start": "npm run dev"
-  },
-  "dependencies": {
-    "express": "^4.17.1",
-    "http-proxy-middleware": "2.0.2"
+  "main": "./src/artwork.js",
+  "exports": {
+    ".": {
+      "default": "./src/artwork.js"
+    },
+    "./html.js": {
+      "default": "./src/html.js"
+    },
+    "./svg.js": {
+      "default": "./src/svg.js"
+    },
+    "./router.js": {
+      "default": "./src/router.js"
+    }
   }
 }

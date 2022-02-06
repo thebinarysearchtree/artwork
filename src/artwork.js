@@ -1,3 +1,8 @@
+import ElementArt from './ElementArt.js';
+import AsyncElementArt from './AsyncElementArt.js';
+import FormInput from './FormInput.js';
+import elements from './elements.js';
+
 const makeArt = (elementClass, name) => {
   name = name ? name : elementClass.name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
   customElements.define(name, elementClass);
@@ -94,26 +99,15 @@ const style = (elements) => {
   }
 }
 
-const createElement = (tag, properties) => {
-  const element = document.createElement(tag);
-  if (typeof properties === 'string') {
-    element.innerText = properties;
-  }
-  if (!properties) {
-    return element;
-  }
-  for (const [key, value] of Object.entries(properties)) {
-    element[key] = value;
-  }
-  return element;
-}
-
 export {
-  createElement,
   makeAsyncArt,
   makeArt,
   makeDivs,
   makeState,
   make,
-  style
+  style,
+  ElementArt,
+  AsyncElementArt,
+  FormInput,
+  elements
 };

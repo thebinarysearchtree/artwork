@@ -1,4 +1,16 @@
-import { makeState, makeDivs, makeArt, makeAsyncArt, createElement } from './element.js';
+const createElement = (tag, properties) => {
+  const element = document.createElement(tag);
+  if (typeof properties === 'string') {
+    element.innerText = properties;
+  }
+  if (!properties) {
+    return element;
+  }
+  for (const [key, value] of Object.entries(properties)) {
+    element[key] = value;
+  }
+  return element;
+}
 
 const html = (properties) => createElement('html', properties);
 const base = (properties) => createElement('base', properties);
@@ -116,10 +128,6 @@ const slot = (properties) => createElement('slot', properties);
 const template = (properties) => createElement('template', properties);
 
 export {
-  makeAsyncArt,
-  makeArt,
-  makeState,
-  makeDivs,
   html,
   base,
   head,
