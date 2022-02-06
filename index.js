@@ -2,7 +2,6 @@ import loginPage from './components/Login.js';
 import userPage from './components/User.js';
 import { Router, start, pushState } from './router.js';
 import client from './client.js';
-import testPage from './components/Test.js';
 
 const root = document.getElementById('root');
 
@@ -27,7 +26,7 @@ const asyncPrivate = (component) => {
 
 router.add('/', () => loginPage());
 
-router.add('/user', () => testPage());
+router.add('/user', () => loginPage());
 
 router.add('/users', asyncPrivate(userPage));
 
