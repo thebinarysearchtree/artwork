@@ -1,4 +1,4 @@
-import { a, p } from './artwork.js';
+import { a, p } from './html.js';
 
 const routers = [];
 
