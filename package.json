@@ -5,5 +5,5 @@
   "author": "Andrew Jones",
   "type": "module",
   "main": "./src/index.js",
-  "types": "./src/index.d.js"
+  "types": "./src/index.d.ts"
 }
