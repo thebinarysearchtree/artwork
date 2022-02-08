@@ -1,10 +1,5 @@
-import ElementArt from './ElementArt.js';
-import AsyncElementArt from './AsyncElementArt.js';
-import FormInput from './FormInput.js';
-import elements from './elements.js';
-
 const makeArt = (elementClass, name) => {
-  name = name ? name : elementClass.name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+  name = name ?? elementClass.name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
   customElements.define(name, elementClass);
   return (state) => {
     const element = document.createElement(name);
@@ -15,7 +10,7 @@ const makeArt = (elementClass, name) => {
 }
 
 const makeAsyncArt = (elementClass, name) => {
-  name = name ? name : elementClass.name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+  name = name ?? elementClass.name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
   customElements.define(name, elementClass);
   return async (state) => {
     const element = document.createElement(name);
@@ -55,59 +50,8 @@ const makeState = (o) => {
   return state;
 }
 
-const addProperty = (divs, className) => {
-  const propertyName = className.replace(/([a-z])-([a-z])/, (m, g1, g2) => `${g1}${g2.toUpperCase()}`);
-  const get = () => {
-    const div = document.createElement('div');
-    div.className = className;
-    return div;
-  }
-  Object.defineProperty(divs, propertyName, { get });
-}
-
-const makeDivs = (styles) => {
-  const divs = {};
-  if (typeof styles === 'string') {
-    const classNames = [...styles.matchAll(/$\s*\.([a-zA-Z\-]+)\s*{/gm)].map(a => a[1]);
-    for (const className of classNames) {
-      addProperty(divs, className);
-    }
-    return divs;
-  }
-  for (const rule of styles.cssRules) {
-    const selector = rule.selectorText;
-    if (selector && selector.startsWith('.') && /\.[a-zA-Z0-9\-]/.test(selector)) {
-      const className = selector.substring(1);
-      addProperty(divs, className);
-    }
-  }
-  return divs;
-}
-
-const make = (tags) => {
-  const elements = {};
-  for (const [key, value] of Object.entries(tags)) {
-    Object.defineProperty(elements, key, { get: () => value() });
-  }
-  return elements;
-}
-
-const style = (elements) => {
-  for (const [key, value] of Object.entries(elements)) {
-    const className = key.replace(/([a-z])([A-Z])/, '$1-$2').toLowerCase();
-    value.className = className;
-  }
-}
-
 export {
   makeAsyncArt,
   makeArt,
-  makeDivs,
-  makeState,
-  make,
-  style,
-  ElementArt,
-  AsyncElementArt,
-  FormInput,
-  elements
+  makeState
 };

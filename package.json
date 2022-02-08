@@ -4,19 +4,6 @@
   "description": "A front-end framework.",
   "author": "Andrew Jones",
   "type": "module",
-  "main": "./src/artwork.js",
-  "exports": {
-    ".": {
-      "default": "./src/artwork.js"
-    },
-    "./html.js": {
-      "default": "./src/html.js"
-    },
-    "./svg.js": {
-      "default": "./src/svg.js"
-    },
-    "./router.js": {
-      "default": "./src/router.js"
-    }
-  }
+  "main": "./src/index.js",
+  "types": "./src/index.d.js"
 }

@@ -1,4 +1,6 @@
-import { a, p } from './html.js';
+import html from './proxies/html.js';
+
+const { a, p } = html;
 
 const routers = [];
 
