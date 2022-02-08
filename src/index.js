@@ -28,5 +28,10 @@ export {
   divs,
   makeAsyncArt,
   makeArt,
-  makeState
+  makeState,
+  Router,
+  pushState,
+  start,
+  routerLink,
+  setNotFound
 };
