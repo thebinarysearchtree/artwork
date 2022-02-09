@@ -2,13 +2,11 @@ const elements = {};
 
 const handler = {
   get: function(target, property, receiver) {
-    if (elements[property]) {
-      return elements[property].cloneNode();
+    if (!elements[property]) {
+      const element = document.createElement(property);
+      elements[property] = element;
     }
-    const element = document.createElement(property);
-    elements[property] = element;
-
-    return element;
+    return elements[property].cloneNode();
   }
 }
 

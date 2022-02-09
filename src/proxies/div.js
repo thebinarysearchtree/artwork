@@ -2,14 +2,12 @@ const divs = {};
 
 const handler = {
   get: function(target, property, receiver) {
-    if (divs[property]) {
-      return divs[property].cloneNode();
+    if (!divs[property]) {
+      const element = document.createElement('div');
+      element.className = property.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+      divs[property] = element;
     }
-    const element = document.createElement('div');
-    element.className = property.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-    divs[property] = element;
-
-    return element;
+    return divs[property].cloneNode();
   }
 }
 

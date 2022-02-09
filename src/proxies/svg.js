@@ -13,10 +13,9 @@ const createElement = (tag, properties) => {
 
 const handler = {
   get: function(target, tag, receiver) {
-    if (elementCreators[tag]) {
-      return elementCreators[tag];
+    if (!elementCreators[tag]) {
+      elementCreators[tag] = (properties) => createElement(tag, properties);
     }
-    elementCreators[tag] = (properties) => createElement(tag, properties);
     return elementCreators[tag];
   }
 }
