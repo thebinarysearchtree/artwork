@@ -20,38 +20,7 @@ const makeAsyncArt = (elementClass, name) => {
   }
 }
 
-const makeState = (o) => {
-  const state = {};
-  for (const [key, value] of Object.entries(o)) {
-    if (typeof value === 'function') {
-      Object.defineProperty(state, key, { get: value });
-    }
-    else {
-      let get;
-      const element = value;
-      switch (element.type) {
-        case 'number':
-        case 'range':
-          get = () => Number(element.value);
-          break;
-        case 'checkbox':
-          get = () => element.checked;
-          break;
-        case 'date':
-        case 'datetime-local':
-          get = () => new Date(element.value);
-          break;
-        default:
-          get = () => element.value;
-      }
-      Object.defineProperty(state, key, { get });
-    }
-  }
-  return state;
-}
-
 export {
   makeAsyncArt,
-  makeArt,
-  makeState
+  makeArt
 };
