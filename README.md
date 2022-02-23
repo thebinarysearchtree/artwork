@@ -3,7 +3,7 @@ A front-end library for people who see their code as artwork. Artwork is 100% re
 
 With components and flow control splitting up HTML into increasingly smaller chunks, the need for a visual representation of the structure of a document decreases. Once HTML is removed, a world of opportunities open up. The programming language can be used without barriers.
 
-```
+```js
 class HelloWorld extends ElementArt {
   render() {
     return div(`Hello ${this.state}`);
