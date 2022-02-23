@@ -28,7 +28,7 @@ class SecondsTimer extends ElementArt {
     this.connected = () => {
       const intervalId = setInterval(tick, 1000);
       return () => clearInterval(intervalId);
-    }
+    };
 
     return root;
   }
