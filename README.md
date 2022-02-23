@@ -10,3 +10,27 @@ class HelloWorld extends ElementArt {
   }
 }
 ```
+
+```js
+class SecondsTimer extends ElementArt {
+  render() {
+    let seconds = 0;
+
+    const root = div();
+
+    const tick = () => {
+      root.innerText = `Seconds: ${seconds}`;
+      seconds++;
+    };
+
+    tick();
+
+    this.connected = () => {
+      const intervalId = setInterval(tick, 1000);
+      return () => clearInterval(intervalId);
+    }
+
+    return root;
+  }
+}
+```
