@@ -5,6 +5,7 @@ import html from './proxies/html.js';
 import svg from './proxies/svg.js';
 import divs from './proxies/div.js';
 import elements from './proxies/element.js';
+import setters from './proxies/setter.js';
 import { 
   makeAsyncArt, 
   makeArt
@@ -25,6 +26,7 @@ export {
   svg,
   divs,
   elements,
+  setters,
   makeAsyncArt,
   makeArt,
   Router,
