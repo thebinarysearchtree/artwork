@@ -3,6 +3,9 @@ A front-end library for people who see their code as artwork. Artwork is 100% re
 
 With components and flow control splitting up HTML into increasingly smaller chunks, the need for a visual representation of the structure of a document decreases. Once HTML is removed, a world of opportunities open up. The programming language can be used without barriers.
 
+## Examples
+
+A very basic example.
 ```js
 class HelloWorld extends ElementArt {
   render() {
@@ -11,6 +14,7 @@ class HelloWorld extends ElementArt {
 }
 ```
 
+A timer that sets `this.connected`, which is a function run when the custom element is added to the DOM. The return value is run when the element is removed from the DOM.
 ```js
 class SecondsTimer extends ElementArt {
   render() {
@@ -35,27 +39,23 @@ class SecondsTimer extends ElementArt {
 }
 ```
 
+A todo list that uses the `elements` proxy to create new elements.
 ```js
 class TodoList extends ElementArt {
   render() {
     const { div, h3, ul, form, label, input, button } = elements;
 
-    h3.innerText = 'Todo';
+    setText(
+      h3, 'Todo', 
+      label, 'What needs to be done?',
+      button, 'Add #1');
 
-    const inputId = 'new-todo';
-
-    label.htmlFor = inputId;
-    label.innerText = 'What needs to be done?';
-    input.id = inputId;
-
-    button.innerText = `Add #1`;
+    htmlFor(label, input, 'new-todo');
 
     form.append(label, input, button);
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
+    onSubmit(form, (e) => {
       const todo = input.value;
-
       if (todo.length === 0) {
         return;
       }
@@ -72,3 +72,5 @@ class TodoList extends ElementArt {
   }
 }
 ```
+
+
