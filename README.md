@@ -34,3 +34,41 @@ class SecondsTimer extends ElementArt {
   }
 }
 ```
+
+```js
+class TodoList extends ElementArt {
+  render() {
+    const { div, h3, ul, form, label, input, button } = elements;
+
+    h3.innerText = 'Todo';
+
+    const inputId = 'new-todo';
+
+    label.htmlFor = inputId;
+    label.innerText = 'What needs to be done?';
+    input.id = inputId;
+
+    button.innerText = `Add #1`;
+
+    form.append(label, input, button);
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const todo = input.value;
+
+      if (todo.length === 0) {
+        return;
+      }
+      const item = li(todo);
+      ul.append(item);
+      
+      button.innerText = `Add #${ul.childElementCount + 1}`;
+      input.value = '';
+    });
+
+    div.append(h3, ul, form);
+
+    return div;
+  }
+}
+```

@@ -4,6 +4,7 @@ import FormInput from './FormInput.js';
 import html from './proxies/html.js';
 import svg from './proxies/svg.js';
 import divs from './proxies/div.js';
+import elements from './proxies/element.js';
 import { 
   makeAsyncArt, 
   makeArt
@@ -23,6 +24,7 @@ export {
   html,
   svg,
   divs,
+  elements,
   makeAsyncArt,
   makeArt,
   Router,
