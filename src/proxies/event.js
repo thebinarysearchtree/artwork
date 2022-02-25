@@ -3,18 +3,18 @@ const events = {};
 const handler = {
   get: function(target, property, receiver) {
     if (!events[property]) {
-      const eventName = property.substring(2).toLowerCase();
-      if (eventName === 'submit') {
-        events[property] = (element, handler) => {
-          element.addEventListener(eventName, (e) => {
+      const type = property.substring(2).toLowerCase();
+      if (type === 'submit') {
+        events[property] = (element, listener, options) => {
+          element.addEventListener(type, (e) => {
             e.preventDefault();
-            handler(e);
-          });
+            listener(e);
+          }, options);
         }
       }
       else {
-        events[property] = (element, handler) => {
-          element.addEventListener(eventName, handler);
+        events[property] = (element, listener, options) => {
+          element.addEventListener(type, listener, options);
         }
       }
     }

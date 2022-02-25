@@ -1,8 +1,6 @@
 # Artwork
 A front-end library for people who see their code as artwork. Artwork is 100% real JavaScript and CSS. There are no asychronous state updates, reactivity, template languages, hybrid languages, hidden rules, or anything else. Artwork runs as fast as a client-side library can run, with less code than React and Vue.
 
-With components and flow control splitting up HTML into increasingly smaller chunks, the need for a visual representation of the structure of a document decreases. Once HTML is removed, a world of opportunities open up. The programming language can be used without barriers.
-
 ## Examples
 
 A very basic example.
@@ -39,7 +37,7 @@ class SecondsTimer extends ElementArt {
 }
 ```
 
-A todo list that uses the `elements` proxy to create new elements.
+A todo list that uses the `elements` proxy to create new elements. `setText` shows the factory line nature of Artwork, as opposed to the document nature of HTML.
 ```js
 class TodoList extends ElementArt {
   render() {

@@ -1,20 +1,16 @@
-export class ElementArt {
+export class BaseElement {
   adoptedStyles?: CSSStyleDeclaration;
   styles?: string;
   state?: any;
   connected: () => void;
   disconnected: () => void;
+}
 
+export class ElementArt extends BaseElement {
   render(): HTMLElement;
 }
 
-export class AsyncElementArt {
-  adoptedStyles?: CSSStyleDeclaration;
-  styles?: string;
-  state?: any;
-  connected: () => void;
-  disconnected: () => void;
-
+export class AsyncElementArt extends BaseElement {
   render(): Promise<HTMLElement>;
 }
 
@@ -22,6 +18,8 @@ export class FormInput extends ElementArt {
   type: string;
   value: string;
 }
+
+export function htmlFor(label: HTMLLabelElement, input: HTMLInputElement, id: string): void;
 
 export function makeArt<T, K>(elementClass: { new() : T }, name?: string): (state?: K) => T;
 export function makeAsyncArt<T, K>(elementClass: { new() : T }, name?: string): (state?: K) => Promise<T>;
@@ -41,6 +39,90 @@ export function setNotFound(element: HTMLElement): void;
 
 export const divs: { 
   [key: string]: HTMLDivElement;
+}
+
+export const events: {
+  [key: string]: any;
+  onAbort: (target: AbortSignal, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions) => void;
+  onEnded: (target: AudioScheduledSourceNode, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions) => void;
+  onMessageError: (target: BroadcastChannel, listener: (e: MessageEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onMessage: (target: BroadcastChannel, listener: (e: MessageEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onAnimationCancel: (target: Document, listener: (e: AnimationEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onAnimationEnd: (target: Document, listener: (e: AnimationEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onAnimationIteration: (target: Document, listener: (e: AnimationEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onAnimationStart: (target: Document, listener: (e: AnimationEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onCopy: (target: Document, listener: (e: ClipboardEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onCut: (target: Document, listener: (e: ClipboardEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onDOMContentLoaded: (target: Document, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions) => void;
+  onDragEnd: (target: Document, listener: (e: DragEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onDragEnter: (target: Document, listener: (e: DragEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onDragLeave: (target: Document, listener: (e: DragEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onDragOver: (target: Document, listener: (e: DragEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onDragStart: (target: Document, listener: (e: DragEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onDrag: (target: Document, listener: (e: DragEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onDrop: (target: Document, listener: (e: DragEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onFullScreenChange: (target: Document, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions) => void;
+  onFullScreenError: (target: Document, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions) => void;
+  onGotPointerCapture: (target: Document, listener: (e: PointerEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onKeyDown: (target: Document, listener: (e: KeyboardEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onKeyPress: (target: Document, listener: (e: KeyboardEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onKeyUp: (target: Document, listener: (e: KeyboardEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onLostPointerCapture: (target: Document, listener: (e: PointerEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onPaste: (target: Document, listener: (e: ClipboardEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onPointerCancel: (target: Document, listener: (e: PointerEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onPointerDown: (target: Document, listener: (e: PointerEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onPointerEnter: (target: Document, listener: (e: PointerEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onPointerLeave: (target: Document, listener: (e: PointerEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onPointerLockChange: (target: Document, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions) => void;
+  onPointerLockError: (target: Document, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions) => void;
+  onPointerMove: (target: Document, listener: (e: PointerEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onPointerOut: (target: Document, listener: (e: PointerEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onPointerOver: (target: Document, listener: (e: PointerEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onPointerUp: (target: Document, listener: (e: PointerEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onReadyStateChange: (target: Document, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions) => void;
+  onScroll: (target: Document, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions) => void;
+  onSelectionChange: (target: Document, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions) => void;
+  onSelectStart: (target: Document, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions) => void;
+  onTouchCancel: (target: Document, listener: (e: TouchEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onTouchEnd: (target: Document, listener: (e: TouchEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onTouchMove: (target: Document, listener: (e: TouchEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onTouchStart: (target: Document, listener: (e: TouchEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onTransitionCancel: (target: Document, listener: (e: TransitionEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onTransitionEnd: (target: Document, listener: (e: TransitionEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onTransitionRun: (target: Document, listener: (e: TransitionEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onTransitionStart: (target: Document, listener: (e: TransitionEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onVisibilityChange: (target: Document, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions) => void;
+  onWheel: (target: Document, listener: (e: WheelEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onAuxClick: (target: Element, listener: (e: MouseEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onBlur: (target: Element, listener: (e: FocusEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onClick: (target: Element, listener: (e: MouseEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onCompositionEnd: (target: Element, listener: (e: CompositionEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onCompositionStart: (target: Element, listener: (e: CompositionEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onCompositionUpdate: (target: Element, listener: (e: CompositionEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onContextMenu: (target: Element, listener: (e: MouseEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onCopy: (target: Element, listener: (e: ClipboardEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onCut: (target: Element, listener: (e: ClipboardEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onDblClick: (target: Element, listener: (e: MouseEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onError: (target: Element, listener: (e: Event | UIEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onFocusIn: (target: Element, listener: (e: FocusEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onFocusOut: (target: Element, listener: (e: FocusEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onFocus: (target: Element, listener: (e: FocusEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onFullScreenChange: (target: Element, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions) => void;
+  onFullScreenError: (target: Element, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions) => void;
+  onGestureChange: (target: Element, listener: (e: GestureEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onGestureEnd: (target: Element, listener: (e: GestureEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onGestureStart: (target: Element, listener: (e: GestureEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onKeyDown: (target: Element, listener: (e: KeyboardEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onKeyPress: (target: Element, listener: (e: KeyboardEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onKeyUp: (target: Element, listener: (e: KeyboardEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onMouseDown: (target: Element, listener: (e: MouseEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onMouseEnter: (target: Element, listener: (e: MouseEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onMouseLeave: (target: Element, listener: (e: MouseEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onMouseMove: (target: Element, listener: (e: MouseEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onMouseOut: (target: Element, listener: (e: MouseEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onMouseOver: (target: Element, listener: (e: MouseEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onMouseUp: (target: Element, listener: (e: MouseEvent) => void, options?: boolean | AddEventListenerOptions) => void;
+  onPaste: (target: Element, listener: (e: ClipboardEvent) => void, options?: boolean | AddEventListenerOptions) => void;
 }
 
 export const elements: {

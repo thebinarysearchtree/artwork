@@ -1,25 +1,25 @@
 const setters = {};
 
 const handler = {
-  get: function(target, property, receiver) {
-    if (!setters[property]) {
-      let name = property.substring(3);
-      name = name[0].toLowerCase() + name.substring(1);
-      if (name === 'class') {
-        name = 'className';
+  get: function(target, name, receiver) {
+    if (!setters[name]) {
+      let property = name.substring(3);
+      property = property[0].toLowerCase() + property.substring(1);
+      if (property === 'class') {
+        property = 'className';
       }
-      if (name === 'text') {
-        name = 'innerText';
+      if (property === 'text') {
+        property = 'innerText';
       }
-      setters[property] = (...arguments) => {
+      setters[name] = (...arguments) => {
         for (let i = 0; i < arguments.length; i += 2) {
           const element = arguments[i];
-          const text = arguments[i + 1];
-          element[name] = text;
+          const value = arguments[i + 1];
+          element[property] = value;
         }
       }
     }
-    return setters[property];
+    return setters[name];
   }
 }
 
