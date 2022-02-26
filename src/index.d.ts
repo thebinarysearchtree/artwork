@@ -2,8 +2,8 @@ export class BaseElement {
   adoptedStyles?: CSSStyleDeclaration;
   styles?: string;
   state?: any;
-  connected: (): void;
-  disconnected: (): void;
+  connected: () => void;
+  disconnected: () => void;
 }
 
 export class ElementArt extends BaseElement {
