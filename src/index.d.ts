@@ -41,6 +41,10 @@ export const divs: {
   [key: string]: HTMLDivElement;
 }
 
+export const setters: {
+  [key: string]: (...arguments: any[]) => void;
+}
+
 export const events: {
   [key: string]: any;
   onAbort(target: AbortSignal, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
@@ -236,6 +240,63 @@ export const events: {
   onSignalingStateChange(target: RTCPeerConnection, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
   onTrack(target: RTCPeerConnection, listener: (e: RTCTrackEvent) => void, options?: boolean | AddEventListenerOptions): void;
   onMessage(target: ServiceWorkerContainer, listener: (e: MessageEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onVoicesChanged(target: SpeechSynthesis, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
+  onBoundary(target: SpeechSynthesisUtterance, listener: (e: SpeechSynthesisEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onEnd(target: SpeechSynthesisUtterance, listener: (e: SpeechSynthesisEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onError(target: SpeechSynthesisUtterance, listener: (e: SpeechSynthesisErrorEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onMark(target: SpeechSynthesisUtterance, listener: (e: SpeechSynthesisEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onPause(target: SpeechSynthesisUtterance, listener: (e: SpeechSynthesisEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onResume(target: SpeechSynthesisUtterance, listener: (e: SpeechSynthesisEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onStart(target: SpeechSynthesisUtterance, listener: (e: SpeechSynthesisEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onCueChange(target: TextTrack, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
+  onAddTrack(target: TextTrackList, listener: (e: TrackEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onChange(target: TextTrackList, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
+  onRemoveTrack(target: TextTrackList, listener: (e: TrackEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onResize(target: VisualViewport, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
+  onScroll(target: VisualViewport, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
+  onClose(target: WebSocket, listener: (e: CloseEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onError(target: WebSocket, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
+  onMessage(target: WebSocket, listener: (e: MessageEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onOpen(target: WebSocket, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
+  onAfterPrint(target: Window, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
+  onAppInstalled(target: Window, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
+  onBeforePrint(target: Window, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
+  onBeforeUnload(target: Window, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
+  onBlur(target: Window, listener: (e: FocusEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onCopy(target: Window, listener: (e: ClipboardEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onCut(target: Window, listener: (e: ClipboardEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onCopy(target: Element, listener: (e: ClipboardEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onDeviceMotion(target: Window, listener: (e: DeviceMotionEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onDeviceOrientation(target: Window, listener: (e: DeviceOrientationEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onDOMContentLoaded(target: Window, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
+  onError(target: Window, listener: (e: Event | UIEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onFocus(target: Window, listener: (e: FocusEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onHashChange(target: Window, listener: (e: HashChangeEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onLanguageChange(target: Window, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
+  onLoad(target: Window, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
+  onMessageError(target: Window, listener: (e: MessageEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onMessage(target: Window, listener: (e: MessageEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onOffline(target: Window, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
+  onOnline(target: Window, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
+  onPageHide(target: Window, listener: (e: PageTransitionEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onPageShow(target: Window, listener: (e: PageTransitionEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onPaste(target: Window, listener: (e: ClipboardEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onPopState(target: Window, listener: (e: PopStateEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onRejectionHandled(target: Window, listener: (e: PromiseRejectionEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onResize(target: Window, listener: (e: UIEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onStorage(target: Window, listener: (e: StorageEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onUnhanldedRejection(target: Window, listener: (e: PromiseRejectionEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onUnload(target: Window, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
+  onMessageError(target: Worker, listener: (e: MessageEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onMessage(target: Worker, listener: (e: MessageEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onLanguageChange(target: WindowOrWorkerGlobalScope, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
+  onAbort(target: XMLHttpRequest, listener: (e: ProgressEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onError(target: XMLHttpRequest, listener: (e: ProgressEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onLoadEnded(target: XMLHttpRequest, listener: (e: ProgressEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onLoadStart(target: XMLHttpRequest, listener: (e: ProgressEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onLoad(target: XMLHttpRequest, listener: (e: ProgressEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onProgress(target: XMLHttpRequest, listener: (e: ProgressEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onTimeout(target: XMLHttpRequest, listener: (e: ProgressEvent) => void, options?: boolean | AddEventListenerOptions): void;
 }
 
 export const elements: {
