@@ -13,7 +13,7 @@ const handler = {
       }
       setters[key] = (values, elements) => {
         for (const [key, value] of Object.entries(values)) {
-          elements[key] = value;
+          elements[key][property] = value;
         }
       }
     }
