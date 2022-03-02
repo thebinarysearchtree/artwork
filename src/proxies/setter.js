@@ -1,9 +1,9 @@
 const setters = {};
 
 const handler = {
-  get: function(target, name, receiver) {
-    if (!setters[name]) {
-      let property = name.substring(3);
+  get: function(target, key, receiver) {
+    if (!setters[key]) {
+      let property = key.substring(3);
       property = property[0].toLowerCase() + property.substring(1);
       if (property === 'class') {
         property = 'className';
@@ -11,15 +11,13 @@ const handler = {
       if (property === 'text') {
         property = 'innerText';
       }
-      setters[name] = (...args) => {
-        for (let i = 0; i < args.length; i += 2) {
-          const element = args[i];
-          const value = args[i + 1];
-          element[property] = value;
+      setters[key] = (values, elements) => {
+        for (const [key, value] of Object.entries(values)) {
+          elements[key] = value;
         }
       }
     }
-    return setters[name];
+    return setters[key];
   }
 }
 

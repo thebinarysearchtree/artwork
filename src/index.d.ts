@@ -48,7 +48,7 @@ export const divs: {
 }
 
 export const setters: {
-  [key: string]: (...arguments: any[]) => void;
+  [key: string]: (values: { [key: string]: any }, elements: { [key: string]: HTMLElement }) => void;
 }
 
 export const events: {
