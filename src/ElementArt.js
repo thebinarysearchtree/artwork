@@ -1,8 +1,8 @@
 import BaseElement from './BaseElement.js';
 
 class ElementArt extends BaseElement {
-  renderShadow() {
-    const element = this.render();
+  renderShadow(state) {
+    const element = this.render(state);
     this.appendToShadow(element);
   }
 

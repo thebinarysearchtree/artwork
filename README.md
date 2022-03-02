@@ -6,8 +6,8 @@ A front-end library for people who see their code as artwork. Artwork is 100% re
 A very basic example.
 ```js
 class HelloWorld extends ElementArt {
-  render() {
-    return div(`Hello ${this.state}`);
+  render(name) {
+    return div(`Hello ${name}`);
   }
 }
 ```

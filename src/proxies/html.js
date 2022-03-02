@@ -9,6 +9,14 @@ const createElement = (tag, properties) => {
   if (!properties) {
     return element;
   }
+  if (properties.hasOwnProperty('class')) {
+    properties.className = properties.class;
+    delete properties.class;
+  }
+  if (properties.hasOwnProperty('text')) {
+    properties.innerText = properties.text;
+    delete properties.text;
+  }
   return Object.assign(element, properties);
 }
 

@@ -9,7 +9,7 @@ const makeArt = (elementClass, name) => {
   return (state) => {
     const element = document.createElement(customName);
     element.state = state;
-    element.renderShadow();
+    element.renderShadow(state);
     return element;
   }
 }
@@ -19,7 +19,7 @@ const makeAsyncArt = (elementClass, name) => {
   return async (state) => {
     const element = document.createElement(customName);
     element.state = state;
-    await element.renderShadow();
+    await element.renderShadow(state);
     return element;
   }
 }
