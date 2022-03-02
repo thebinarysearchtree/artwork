@@ -43,15 +43,13 @@ class TodoList extends ElementArt {
   render() {
     const { div, h3, ul, form, label, input, button } = elements;
 
-    const textElements = { h3, label, button };
-
     const text = {
       h3: 'Todo', 
       label: 'What needs to be done?',
       button: 'Add #1'
     };
 
-    setText(text, textElements);
+    setText(text, { h3, label, button });
 
     htmlFor(label, input, 'new-todo');
 
