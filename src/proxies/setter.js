@@ -11,10 +11,10 @@ const handler = {
       if (property === 'text') {
         property = 'innerText';
       }
-      setters[name] = (...arguments) => {
-        for (let i = 0; i < arguments.length; i += 2) {
-          const element = arguments[i];
-          const value = arguments[i + 1];
+      setters[name] = (...args) => {
+        for (let i = 0; i < args.length; i += 2) {
+          const element = args[i];
+          const value = args[i + 1];
           element[property] = value;
         }
       }
