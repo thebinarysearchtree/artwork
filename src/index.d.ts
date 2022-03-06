@@ -7,11 +7,11 @@ export class BaseElement {
 }
 
 export class ElementArt extends BaseElement {
-  render(): HTMLElement;
+  render(state?: any): HTMLElement;
 }
 
 export class AsyncElementArt extends BaseElement {
-  render(): Promise<HTMLElement>;
+  render(state?: any): Promise<HTMLElement>;
 }
 
 export class FormInput extends ElementArt {
