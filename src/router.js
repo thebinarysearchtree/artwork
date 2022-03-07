@@ -8,10 +8,6 @@ history.scrollRestoration = 'manual';
 
 let notFound = () => p('Page not found');
 
-const setNotFound = (element) => {
-  notFound = () => element;
-}
-
 const getRoute = (url) => {
   for (let i = routers.length - 1; i >= 0; i--) {
     const router = routers[i];
@@ -56,15 +52,6 @@ const processRoute = (url) => {
   }
 }
 
-const pushState = (url, state) => {
-  history.pushState(state, '', url);
-  processRoute(`${location.origin}${url}`);
-}
-
-const start = () => {
-  processRoute(window.location.href);
-}
-
 window.addEventListener('popstate', (e) => {
   processRoute(window.location.href);
   const { x, y } = e.state.scroll;
@@ -83,6 +70,19 @@ class Router {
   constructor(root) {
     this.root = root;
     routers.push(this);
+  }
+
+  static start() {
+    processRoute(window.location.href);
+  }
+
+  static setNotFound() {
+    notFound = () => element;
+  }
+
+  static pushState(url, state) {
+    history.pushState(state, '', url);
+    processRoute(`${location.origin}${url}`);
   }
 
   add(match, handler) {
@@ -145,8 +145,5 @@ const routerLink = (properties) => {
 
 export {
   Router,
-  pushState,
-  start,
-  routerLink,
-  setNotFound
+  routerLink
 };

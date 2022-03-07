@@ -14,10 +14,7 @@ import {
 } from './artwork.js';
 import {
   Router,
-  pushState,
-  start,
-  routerLink,
-  setNotFound
+  routerLink
 } from './router.js';
 
 export {
@@ -35,8 +32,5 @@ export {
   makeAsyncArt,
   makeArt,
   Router,
-  pushState,
-  start,
-  routerLink,
-  setNotFound
+  routerLink
 };

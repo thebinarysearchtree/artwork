@@ -33,15 +33,15 @@ export function makeAsyncArt<T, K>(elementClass: { new() : T }, name?: string): 
 export class Router {
   constructor(root: HTMLElement);
 
-  add(match: string | RegExp, handler: (params?: { [key: string]: string }) => HTMLElement): void;
+  static pushState(url: string, state?: any): void;
+  static start(): void;
+  static setNotFound(element: HTMLElement): void;
 
+  add(match: string | RegExp, handler: (params?: { [key: string]: string }) => HTMLElement): void;
   remove(): void;
 }
 
-export function pushState(url: string, state?: any): void;
-export function start(): void;
 export function routerLink(properties: Partial<HTMLAnchorElement> & { state?: any }): HTMLAnchorElement;
-export function setNotFound(element: HTMLElement): void;
 
 export const divs: { 
   [key: string]: HTMLDivElement;
