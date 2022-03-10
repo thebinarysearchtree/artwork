@@ -13,6 +13,7 @@ import {
   makeArt
 } from './artwork.js';
 import {
+  pushState,
   Router,
   routerLink
 } from './router.js';
@@ -31,6 +32,7 @@ export {
   makeElements,
   makeAsyncArt,
   makeArt,
+  pushState,
   Router,
   routerLink
 };

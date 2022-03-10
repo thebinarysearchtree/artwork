@@ -30,13 +30,12 @@ export function makeElements<K extends keyof HTMLElementTagNameMap>(tag: K, opti
 export function makeArt<T, K>(elementClass: { new() : T }, name?: string): (state?: K) => T;
 export function makeAsyncArt<T, K>(elementClass: { new() : T }, name?: string): (state?: K) => Promise<T>;
 
+export function pushState(url: string, state?: any): void;
+
 export class Router {
   constructor(root: HTMLElement);
-
-  static pushState(url: string, state?: any): void;
-  static start(): void;
-  static setNotFound(element: HTMLElement): void;
-
+  start(): void;
+  setNotFound(element: HTMLElement): void;
   add(match: string | RegExp, handler: (params?: { [key: string]: string }) => HTMLElement): void;
   remove(): void;
 }

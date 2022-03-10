@@ -62,6 +62,19 @@ window.addEventListener('clickart', (e) => {
   processRoute(e.href);
 });
 
+const start = () => {
+  processRoute(window.location.href);
+};
+
+const setNotFound = () => {
+  notFound = () => element;
+};
+
+const pushState = (url, state) => {
+  history.pushState(state, '', url);
+  processRoute(`${location.origin}${url}`);
+};
+
 class Router {
   stringRoutes = new Map();
   regexRoutes = [];
@@ -72,17 +85,12 @@ class Router {
     routers.push(this);
   }
 
-  static start() {
+  start() {
     processRoute(window.location.href);
   }
-
-  static setNotFound() {
+  
+  setNotFound() {
     notFound = () => element;
-  }
-
-  static pushState(url, state) {
-    history.pushState(state, '', url);
-    processRoute(`${location.origin}${url}`);
   }
 
   add(match, handler) {
@@ -144,6 +152,9 @@ const routerLink = (properties) => {
 }
 
 export {
+  start,
+  setNotFound,
+  pushState,
   Router,
   routerLink
 };
