@@ -2,7 +2,7 @@ const elementCreators = {};
 
 const createElement = (tag, properties) => {
   const element = document.createElement(tag);
-  if (typeof properties === 'string') {
+  if (typeof properties === 'string' || typeof properties === 'number') {
     element.innerText = properties;
     return element;
   }
