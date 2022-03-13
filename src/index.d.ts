@@ -1,6 +1,5 @@
 export class BaseElement {
-  adoptedStyles?: CSSStyleDeclaration;
-  styles?: string;
+  styles?: CSSStyleDeclaration | string;
   state?: any;
   connected: () => void;
   disconnected: () => void;
