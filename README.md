@@ -176,7 +176,7 @@ const { root, sidePanel, content } = divs;
 root.append(content, sidePanel);
 ```
 
-```root``` is now an ```HTMLDivElement` that looks like this:
+```root``` is now an ```HTMLDivElement``` that looks like this:
 
 ```html
 <div class="root">
