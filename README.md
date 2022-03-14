@@ -116,7 +116,7 @@ Once the class has been defined, ```makeArt``` is used to register a native web 
 const helloWorld = makeArt(HelloWorld);
 ```
 
-```makeArt``` will use the supplied classes name to create the native web component name. In this case, `HelloWorld`` will become ```hello-world```. You can control this by passing in a second argument to ```makeArt``` that specifies the name of the web component directly. Web components must have at least two words separated by a ```-```.
+```makeArt``` will use the supplied classes name to create the native web component name. In this case, ```HelloWorld``` will become ```hello-world```. You can control this by passing in a second argument to ```makeArt``` that specifies the name of the web component directly. Web components must have at least two words separated by a ```-```.
 
 To use the component, you simply import it into your file and run the function created by ```makeArt```.
 
@@ -134,5 +134,7 @@ The argument supplied to the function is the same argument that will be passed i
 
 Each component will be composed of one or more HTML elements. Artwork provides multiple convenience methods for creating elements so that you don't have to do ```document.createElement('div');``` each time.
 
-Which method you use will depend on what you are trying to do and the way you write components.
+Which method you use will depend on what you are trying to do and the way you write components. If you want to create an element with lots of attributes, it is often best to use the ```html``` proxy.
+
+
 
