@@ -132,9 +132,62 @@ The argument supplied to the function is the same argument that will be passed i
 
 ### Creating elements
 
-Each component will be composed of one or more HTML elements. Artwork provides multiple convenience methods for creating elements so that you don't have to do ```document.createElement('div');``` each time.
+Components will often be composed of one or more HTML elements. Artwork provides multiple convenience methods for creating elements so that you don't have to do ```document.createElement('div');``` each time.
 
 Which method you use will depend on what you are trying to do and the way you write components. If you want to create an element with lots of attributes, it is often best to use the ```html``` proxy.
 
+```js
+import { html } from '../artwork/index.js';
 
+const { div, span } = html;
+
+const city = div({
+  class: 'city',
+  text: 'Brisbane',
+  title: 'Australia'
+});
+```
+
+```city``` will now be an ```HTMLDivElement``` that looks like this:
+
+```html
+<div class="city" title="Australia">Brisbane</div>
+```
+
+The functions created by accessing the ```html``` proxy accept an object containing the properties of the element you are creating. ```text``` and ```class``` are shorthands for ```className``` and ```innerText```. The functions can also accept a ```string``` or ```number``` instead of an object, which is then used to set ```innerText```.
+
+```js
+const city = span('Brisbane');
+```
+
+which turns into
+
+```html
+<span>Brisbane</span>
+```
+
+Often, a component will have a bunch of div elements that are used for nothing other than styling and layout. In this case, you can use the ```divs``` proxy, or create your own proxy with ```makeElements```. This proxy returns div elements with their ```className``` set to the name of the variable after it is converted from camel case to dashes.
+
+```js
+import { divs } from '../artwork/index.js;
+
+const { root, sidePanel, content } = divs;
+
+root.append(content, sidePanel);
+```
+
+```root``` is now an ```HTMLDivElement` that looks like this:
+
+```html
+<div class="root">
+  <div class="content"></div>
+  <div class="side-panel"></div>
+</div>
+```
+
+For some people this may not work, as they use utility classes in their css, but for others it will save a lot of time.
+
+The final way to create elements is by using the ```elements``` proxy. This can be used when you have lots of different types of elements that don't have many attributes.
+
+All of these proxies are backed by objects with getters, so they can be used in loops and so on, as each property access creates a new element.
 
