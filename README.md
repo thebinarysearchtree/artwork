@@ -130,7 +130,7 @@ document.body.append(element);
 
 The argument supplied to the function is the same argument that will be passed into the ```render``` method of the class you created earlier.
 
-### Creating elements
+## Creating elements
 
 Components will often be composed of one or more HTML elements. Artwork provides multiple convenience methods for creating elements so that you don't have to do ```document.createElement('div');``` each time.
 
@@ -187,7 +187,52 @@ root.append(content, sidePanel);
 
 For some people this may not work, as they use utility classes in their css, but for others it will save a lot of time.
 
-The final way to create elements is by using the ```elements``` proxy. This can be used when you have lots of different types of elements that don't have many attributes.
+The final way to create elements is by using the ```elements``` proxy. When you access the properties on the ```elements``` proxy, it returns a new element corresponding to the name of the property.
+
+```js
+const { div } = elements;
+div.innerText = 'Brisbane';
+```
+
+
+```html
+<div>Brisbane</div>
+```
 
 All of these proxies are backed by objects with getters, so they can be used in loops and so on, as each property access creates a new element.
+
+## Styles
+
+Every component can have css that is scoped to that component, to avoid clashes with other components.
+
+```js
+import styles from './Thumbnail.css' assert { type: 'css' };
+
+class MovieThumbnail extends ElementArt {
+  constructor() {
+    super();
+    this.styles = styles;
+  }
+
+  render() {
+    return p('Star Wars');
+  }
+}
+```
+
+You can also use strings containing css.
+
+```js
+class MovieThumbnail extends ElementArt {
+  constructor() {
+    super();
+    this.styles = 'p { margin-left: 20px; }';
+  }
+
+  render() {
+    return p('Star Wars');
+  }
+}
+```
+
 
