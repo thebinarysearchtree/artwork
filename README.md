@@ -76,4 +76,63 @@ class TodoList extends ElementArt {
 }
 ```
 
+## Creating a component
+
+```js
+import { makeArt, ElementArt, html } from '../artwork/index.js';
+
+const { div } = html;
+
+class HelloWorld extends ElementArt {
+  render(name) {
+    return div(`Hello ${name}`);
+  }
+}
+
+const helloWorld = makeArt(HelloWorld);
+
+export default helloWorld;
+```
+
+Artwork is based on Web Components, a native component API built into modern web browsers. A typical component in Artwork will start by importing ```makeArt``` or ```makeAsyncArt```, ```ElementArt``` or ```AsyncElementArt```, and some way of making HTML elements, in this case ```html```.
+
+```js
+import { makeArt, ElementArt, html } from '../artwork/index.js';
+```
+
+Every component will extend either ```ElementArt``` or ```AsyncElementArt``` depending on whether the render method is asynchronous or not. The main method of ```ElementArt``` is ```render```, which is run once, and is used to create HTML elements, and set up any event handlers. It returns a ```HTMLElement```.
+
+```js
+class HelloWorld extends ElementArt {
+  render(name) {
+    return div(`Hello ${name}`);
+  }
+}
+```
+
+Once the class has been defined, ```makeArt``` is used to register a native web component and create a function that can be used to create a new instance of the component, as the class cannot be created directly.
+
+```js
+const helloWorld = makeArt(HelloWorld);
+```
+
+```makeArt``` will use the supplied classes name to create the native web component name. In this case, `HelloWorld`` will become ```hello-world```. You can control this by passing in a second argument to ```makeArt``` that specifies the name of the web component directly. Web components must have at least two words separated by a ```-```.
+
+To use the component, you simply import it into your file and run the function created by ```makeArt```.
+
+```js
+import hello from './HelloWorld.js';
+
+const element = hello('Andrew');
+
+document.body.append(element);
+```
+
+The argument supplied to the function is the same argument that will be passed into the ```render``` method of the class you created earlier.
+
+### Creating elements
+
+Each component will be composed of one or more HTML elements. Artwork provides multiple convenience methods for creating elements so that you don't have to do ```document.createElement('div');``` each time.
+
+Which method you use will depend on what you are trying to do and the way you write components.
 

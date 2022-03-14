@@ -1,6 +1,6 @@
-const htmlFor = (label, input, id) => {
-  label.htmlFor = id;
-  input.id = id;
+const htmlFor = (label, input, inputId) => {
+  label.htmlFor = inputId;
+  input.id = inputId;
 }
 
 const makeElements = (tag, options) => {
