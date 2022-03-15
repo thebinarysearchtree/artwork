@@ -194,11 +194,6 @@ const { div } = elements;
 div.innerText = 'Brisbane';
 ```
 
-
-```html
-<div>Brisbane</div>
-```
-
 All of these proxies are backed by objects with getters, so they can be used in loops and so on, as each property access creates a new element.
 
 ## Styles
@@ -235,4 +230,87 @@ class MovieThumbnail extends ElementArt {
 }
 ```
 
+## Routes
 
+Artwork includes a router that has some pretty interesting features. When creating a router, you can pass in the ```root``` element, and the router will replace the child element of the root with whatever is returned by the route handler. In the example below, it will be the ```HelloWorld``` component from earlier. If you don't provide a root element, your route handler should not return any element, as you it is left up to you to determine what happens when the route is hit.
+
+```js
+const root = document.getElementById('root');
+
+const router = new Router(root);
+
+router.add('/hello', ({ name }) => hello(name));
+
+router.start();
+```
+
+The ```add``` method takes two arguments, the path and a route handler.  The path can be specified as a string or a regular expression. If the regular expression has named capturing groups, these groups are added to the parameters object that is passed to the route handler.
+
+```js
+router.add(/\/(?<username>[^/]*)\/(?<repository>[^/]*)/, ({ username, repository}) => {
+  const user = users.find(u => u.username === username);
+});
+```
+
+The above example will match routes such as ```/thebinarysearchtree/artwork```. Other routing libraries will allow you to specify routes like this:
+
+```/:username/:repository```
+
+but this requires more code from the libraries perspective, is less flexible, and can be ambiguous.
+
+The anchor tags in a single page application need to be handled correctly to prevent the page reloading. When you want to use the ```a``` tag, you can import the ```routerLink``` function, that takes the same arguments as the ```a``` function, and adds a ```state``` property that represents the history state.
+
+```js
+import { routerLink } from './artwork/index.js';
+
+render() {
+  const { div } = elements;
+
+  const a1 = routerLink({ href: '/hello?name=World', text: 'Hello World' });
+
+  div.append(a1);
+
+  return div;
+}
+```
+
+When you are loading an asynchronous component, you often want to display a loading indicator. You can do this by returning the loading indicator in the route handler, and then replacing the indicator once the asynchronous component has loaded. These are all standard DOM API methods.
+
+```js
+router.add(/\/routes/, () => {
+  const loading = div('Loading...');
+  routes().then((r) => loading.replaceWith(r));
+  return loading;
+});
+```
+
+Artwork lets you create as many routers as you want. The router that is created last will override the earlier routers when it has a match that is also in the other routers. Usually, you will have one router that starts when the application begins, and then other routers that are started inside components. When the component loads, the router will become active. Make sure to remove the router once the component is removed from the DOM.
+
+In the example below, the ```connect``` method is used to create a new router that intercepts routes and only replaces the title of the movie instead of reloading the side panel. ```connect``` is a method that is available to both ```ElementArt``` and ```AsyncElementArt``` classes, and is run when the web component is connected to the DOM. The return value is a function that is run when the component is removed from the DOM.
+
+```js
+async render() {
+  const { root, sidePanel, content } = divs;
+
+  const movies = await getMovies();
+  sidePanel.append(...movies);
+
+  this.connected = () => {
+    const router = new Router();
+
+    router.add('/routes', ({ v }) => {
+      const videoId = parseInt(v, 10);
+      const { name } = movies.find(m => m.id === videoId);
+
+      const title = h3(name);
+      content.replaceChildren(title);
+    });
+    
+    router.start();
+    return () => router.remove();
+  }
+
+  root.append(content, sidePanel);
+  return root;
+}
+```
