@@ -232,7 +232,7 @@ class MovieThumbnail extends ElementArt {
 
 ## Routes
 
-Artwork includes a router that has some pretty interesting features. When creating a router, you can pass in the ```root``` element, and the router will replace the child element of the root with whatever is returned by the route handler. In the example below, it will be the ```HelloWorld``` component from earlier. If you don't provide a root element, your route handler should not return any element, as you it is left up to you to determine what happens when the route is hit.
+Artwork includes a router that has some pretty interesting features. When creating a router, you can pass in the ```root``` element, and the router will replace the child element of the root with whatever is returned by the route handler. In the example below, the child element will be the ```HelloWorld``` component from earlier. If you don't provide a root element, your route handler should not return anything, as it is left up to you to determine what happens when the route is hit.
 
 ```js
 const root = document.getElementById('root');
