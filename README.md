@@ -286,7 +286,7 @@ router.add(/\/routes/, () => {
 
 Artwork lets you create as many routers as you want. The router that is created last will override the earlier routers when it has a match that is also in the other routers. Usually, you will have one router that starts when the application begins, and then other routers that are started inside components. When the component loads, the router will become active. Make sure to remove the router once the component is removed from the DOM.
 
-In the example below, the ```connect``` method is used to create a new router that intercepts routes and only replaces the title of the movie instead of reloading the side panel. ```connect``` is a method that is available to both ```ElementArt``` and ```AsyncElementArt``` classes, and is run when the web component is connected to the DOM. The return value is a function that is run when the component is removed from the DOM.
+In the example below, the ```connected``` method is used to create a new router that intercepts routes and only replaces the title of the movie instead of reloading the side panel. ```connected``` is a method that is available to both ```ElementArt``` and ```AsyncElementArt``` classes, and is run when the web component is connected to the DOM. The return value is a function that is run when the component is removed from the DOM.
 
 ```js
 async render() {
