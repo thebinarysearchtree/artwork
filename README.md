@@ -247,7 +247,7 @@ router.start();
 The ```add``` method takes two arguments, the path and a route handler.  The path can be specified as a string or a regular expression. If the regular expression has named capturing groups, these groups are added to the parameters object that is passed to the route handler.
 
 ```js
-router.add(/\/(?<username>[^/]*)\/(?<repository>[^/]*)/, ({ username, repository}) => {
+router.add(/\/(?<username>[^/]*)\/(?<repository>[^/]*)/, ({ username, repository }) => {
   const user = users.find(u => u.username === username);
 });
 ```
