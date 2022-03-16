@@ -110,7 +110,7 @@ class HelloWorld extends ElementArt {
 }
 ```
 
-Once the class has been defined, ```makeArt``` is used to register a native web component and create a function that can be used to create a new instance of the component, as the class cannot be created directly.
+Once the class has been defined, ```makeArt``` is used to register a native web component and create a function that can be used to create a new instance of the component, as the class cannot be instantiated directly.
 
 ```js
 const helloWorld = makeArt(HelloWorld);
@@ -277,9 +277,9 @@ render() {
 When you are loading an asynchronous component, you often want to display a loading indicator. You can do this by returning the loading indicator in the route handler, and then replacing the indicator once the asynchronous component has loaded. These are all standard DOM API methods.
 
 ```js
-router.add(/\/routes/, () => {
+router.add(/\/movies/, () => {
   const loading = div('Loading...');
-  routes().then((r) => loading.replaceWith(r));
+  movies().then((r) => loading.replaceWith(r));
   return loading;
 });
 ```
@@ -298,7 +298,7 @@ async render() {
   this.connected = () => {
     const router = new Router();
 
-    router.add('/routes', ({ v }) => {
+    router.add('/movies', ({ v }) => {
       const videoId = parseInt(v, 10);
       const { name } = movies.find(m => m.id === videoId);
 
