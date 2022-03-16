@@ -279,7 +279,7 @@ When you are loading an asynchronous component, you often want to display a load
 ```js
 router.add(/\/movies/, () => {
   const loading = div('Loading...');
-  movies().then((r) => loading.replaceWith(r));
+  movies().then((m) => loading.replaceWith(m));
   return loading;
 });
 ```
