@@ -89,7 +89,7 @@ class HelloWorld extends ElementArt {
   }
 }
 
-const helloWorld = makeArt(HelloWorld);
+const helloWorld = makeArt(HelloWorld, 'hello-world');
 
 export default helloWorld;
 ```
@@ -113,10 +113,10 @@ class HelloWorld extends ElementArt {
 Once the class has been defined, ```makeArt``` is used to register a native web component and create a function that can be used to create a new instance of the component, as the class cannot be instantiated directly.
 
 ```js
-const helloWorld = makeArt(HelloWorld);
+const helloWorld = makeArt(HelloWorld, 'hello-world');
 ```
 
-```makeArt``` will use the supplied classes name to create the native web component name. In this case, ```HelloWorld``` will become ```hello-world```. You can control this by passing in a second argument to ```makeArt``` that specifies the name of the web component directly. Web components must have at least two words separated by a ```-```.
+The second argument to ```makeArt``` is the name that will be given to the web component. The name must have at least two words in it that are separated by a ```-```.
 
 To use the component, you simply import it into your file and run the function created by ```makeArt```.
 
