@@ -1,13 +1,7 @@
-const defineElement = (elementClass, name) => {
-  name = name ? name : elementClass.name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-  customElements.define(name, elementClass);
-  return name;
-}
-
 const makeArt = (elementClass, name) => {
-  const customName = defineElement(elementClass, name);
+  customElements.define(name, elementClass);
   return (state) => {
-    const element = document.createElement(customName);
+    const element = document.createElement(name);
     element.state = state;
     element.renderShadow(state);
     return element;
@@ -15,9 +9,9 @@ const makeArt = (elementClass, name) => {
 }
 
 const makeAsyncArt = (elementClass, name) => {
-  const customName = defineElement(elementClass, name);
+  customElements.define(name, elementClass);
   return async (state) => {
-    const element = document.createElement(customName);
+    const element = document.createElement(name);
     element.state = state;
     await element.renderShadow(state);
     return element;
