@@ -258,7 +258,7 @@ The above example will match routes such as ```/thebinarysearchtree/artwork```. 
 
 but this requires more code from the libraries perspective, is less flexible, and can be ambiguous.
 
-The anchor tags in a single page application need to be handled correctly to prevent the page reloading. When you want to use the ```a``` tag, you can import the ```routerLink``` function, that takes the same arguments as the ```a``` function, and adds a ```state``` property that represents the history state.
+The anchor tags in a single page application need to be handled correctly to prevent the page reloading. When you want to use the ```a``` tag, you can import the ```routerLink``` function, which takes the same arguments as the ```a``` function, and adds a ```state``` property that represents the history state.
 
 ```js
 import { routerLink } from './artwork/index.js';
@@ -296,14 +296,13 @@ async render() {
   sidePanel.append(...movies);
 
   this.connected = () => {
-    const router = new Router();
+    const router = new Router(content);
 
     router.add('/movies', ({ v }) => {
       const videoId = parseInt(v, 10);
       const { name } = movies.find(m => m.id === videoId);
 
-      const title = h3(name);
-      content.replaceChildren(title);
+      return h3(name);
     });
     
     router.start();
