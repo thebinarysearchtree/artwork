@@ -1,4 +1,4 @@
-const makeArt = (elementClass, name) => {
+const makeArt = (name, elementClass) => {
   customElements.define(name, elementClass);
   return (state) => {
     const element = document.createElement(name);
@@ -8,7 +8,7 @@ const makeArt = (elementClass, name) => {
   }
 }
 
-const makeAsyncArt = (elementClass, name) => {
+const makeAsyncArt = (name, elementClass) => {
   customElements.define(name, elementClass);
   return async (state) => {
     const element = document.createElement(name);

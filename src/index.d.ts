@@ -26,8 +26,8 @@ export interface MakeElementOptions {
 export function htmlFor(label: HTMLLabelElement, input: HTMLInputElement, inputId: string): void;
 export function makeElements<K extends keyof HTMLElementTagNameMap>(tag: K, options?: MakeElementOptions): { [key: string]: HTMLElementTagNameMap[K] };
 
-export function makeArt<T, K>(elementClass: { new() : T }, name: string): (state?: K) => T;
-export function makeAsyncArt<T, K>(elementClass: { new() : T }, name: string): (state?: K) => Promise<T>;
+export function makeArt<T, K>(name: string, elementClass: { new() : T }): (state?: K) => T;
+export function makeAsyncArt<T, K>(name: string, elementClass: { new() : T }): (state?: K) => Promise<T>;
 
 export function pushState(url: string, state?: any): void;
 
