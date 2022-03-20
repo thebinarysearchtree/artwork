@@ -185,8 +185,6 @@ root.append(content, sidePanel);
 </div>
 ```
 
-For some people this may not work, as they use utility classes in their css, but for others it will save a lot of time.
-
 The final way to create elements is by using the ```elements``` proxy. When you access the properties on the ```elements``` proxy, it returns a new element corresponding to the name of the property.
 
 ```js
