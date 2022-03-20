@@ -230,6 +230,57 @@ class MovieThumbnail extends ElementArt {
 }
 ```
 
+## Events
+
+You can use the existing DOM API for events
+
+```js
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  sendForm();
+});
+```
+
+or you can use the functions provided by the ```events``` proxy.
+
+```js
+import { events } from '../artwork/index.js';
+
+const { onSubmit } = events;
+
+onSubmit(form, () => sendForm());
+```
+
+The ```onSubmit``` function calls ```preventDefault``` automatically because it is less common to want to post a form in an SPA.
+
+## Setters
+
+As seen in the Todo example, you can use setters to set the same property on multiple elements. 
+
+```js
+import { setters } from '../artwork/index.js';
+
+const { setText } = setters;
+
+const text = {
+  h3: 'Todo', 
+  label: 'What needs to be done?',
+  button: 'Add #1'
+};
+
+setText(text, { h3, label, button });
+```
+
+This is quite an awkward way of doings things, and maybe it will be improved in the future with new language features, but it is a bit more readable and less repetitive than the alternative:
+
+```js
+h3.innerText = 'Todo';
+label.innerText = 'What needs to be done?';
+button.innerText = 'Add #1';
+```
+
+You may not need to use these functions anyway.
+
 ## Routes
 
 Artwork includes a router that has some pretty interesting features. When creating a router, you can pass in the ```root``` element, and the router will replace the child element of the root with whatever is returned by the route handler. In the example below, the child element will be the ```HelloWorld``` component from earlier. If you don't provide a root element, your route handler should not return anything, as it is left up to you to determine what happens when the route is hit.
