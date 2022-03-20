@@ -269,7 +269,7 @@ const text = {
 setText(text, { h3, label, button });
 ```
 
-This is quite an awkward way of doings things, and maybe it will be improved in the future with new language features, but it is a bit more readable and less repetitive than the alternative:
+This is quite an awkward way of doings things, but it is a bit more readable and less repetitive than the alternative:
 
 ```js
 h3.innerText = 'Todo';
