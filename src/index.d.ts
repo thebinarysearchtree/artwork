@@ -325,7 +325,7 @@ export const events: {
   onFormData(target: Document, listener: (e: FormDataEvent) => void, options?: boolean | AddEventListenerOptions): void;
   onInput(target: Document, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
   onInvalid(target: Document, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
-  onKeypress(target: Document, listener: (e: KeyboardEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onKeyPress(target: Document, listener: (e: KeyboardEvent) => void, options?: boolean | AddEventListenerOptions): void;
   onLoad(target: Document, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
   onLoadedData(target: Document, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
   onLoadedMetadata(target: Document, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
@@ -395,7 +395,7 @@ export const events: {
   onInput(target: Window, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
   onInvalid(target: Window, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
   onKeyDown(target: Window, listener: (e: KeyboardEvent) => void, options?: boolean | AddEventListenerOptions): void;
-  onKeypress(target: Window, listener: (e: KeyboardEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onKeyPress(target: Window, listener: (e: KeyboardEvent) => void, options?: boolean | AddEventListenerOptions): void;
   onKeyUp(target: Window, listener: (e: KeyboardEvent) => void, options?: boolean | AddEventListenerOptions): void;
   onLoadedData(target: Window, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
   onLoadedMetadata(target: Window, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
@@ -475,7 +475,7 @@ export const events: {
   onGotPointerCapture(target: Element, listener: (e: PointerEvent) => void, options?: boolean | AddEventListenerOptions): void;
   onInput(target: Element, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
   onInvalid(target: Element, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
-  onKeypress(target: Element, listener: (e: KeyboardEvent) => void, options?: boolean | AddEventListenerOptions): void;
+  onKeyPress(target: Element, listener: (e: KeyboardEvent) => void, options?: boolean | AddEventListenerOptions): void;
   onLoad(target: Element, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
   onLoadedData(target: Element, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
   onLoadedMetadata(target: Element, listener: (e: Event) => void, options?: boolean | AddEventListenerOptions): void;
