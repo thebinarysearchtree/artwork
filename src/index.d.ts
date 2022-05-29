@@ -6,11 +6,11 @@ export class BaseElement extends HTMLElement {
 }
 
 export class ElementArt extends BaseElement {
-  render(state?: any): HTMLElement;
+  render(...state: any[]): HTMLElement;
 }
 
 export class AsyncElementArt extends BaseElement {
-  render(state?: any): Promise<HTMLElement>;
+  render(...state: any[]): Promise<HTMLElement>;
 }
 
 export class FormInput extends ElementArt {
@@ -26,8 +26,8 @@ export interface MakeElementOptions {
 export function htmlFor(label: HTMLLabelElement, input: HTMLInputElement, inputId: string): void;
 export function makeElements<K extends keyof HTMLElementTagNameMap>(tag: K, options?: MakeElementOptions): { [key: string]: HTMLElementTagNameMap[K] };
 
-export function makeArt<T extends ElementArt, K>(name: string, elementClass: { new() : T }): (state?: K) => T;
-export function makeAsyncArt<T extends AsyncElementArt, K>(name: string, elementClass: { new() : T }): (state?: K) => Promise<T>;
+export function makeArt<T extends ElementArt, K extends (...state: any[]) => T>(name: string, elementClass: { new() : T }): K;
+export function makeAsyncArt<T extends AsyncElementArt, K extends (...state: any[]) => Promise<T>>(name: string, elementClass: { new() : T }): K;
 
 export function pushState(url: string, state?: any): void;
 
