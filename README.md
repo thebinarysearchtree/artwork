@@ -120,6 +120,12 @@ Once the class has been defined, ```makeArt``` is used to register a native web 
 const helloWorld = makeArt('hello-world', HelloWorld);
 ```
 
+If you are using TypeScript, you can type the ```makeArt``` function like this:
+
+```ts
+const helloWorld = makeArt<HelloWorld, (name: string) => HelloWorld>('hello-world', HelloWorld);
+```
+
 The first argument to ```makeArt``` is the name that will be given to the web component. The name must have at least two words in it that are separated by a ```-```.
 
 To use the component, you simply import it into your file and run the function created by ```makeArt```.
@@ -132,11 +138,7 @@ const element = hello('Andrew');
 document.body.append(element);
 ```
 
-The arguments supplied to the function are the same arguments that will be passed into the ```render``` method of the class you created earlier. If you are using TypeScript, you can type the ```makeArt``` function like this:
-
-```ts
-const helloWorld = makeArt<HelloWorld, (name: string) => HelloWorld>('hello-world', HelloWorld);
-```
+The arguments supplied to the function are the same arguments that will be passed into the ```render``` method of the class you created earlier.
 
 ## Creating elements
 
