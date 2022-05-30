@@ -1,8 +1,9 @@
 {
-  "name": "artwork",
+  "name": "artworkjs",
   "version": "0.1.0",
   "description": "A front-end framework.",
   "author": "Andrew Jones",
+  "license": "MIT",
   "type": "module",
   "main": "./src/index.js",
   "types": "./src/index.d.ts"

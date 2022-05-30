@@ -79,7 +79,7 @@ class TodoList extends ElementArt {
 ## Creating a component
 
 ```js
-import { makeArt, ElementArt, html } from '../artwork/index.js';
+import { makeArt, ElementArt, html } from 'artworkjs';
 
 const { div } = html;
 
@@ -97,7 +97,7 @@ export default helloWorld;
 Artwork is based on Web Components, a native component API built into modern web browsers. A typical component in Artwork will start by importing ```makeArt``` or ```makeAsyncArt```, ```ElementArt``` or ```AsyncElementArt```, and some way of making HTML elements, in this case ```html```.
 
 ```js
-import { makeArt, ElementArt, html } from '../artwork/index.js';
+import { makeArt, ElementArt, html } from 'artworkjs';
 ```
 
 Every component will extend either ```ElementArt``` or ```AsyncElementArt``` depending on whether the render method is asynchronous or not. The main method of ```ElementArt``` is ```render```, which is run once, and is used to create HTML elements, and set up any event handlers. It returns a ```HTMLElement```.
@@ -128,7 +128,11 @@ const element = hello('Andrew');
 document.body.append(element);
 ```
 
-The argument supplied to the function is the same argument that will be passed into the ```render``` method of the class you created earlier.
+The arguments supplied to the function are the same arguments that will be passed into the ```render``` method of the class you created earlier. If you are using TypeScript, you can type the ```makeArt``` function like this:
+
+```ts
+const helloWorld = makeArt<HelloWorld, (name: string) => HelloWorld>('hello-world', HelloWorld);
+```
 
 ## Creating elements
 
@@ -137,7 +141,7 @@ Components will often be composed of one or more HTML elements. Artwork provides
 Which method you use will depend on what you are trying to do and the way you write components. If you want to create an element with lots of attributes, it is often best to use the ```html``` proxy.
 
 ```js
-import { html } from '../artwork/index.js';
+import { html } from 'artworkjs';
 
 const { div, span } = html;
 
@@ -169,7 +173,7 @@ which turns into
 Often, a component will have a bunch of div elements that are used for nothing other than styling and layout. In this case, you can use the ```divs``` proxy, or create your own proxy with ```makeElements```. This proxy returns div elements with their ```className``` set to the name of the variable after it is converted from camel case to dashes.
 
 ```js
-import { divs } from '../artwork/index.js;
+import { divs } from 'artworkjs';
 
 const { root, sidePanel, content } = divs;
 
@@ -242,7 +246,7 @@ form.addEventListener('submit', (e) => {
 or you can use the functions provided by the ```events``` proxy.
 
 ```js
-import { events } from '../artwork/index.js';
+import { events } from 'artworkjs';
 
 const { onSubmit } = events;
 
@@ -256,7 +260,7 @@ The ```onSubmit``` function calls ```preventDefault``` automatically because it 
 As seen in the Todo example, you can use setters to set the same property on multiple elements. 
 
 ```js
-import { setters } from '../artwork/index.js';
+import { setters } from 'artworkjs';
 
 const { setText } = setters;
 
@@ -310,7 +314,7 @@ but this requires more code from the libraries perspective, is less flexible, an
 The anchor tags in a single page application need to be handled correctly to prevent the page reloading. When you want to use the ```a``` tag, you can import the ```routerLink``` function, which takes the same arguments as the ```a``` function, and adds a ```state``` property that represents the history state.
 
 ```js
-import { routerLink } from './artwork/index.js';
+import { routerLink } from 'artworkjs';
 
 render() {
   const { div } = elements;
