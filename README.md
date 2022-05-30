@@ -3,6 +3,10 @@ A front-end library for people who see their code as artwork. Artwork is 100% re
 
 Go to the [art-project](https://github.com/thebinarysearchtree/art-project) repository if you want to run the examples below or need a template for creating a new project.
 
+```
+npm install artworkjs
+```
+
 ## Examples
 
 A very basic example.
