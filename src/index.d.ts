@@ -1,6 +1,5 @@
 export class BaseElement extends HTMLElement {
   styles?: CSSStyleDeclaration | string;
-  state?: any;
   connected: () => void;
   disconnected: () => void;
 }
