@@ -1,3 +1,5 @@
+import isEvent from './camel.js';
+
 const elementCreators = {};
 
 const createElement = (tag, properties) => {
@@ -9,15 +11,24 @@ const createElement = (tag, properties) => {
   if (!properties) {
     return element;
   }
-  if (properties.hasOwnProperty('class')) {
-    properties.className = properties.class;
-    delete properties.class;
+  for (const [key, value] of Object.entries(properties)) {
+    if (key === 'class') {
+      element.className = value;
+    }
+    else if (key === 'text') {
+      element.innerText = value;
+    }
+    else if (key.startsWith('on') && key.length > 2) {
+      if (isEvent(key)) {
+        const event = key.substring(2).toLowerCase();
+        element.addEventListener(event, value);
+      }
+    }
+    else {
+      element[key] = value;
+    }
   }
-  if (properties.hasOwnProperty('text')) {
-    properties.innerText = properties.text;
-    delete properties.text;
-  }
-  return Object.assign(element, properties);
+  return element;
 }
 
 const handler = {

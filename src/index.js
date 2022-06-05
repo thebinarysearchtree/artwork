@@ -7,7 +7,11 @@ import divs from './proxies/div.js';
 import elements from './proxies/element.js';
 import setters from './proxies/setter.js';
 import events from './proxies/event.js';
-import { htmlFor, makeElements } from './utils.js';
+import { 
+  htmlFor, 
+  makeElements,
+  append 
+} from './utils.js';
 import { 
   makeAsyncArt, 
   makeArt
@@ -30,6 +34,7 @@ export {
   events,
   htmlFor,
   makeElements,
+  append,
   makeAsyncArt,
   makeArt,
   pushState,

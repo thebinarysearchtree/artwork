@@ -23,7 +23,20 @@ const makeElements = (tag, options) => {
   return new Proxy(elements, handler);
 }
 
+const append = (parent, children) => {
+  if (parent instanceof HTMLElement) {
+    parent.append(...children);
+    return parent;
+  }
+  else {
+    const element = parent();
+    parent.append(...children);
+    return element;
+  }
+}
+
 export {
   htmlFor,
-  makeElements
+  makeElements,
+  append
 };

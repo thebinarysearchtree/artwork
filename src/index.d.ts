@@ -24,6 +24,7 @@ export interface MakeElementOptions {
 
 export function htmlFor(label: HTMLLabelElement, input: HTMLInputElement, inputId: string): void;
 export function makeElements<K extends keyof HTMLElementTagNameMap>(tag: K, options?: MakeElementOptions): { [key: string]: HTMLElementTagNameMap[K] };
+export function append(parent: HTMLElement | ((properties?: any) => HTMLElement), children: HTMLElement[]): HTMLElement;
 
 export function makeArt<T extends ElementArt, K extends (...state: any[]) => T>(name: string, elementClass: { new() : T }): K;
 export function makeAsyncArt<T extends AsyncElementArt, K extends (...state: any[]) => Promise<T>>(name: string, elementClass: { new() : T }): K;
@@ -38,7 +39,343 @@ export class Router {
   remove(): void;
 }
 
-export function routerLink(properties: Partial<HTMLAnchorElement> & { state?: any }): HTMLAnchorElement;
+export function routerLink(properties: Camel<HTMLAnchorElement> & { state?: any }): HTMLAnchorElement;
+
+interface ExistingDocumentEventHandlers {
+  onfullscreenchange: ((this: Document, ev: Event) => any) | null;
+  onfullscreenerror: ((this: Document, ev: Event) => any) | null;
+  onpointerlockchange: ((this: Document, ev: Event) => any) | null;
+  onpointerlockerror: ((this: Document, ev: Event) => any) | null;
+  /**
+   * Fires when the state of the object has changed.
+   * @param ev The event
+   */
+  onreadystatechange: ((this: Document, ev: Event) => any) | null;
+  onvisibilitychange: ((this: Document, ev: Event) => any) | null;
+}
+
+interface ExistingAudioEventHandlers {
+  onencrypted: ((this: HTMLMediaElement, ev: MediaEncryptedEvent) => any) | null;
+  onwaitingforkey: ((this: HTMLMediaElement, ev: Event) => any) | null;
+}
+
+interface CamelAudioEventHandlers {
+  onEncrypted?: (e: MediaEncryptedEvent) => any;
+  onWaitingForKey?: (e: Event) => any;
+}
+
+interface ExistingVideoEventHandlers {
+  onenterpictureinpicture: ((this: HTMLVideoElement, ev: Event) => any) | null;
+  onleavepictureinpicture: ((this: HTMLVideoElement, ev: Event) => any) | null;
+}
+
+interface CamelVideoEventHandlers {
+  onEnterPictureInPicture?: (e: Event) => any;
+  onLeavePictureInPicture?: (e: Event) => any;
+}
+
+interface CamelDocumentEventHandlers {
+  onFullScreenChange?: (e: Event) => any;
+  onFullScreenError?: (e: Event) => any;
+  onPointerLockChange?: (e: Event) => any;
+  onPointerLockError?: (e: Event) => any;
+  /**
+   * Fires when the state of the object has changed.
+   * @param ev The event
+   */
+  onReadyStateChange?: (e: Event) => any;
+  onVisibilityChange?: (e: Event) => any;
+}
+
+interface CamelDocumentAndElementEventHandlers {
+  onCopy?: (e: ClipboardEvent) => any;
+  onCut?: (e: ClipboardEvent) => any;
+  onPaste?: (e: ClipboardEvent) => any;
+}
+
+interface CamelWindowEventHandlers {
+  onAfterPrint?: (e: Event) => any;
+  onBeforePrint?: (e: Event) => any;
+  onBeforeUnload?: (e: BeforeUnloadEvent) => any;
+  onGamepadConnected?: (e: GamepadEvent) => any;
+  onGamepadDisconnected?: (e: GamepadEvent) => any;
+  onHashChange?: (e: HashChangeEvent) => any;
+  onLanguageChange?: (e: Event) => any;
+  onMessage?: (e: MessageEvent) => any;
+  onMessageError?: (e: MessageEvent) => any;
+  onOffline?: (e: Event) => any;
+  onOnline?: (e: Event) => any;
+  onPageHide?: (e: PageTransitionEvent) => any;
+  onPageShow?: (e: PageTransitionEvent) => any;
+  onPopState?: (e: PopStateEvent) => any;
+  onRejectionHandled?: (e: PromiseRejectionEvent) => any;
+  onStorage?: (e: StorageEvent) => any;
+  onUnhandledRejection?: (e: PromiseRejectionEvent) => any;
+  onUnload?: (e: Event) => any;
+}
+
+interface CamelGlobalEventHandlers {
+  /**
+   * Fires when the user aborts the download.
+   * @param e The event.
+   */
+  onAbort?: (e: UIEvent) => any;
+  onAnimationCancel?: (e: AnimationEvent) => any;
+  onAnimationEnd?: (e: AnimationEvent) => any;
+  onAnimationIteration?: (e: AnimationEvent) => any;
+  onAnimationStart?: (e: AnimationEvent) => any;
+  onAuxClick?: (e: MouseEvent) => any;
+  /**
+   * Fires when the object loses the input focus.
+   * @param e The focus event.
+   */
+  onBlur?: (e: FocusEvent) => any;
+  /**
+   * Occurs when playback is possible, but would require further buffering.
+   * @param e The event.
+   */
+  onCanPlay?: (e: Event) => any;
+  onCanPlayThrough?: (e: Event) => any;
+  /**
+   * Fires when the contents of the object or selection have changed.
+   * @param e The event.
+   */
+  onChange?: (e: Event) => any;
+  /**
+   * Fires when the user clicks the left mouse button on the object
+   * @param e The mouse event.
+   */
+  onClick?: (e: MouseEvent) => any;
+  onClose?: (e: Event) => any;
+  /**
+   * Fires when the user clicks the right mouse button in the client area, opening the context menu.
+   * @param e The mouse event.
+   */
+  onContextMenu?: (e: MouseEvent) => any;
+  onCueChange?: (e: Event) => any;
+  /**
+   * Fires when the user double-clicks the object.
+   * @param e The mouse event.
+   */
+  onDblClick?: (e: MouseEvent) => any;
+  /**
+   * Fires on the source object continuously during a drag operation.
+   * @param e The event.
+   */
+  onDrag?: (e: DragEvent) => any;
+  /**
+   * Fires on the source object when the user releases the mouse at the close of a drag operation.
+   * @param e The event.
+   */
+  onDragEnd?: (e: DragEvent) => any;
+  /**
+   * Fires on the target element when the user drags the object to a valid drop target.
+   * @param e The drag event.
+   */
+  onDragEnter?: (e: DragEvent) => any;
+  /**
+   * Fires on the target object when the user moves the mouse out of a valid drop target during a drag operation.
+   * @param e The drag event.
+   */
+  onDragLeave?: (e: DragEvent) => any;
+  /**
+   * Fires on the target element continuously while the user drags the object over a valid drop target.
+   * @param e The event.
+   */
+  onDragOver?: (e: DragEvent) => any;
+  /**
+   * Fires on the source object when the user starts to drag a text selection or selected object.
+   * @param e The event.
+   */
+  onDragStart?: (e: DragEvent) => any;
+  onDrop?: (e: DragEvent) => any;
+  /**
+   * Occurs when the duration attribute is updated.
+   * @param e The event.
+   */
+  onDurationChange?: (e: Event) => any;
+  /**
+   * Occurs when the media element is reset to its initial state.
+   * @param e The event.
+   */
+  onEmptied?: (e: Event) => any;
+  /**
+   * Occurs when the end of playback is reached.
+   * @param e The event
+   */
+  onEnded?: (e: Event) => any;
+  /**
+   * Fires when an error occurs during object loading.
+   * @param e The event.
+   */
+  onError?: OnErrorEventHandler;
+  /**
+   * Fires when the object receives focus.
+   * @param e The event.
+   */
+  onFocus?: (e: FocusEvent) => any;
+  onFormData?: (e: FormDataEvent) => any;
+  onGotPointerCapture?: (e: PointerEvent) => any;
+  onInput?: (e: Event) => any;
+  onInvalid?: (e: Event) => any;
+  /**
+   * Fires when the user presses a key.
+   * @param e The keyboard event
+   */
+  onKeyDown?: (e: KeyboardEvent) => any;
+  /**
+   * Fires when the user releases a key.
+   * @param e The keyboard event
+   */
+  onKeyUp?: (e: KeyboardEvent) => any;
+  /**
+   * Fires immediately after the browser loads the object.
+   * @param e The event.
+   */
+  onLoad?: (e: Event) => any;
+  /**
+   * Occurs when media data is loaded at the current playback position.
+   * @param e The event.
+   */
+  onLoadedData?: (e: Event) => any;
+  /**
+   * Occurs when the duration and dimensions of the media have been determined.
+   * @param e The event.
+   */
+  onLoadedMetadata?: (e: Event) => any;
+  /**
+   * Occurs when Internet Explorer begins looking for media data.
+   * @param e The event.
+   */
+  onLoadStart?: (e: Event) => any;
+  onLostPointerCapture?: (e: PointerEvent) => any;
+  /**
+   * Fires when the user clicks the object with either mouse button.
+   * @param e The mouse event.
+   */
+  onMouseDown?: (e: MouseEvent) => any;
+  onMouseEnter?: (e: MouseEvent) => any;
+  onMouseLeave?: (e: MouseEvent) => any;
+  /**
+   * Fires when the user moves the mouse over the object.
+   * @param e The mouse event.
+   */
+  onMouseMove?: (e: MouseEvent) => any;
+  /**
+   * Fires when the user moves the mouse pointer outside the boundaries of the object.
+   * @param e The mouse event.
+   */
+  onMouseOut?: (e: MouseEvent) => any;
+  /**
+   * Fires when the user moves the mouse pointer into the object.
+   * @param e The mouse event.
+   */
+  onMouseOver?: (e: MouseEvent) => any;
+  /**
+   * Fires when the user releases a mouse button while the mouse is over the object.
+   * @param e The mouse event.
+   */
+  onMouseUp?: (e: MouseEvent) => any;
+  /**
+   * Occurs when playback is paused.
+   * @param e The event.
+   */
+  onPause?: (e: Event) => any;
+  /**
+   * Occurs when the play method is requested.
+   * @param e The event.
+   */
+  onPlay?: (e: Event) => any;
+  /**
+   * Occurs when the audio or video has started playing.
+   * @param e The event.
+   */
+  onPlaying?: (e: Event) => any;
+  onPointerCancel?: (e: PointerEvent) => any;
+  onPointerDown?: (e: PointerEvent) => any;
+  onPointerEnter?: (e: PointerEvent) => any;
+  onPointerLeave?: (e: PointerEvent) => any;
+  onPointerMove?: (e: PointerEvent) => any;
+  onPointerOut?: (e: PointerEvent) => any;
+  onPointerOver?: (e: PointerEvent) => any;
+  onPointerUp?: (e: PointerEvent) => any;
+  /**
+   * Occurs to indicate progress while downloading media data.
+   * @param e The event.
+   */
+  onProgress?: (e: ProgressEvent) => any;
+  /**
+   * Occurs when the playback rate is increased or decreased.
+   * @param e The event.
+   */
+  onRateChange?: (e: Event) => any;
+  /**
+   * Fires when the user resets a form.
+   * @param e The event.
+   */
+  onReset?: (e: Event) => any;
+  onResize?: (e: UIEvent) => any;
+  /**
+   * Fires when the user repositions the scroll box in the scroll bar on the object.
+   * @param e The event.
+   */
+  onScroll?: (e: Event) => any;
+  onSecurityPolicyViolation?: (e: SecurityPolicyViolationEvent) => any;
+  /**
+   * Occurs when the seek operation ends.
+   * @param e The event.
+   */
+  onSeeked?: (e: Event) => any;
+  /**
+   * Occurs when the current playback position is moved.
+   * @param e The event.
+   */
+  onSeeking?: (e: Event) => any;
+  /**
+   * Fires when the current selection changes.
+   * @param e The event.
+   */
+  onSelect?: (e: Event) => any;
+  onSelectionChange?: (e: Event) => any;
+  onSelectStart?: (e: Event) => any;
+  onSlotChange?: (e: Event) => any;
+  /**
+   * Occurs when the download has stopped.
+   * @param e The event.
+   */
+  onStalled?: (e: Event) => any;
+  onSubmit?: (e: SubmitEvent) => any;
+  /**
+   * Occurs if the load operation has been intentionally halted.
+   * @param e The event.
+   */
+  onSuspend?: (e: Event) => any;
+  /**
+   * Occurs to indicate the current playback position.
+   * @param e The event.
+   */
+  onTimeUpdate?: (e: Event) => any;
+  onToggle?: (e: Event) => any;
+  onTouchCancel?: (e: TouchEvent) => any;
+  onTouchEnd?: (e: TouchEvent) => any;
+  onTouchMove?: (e: TouchEvent) => any;
+  onTouchStart?: (e: TouchEvent) => any;
+  onTransitionCancel?: (e: TransitionEvent) => any;
+  onTransitionEnd?: (e: TransitionEvent) => any;
+  onTransitionRun?: (e: TransitionEvent) => any;
+  onTransitionStart?: (e: TransitionEvent) => any;
+  /**
+   * Occurs when the volume is changed, or playback is muted or unmuted.
+   * @param e The event.
+   */
+  onVolumeChange?: (e: Event) => any;
+  /**
+   * Occurs when playback stops because the next frame of a video resource is not available.
+   * @param e The event.
+   */
+  onWaiting?: (e: Event) => any;
+  onWheel?: (e: WheelEvent) => any;
+}
 
 export const divs: { 
   [key: string]: HTMLDivElement;
@@ -632,183 +969,197 @@ export const elements: {
   template: HTMLTemplateElement;
 }
 
+interface HtmlShortcuts {
+  class?: string;
+  text?: string;
+}
+
+interface SvgShortcuts {
+  class?: string;
+}
+
+type ExistingEventHandlers = GlobalEventHandlers & DocumentAndElementEventHandlers;
+
+type Camel<T> = Omit<Partial<T> & HtmlShortcuts & CamelDocumentAndElementEventHandlers & CamelGlobalEventHandlers, keyof ExistingEventHandlers> | string | number;
+type SvgCamel<T> = Omit<Partial<T> & SvgShortcuts & CamelDocumentAndElementEventHandlers & CamelGlobalEventHandlers, keyof ExistingEventHandlers>;
+
 export const html: {
   [key: string]: any;
-  html: (properties?: Partial<HTMLHtmlElement> & { class?: string, text?: string }) => HTMLHtmlElement;
-  base: (properties?: Partial<HTMLBaseElement> & { class?: string, text?: string }) => HTMLBaseElement;
-  head: (properties?: Partial<HTMLHeadElement> & { class?: string, text?: string }) => HTMLHeadElement;
-  link: (properties?: Partial<HTMLLinkElement> & { class?: string, text?: string }) => HTMLLinkElement;
-  meta: (properties?: Partial<HTMLMetaElement> & { class?: string, text?: string }) => HTMLMetaElement;
-  style: (properties?: Partial<HTMLStyleElement> & { class?: string, text?: string }) => HTMLStyleElement;
-  title: (properties?: Partial<HTMLTitleElement> & { class?: string, text?: string }) => HTMLTitleElement;
-  body: (properties?: Partial<HTMLBodyElement> & { class?: string, text?: string }) => HTMLBodyElement;
-  address: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  article: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  aside: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  footer: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  header: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  h1: (properties?: Partial<HTMLHeadingElement> & { class?: string, text?: string }) => HTMLHeadingElement;
-  h2: (properties?: Partial<HTMLHeadingElement> & { class?: string, text?: string }) => HTMLHeadingElement;
-  h3: (properties?: Partial<HTMLHeadingElement> & { class?: string, text?: string }) => HTMLHeadingElement;
-  h4: (properties?: Partial<HTMLHeadingElement> & { class?: string, text?: string }) => HTMLHeadingElement;
-  h5: (properties?: Partial<HTMLHeadingElement> & { class?: string, text?: string }) => HTMLHeadingElement;
-  h6: (properties?: Partial<HTMLHeadingElement> & { class?: string, text?: string }) => HTMLHeadingElement;
-  main: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  nav: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  section: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  blockquote: (properties?: Partial<HTMLQuoteElement> & { class?: string, text?: string }) => HTMLQuoteElement;
-  dd: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  div: (properties?: Partial<HTMLDivElement> & { class?: string, text?: string }) => HTMLDivElement;
-  dl: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  dt: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  figcaption: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  figure: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  hr: (properties?: Partial<HTMLHRElement> & { class?: string, text?: string }) => HTMLHRElement;
-  li: (properties?: Partial<HTMLLIElement> & { class?: string, text?: string }) => HTMLLIElement;
-  ol: (properties?: Partial<HTMLOListElement> & { class?: string, text?: string }) => HTMLOListElement;
-  p: (properties?: Partial<HTMLParagraphElement> & { class?: string, text?: string }) => HTMLParagraphElement;
-  pre: (properties?: Partial<HTMLPreElement> & { class?: string, text?: string }) => HTMLPreElement;
-  ul: (properties?: Partial<HTMLUListElement> & { class?: string, text?: string }) => HTMLUListElement;
-  a: (properties?: Partial<HTMLAnchorElement> & { class?: string, text?: string }) => HTMLAnchorElement;
-  abbr: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  b: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  bdi: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  bdo: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  br: (properties?: Partial<HTMLBRElement> & { class?: string, text?: string }) => HTMLBRElement;
-  cite: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  code: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  data: (properties?: Partial<HTMLDataElement> & { class?: string, text?: string }) => HTMLDataElement;
-  dfn: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  em: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  i: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  kbd: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  mark: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  q: (properties?: Partial<HTMLQuoteElement> & { class?: string, text?: string }) => HTMLQuoteElement;
-  rp: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  rt: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  ruby: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  s: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  samp: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  small: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  span: (properties?: Partial<HTMLSpanElement> & { class?: string, text?: string }) => HTMLSpanElement;
-  strong: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  sub: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  sup: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  time: (properties?: Partial<HTMLTimeElement> & { class?: string, text?: string }) => HTMLTimeElement;
-  u: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  var: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  wbr: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  area: (properties?: Partial<HTMLAreaElement> & { class?: string, text?: string }) => HTMLAreaElement;
-  audio: (properties?: Partial<HTMLAudioElement> & { class?: string, text?: string }) => HTMLAudioElement;
-  img: (properties?: Partial<HTMLImageElement> & { class?: string, text?: string }) => HTMLImageElement;
-  map: (properties?: Partial<HTMLMapElement> & { class?: string, text?: string }) => HTMLMapElement;
-  track: (properties?: Partial<HTMLTrackElement> & { class?: string, text?: string }) => HTMLTrackElement;
-  video: (properties?: Partial<HTMLVideoElement> & { class?: string, text?: string }) => HTMLVideoElement;
-  embed: (properties?: Partial<HTMLEmbedElement> & { class?: string, text?: string }) => HTMLEmbedElement;
-  iframe: (properties?: Partial<HTMLIFrameElement> & { class?: string, text?: string }) => HTMLIFrameElement;
-  object: (properties?: Partial<HTMLObjectElement> & { class?: string, text?: string }) => HTMLObjectElement;
-  param: (properties?: Partial<HTMLParamElement> & { class?: string, text?: string }) => HTMLParamElement;
-  picture: (properties?: Partial<HTMLPictureElement> & { class?: string, text?: string }) => HTMLPictureElement;
-  source: (properties?: Partial<HTMLSourceElement> & { class?: string, text?: string }) => HTMLSourceElement;
-  canvas: (properties?: Partial<HTMLCanvasElement> & { class?: string, text?: string }) => HTMLCanvasElement;
-  noscript: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  script: (properties?: Partial<HTMLScriptElement> & { class?: string, text?: string }) => HTMLScriptElement;
-  del: (properties?: Partial<HTMLModElement> & { class?: string, text?: string }) => HTMLModElement;
-  ins: (properties?: Partial<HTMLModElement> & { class?: string, text?: string }) => HTMLModElement;
-  caption: (properties?: Partial<HTMLTableCaptionElement> & { class?: string, text?: string }) => HTMLTableCaptionElement;
-  col: (properties?: Partial<HTMLTableColElement> & { class?: string, text?: string }) => HTMLTableColElement;
-  colgroup: (properties?: Partial<HTMLTableColElement> & { class?: string, text?: string }) => HTMLTableColElement;
-  table: (properties?: Partial<HTMLTableElement> & { class?: string, text?: string }) => HTMLTableElement;
-  tbody: (properties?: Partial<HTMLTableSectionElement> & { class?: string, text?: string }) => HTMLTableSectionElement;
-  td: (properties?: Partial<HTMLTableCellElement> & { class?: string, text?: string }) => HTMLTableCellElement;
-  tfoot: (properties?: Partial<HTMLTableSectionElement> & { class?: string, text?: string }) => HTMLTableSectionElement;
-  th: (properties?: Partial<HTMLTableCellElement> & { class?: string, text?: string }) => HTMLTableCellElement;
-  thead: (properties?: Partial<HTMLTableSectionElement> & { class?: string, text?: string }) => HTMLTableSectionElement;
-  tr: (properties?: Partial<HTMLTableRowElement> & { class?: string, text?: string }) => HTMLTableRowElement;
-  button: (properties?: Partial<HTMLButtonElement> & { class?: string, text?: string }) => HTMLButtonElement;
-  datalist: (properties?: Partial<HTMLDataListElement> & { class?: string, text?: string }) => HTMLDataListElement;
-  fieldset: (properties?: Partial<HTMLFieldSetElement> & { class?: string, text?: string }) => HTMLFieldSetElement;
-  form: (properties?: Partial<HTMLFormElement> & { class?: string, text?: string }) => HTMLFormElement;
-  input: (properties?: Partial<HTMLInputElement> & { class?: string, text?: string }) => HTMLInputElement;
-  label: (properties?: Partial<HTMLLabelElement> & { class?: string, text?: string }) => HTMLLabelElement;
-  legend: (properties?: Partial<HTMLLegendElement> & { class?: string, text?: string }) => HTMLLegendElement;
-  meter: (properties?: Partial<HTMLMeterElement> & { class?: string, text?: string }) => HTMLMeterElement;
-  optgroup: (properties?: Partial<HTMLOptGroupElement> & { class?: string, text?: string }) => HTMLOptGroupElement;
-  option: (properties?: Partial<HTMLOptionElement> & { class?: string, text?: string }) => HTMLOptionElement;
-  output: (properties?: Partial<HTMLOutputElement> & { class?: string, text?: string }) => HTMLOutputElement;
-  progress: (properties?: Partial<HTMLProgressElement> & { class?: string, text?: string }) => HTMLProgressElement;
-  select: (properties?: Partial<HTMLSelectElement> & { class?: string, text?: string }) => HTMLSelectElement;
-  textarea: (properties?: Partial<HTMLTextAreaElement> & { class?: string, text?: string }) => HTMLTextAreaElement;
-  details: (properties?: Partial<HTMLDetailsElement> & { class?: string, text?: string }) => HTMLDetailsElement;
-  menu: (properties?: Partial<HTMLMenuElement> & { class?: string, text?: string }) => HTMLMenuElement;
-  summary: (properties?: Partial<HTMLElement> & { class?: string, text?: string }) => HTMLElement;
-  slot: (properties?: Partial<HTMLSlotElement> & { class?: string, text?: string }) => HTMLSlotElement;
-  template: (properties?: Partial<HTMLTemplateElement> & { class?: string, text?: string }) => HTMLTemplateElement;
+  html: (properties?: Camel<HTMLHtmlElement>) => HTMLHtmlElement;
+  base: (properties?: Camel<HTMLBaseElement>) => HTMLBaseElement;
+  head: (properties?: Camel<HTMLHeadElement>) => HTMLHeadElement;
+  link: (properties?: Camel<HTMLLinkElement>) => HTMLLinkElement;
+  meta: (properties?: Camel<HTMLMetaElement>) => HTMLMetaElement;
+  style: (properties?: Camel<HTMLStyleElement>) => HTMLStyleElement;
+  title: (properties?: Camel<HTMLTitleElement>) => HTMLTitleElement;
+  body: (properties?: Omit<Camel<HTMLBodyElement> & CamelWindowEventHandlers, keyof WindowEventHandlers>) => HTMLBodyElement;
+  address: (properties?: Camel<HTMLElement>) => HTMLElement;
+  article: (properties?: Camel<HTMLElement>) => HTMLElement;
+  aside: (properties?: Camel<HTMLElement>) => HTMLElement;
+  footer: (properties?: Camel<HTMLElement>) => HTMLElement;
+  header: (properties?: Camel<HTMLElement>) => HTMLElement;
+  h1: (properties?: Camel<HTMLHeadingElement>) => HTMLHeadingElement;
+  h2: (properties?: Camel<HTMLHeadingElement>) => HTMLHeadingElement;
+  h3: (properties?: Camel<HTMLHeadingElement>) => HTMLHeadingElement;
+  h4: (properties?: Camel<HTMLHeadingElement>) => HTMLHeadingElement;
+  h5: (properties?: Camel<HTMLHeadingElement>) => HTMLHeadingElement;
+  h6: (properties?: Camel<HTMLHeadingElement>) => HTMLHeadingElement;
+  main: (properties?: Camel<HTMLElement>) => HTMLElement;
+  nav: (properties?: Camel<HTMLElement>) => HTMLElement;
+  section: (properties?: Camel<HTMLElement>) => HTMLElement;
+  blockquote: (properties?: Camel<HTMLQuoteElement>) => HTMLQuoteElement;
+  dd: (properties?: Camel<HTMLElement>) => HTMLElement;
+  div: (properties?: Camel<HTMLDivElement>) => HTMLDivElement;
+  dl: (properties?: Camel<HTMLElement>) => HTMLElement;
+  dt: (properties?: Camel<HTMLElement>) => HTMLElement;
+  figcaption: (properties?: Camel<HTMLElement>) => HTMLElement;
+  figure: (properties?: Camel<HTMLElement>) => HTMLElement;
+  hr: (properties?: Camel<HTMLHRElement>) => HTMLHRElement;
+  li: (properties?: Camel<HTMLLIElement>) => HTMLLIElement;
+  ol: (properties?: Camel<HTMLOListElement>) => HTMLOListElement;
+  p: (properties?: Camel<HTMLParagraphElement>) => HTMLParagraphElement;
+  pre: (properties?: Camel<HTMLPreElement>) => HTMLPreElement;
+  ul: (properties?: Camel<HTMLUListElement>) => HTMLUListElement;
+  a: (properties?: Camel<HTMLAnchorElement>) => HTMLAnchorElement;
+  abbr: (properties?: Camel<HTMLElement>) => HTMLElement;
+  b: (properties?: Camel<HTMLElement>) => HTMLElement;
+  bdi: (properties?: Camel<HTMLElement>) => HTMLElement;
+  bdo: (properties?: Camel<HTMLElement>) => HTMLElement;
+  br: (properties?: Camel<HTMLBRElement>) => HTMLBRElement;
+  cite: (properties?: Camel<HTMLElement>) => HTMLElement;
+  code: (properties?: Camel<HTMLElement>) => HTMLElement;
+  data: (properties?: Camel<HTMLDataElement>) => HTMLDataElement;
+  dfn: (properties?: Camel<HTMLElement>) => HTMLElement;
+  em: (properties?: Camel<HTMLElement>) => HTMLElement;
+  i: (properties?: Camel<HTMLElement>) => HTMLElement;
+  kbd: (properties?: Camel<HTMLElement>) => HTMLElement;
+  mark: (properties?: Camel<HTMLElement>) => HTMLElement;
+  q: (properties?: Camel<HTMLQuoteElement>) => HTMLQuoteElement;
+  rp: (properties?: Camel<HTMLElement>) => HTMLElement;
+  rt: (properties?: Camel<HTMLElement>) => HTMLElement;
+  ruby: (properties?: Camel<HTMLElement>) => HTMLElement;
+  s: (properties?: Camel<HTMLElement>) => HTMLElement;
+  samp: (properties?: Camel<HTMLElement>) => HTMLElement;
+  small: (properties?: Camel<HTMLElement>) => HTMLElement;
+  span: (properties?: Camel<HTMLSpanElement>) => HTMLSpanElement;
+  strong: (properties?: Camel<HTMLElement>) => HTMLElement;
+  sub: (properties?: Camel<HTMLElement>) => HTMLElement;
+  sup: (properties?: Camel<HTMLElement>) => HTMLElement;
+  time: (properties?: Camel<HTMLTimeElement>) => HTMLTimeElement;
+  u: (properties?: Camel<HTMLElement>) => HTMLElement;
+  var: (properties?: Camel<HTMLElement>) => HTMLElement;
+  wbr: (properties?: Camel<HTMLElement>) => HTMLElement;
+  area: (properties?: Camel<HTMLAreaElement>) => HTMLAreaElement;
+  audio: (properties?: Omit<Camel<HTMLAudioElement> & CamelAudioEventHandlers, keyof ExistingAudioEventHandlers) => HTMLAudioElement;
+  img: (properties?: Camel<HTMLImageElement>) => HTMLImageElement;
+  map: (properties?: Camel<HTMLMapElement>) => HTMLMapElement;
+  track: (properties?: Camel<HTMLTrackElement>) => HTMLTrackElement;
+  video: (properties?: Omit<Camel<HTMLVideoElement> & CamelVideoEventHandlers, keyof ExistingVideoEventHandlers>) => HTMLVideoElement;
+  embed: (properties?: Camel<HTMLEmbedElement>) => HTMLEmbedElement;
+  iframe: (properties?: Camel<HTMLIFrameElement>) => HTMLIFrameElement;
+  object: (properties?: Camel<HTMLObjectElement>) => HTMLObjectElement;
+  param: (properties?: Camel<HTMLParamElement>) => HTMLParamElement;
+  picture: (properties?: Camel<HTMLPictureElement>) => HTMLPictureElement;
+  source: (properties?: Camel<HTMLSourceElement>) => HTMLSourceElement;
+  canvas: (properties?: Camel<HTMLCanvasElement>) => HTMLCanvasElement;
+  noscript: (properties?: Camel<HTMLElement>) => HTMLElement;
+  script: (properties?: Camel<HTMLScriptElement>) => HTMLScriptElement;
+  del: (properties?: Camel<HTMLModElement>) => HTMLModElement;
+  ins: (properties?: Camel<HTMLModElement>) => HTMLModElement;
+  caption: (properties?: Camel<HTMLTableCaptionElement>) => HTMLTableCaptionElement;
+  col: (properties?: Camel<HTMLTableColElement>) => HTMLTableColElement;
+  colgroup: (properties?: Camel<HTMLTableColElement>) => HTMLTableColElement;
+  table: (properties?: Camel<HTMLTableElement>) => HTMLTableElement;
+  tbody: (properties?: Camel<HTMLTableSectionElement>) => HTMLTableSectionElement;
+  td: (properties?: Camel<HTMLTableCellElement>) => HTMLTableCellElement;
+  tfoot: (properties?: Camel<HTMLTableSectionElement>) => HTMLTableSectionElement;
+  th: (properties?: Camel<HTMLTableCellElement>) => HTMLTableCellElement;
+  thead: (properties?: Camel<HTMLTableSectionElement>) => HTMLTableSectionElement;
+  tr: (properties?: Camel<HTMLTableRowElement>) => HTMLTableRowElement;
+  button: (properties?: Camel<HTMLButtonElement>) => HTMLButtonElement;
+  datalist: (properties?: Camel<HTMLDataListElement>) => HTMLDataListElement;
+  fieldset: (properties?: Camel<HTMLFieldSetElement>) => HTMLFieldSetElement;
+  form: (properties?: Camel<HTMLFormElement>) => HTMLFormElement;
+  input: (properties?: Camel<HTMLInputElement>) => HTMLInputElement;
+  label: (properties?: Camel<HTMLLabelElement>) => HTMLLabelElement;
+  legend: (properties?: Camel<HTMLLegendElement>) => HTMLLegendElement;
+  meter: (properties?: Camel<HTMLMeterElement>) => HTMLMeterElement;
+  optgroup: (properties?: Camel<HTMLOptGroupElement>) => HTMLOptGroupElement;
+  option: (properties?: Camel<HTMLOptionElement>) => HTMLOptionElement;
+  output: (properties?: Camel<HTMLOutputElement>) => HTMLOutputElement;
+  progress: (properties?: Camel<HTMLProgressElement>) => HTMLProgressElement;
+  select: (properties?: Camel<HTMLSelectElement>) => HTMLSelectElement;
+  textarea: (properties?: Camel<HTMLTextAreaElement>) => HTMLTextAreaElement;
+  details: (properties?: Camel<HTMLDetailsElement>) => HTMLDetailsElement;
+  menu: (properties?: Camel<HTMLMenuElement>) => HTMLMenuElement;
+  summary: (properties?: Camel<HTMLElement>) => HTMLElement;
+  slot: (properties?: Camel<HTMLSlotElement>) => HTMLSlotElement;
+  template: (properties?: Camel<HTMLTemplateElement>) => HTMLTemplateElement;
 }
 
 export const svg: {
   [key: string]: any;
-  a: (properties?: Partial<SVGAElement>) => SVGAElement;
-  animate: (properties?: Partial<SVGAnimateElement>) => SVGAnimateElement;
-  animateMotion: (properties?: Partial<SVGAnimateMotionElement>) => SVGAnimateMotionElement;
-  animateTransform: (properties?: Partial<SVGAnimateTransformElement>) => SVGAnimateTransformElement;
-  circle: (properties?: Partial<SVGCircleElement>) => SVGCircleElement;
-  clipPath: (properties?: Partial<SVGClipPathElement>) => SVGClipPathElement;
-  defs: (properties?: Partial<SVGDefsElement>) => SVGDefsElement;
-  desc: (properties?: Partial<SVGDescElement>) => SVGDescElement;
-  ellipse: (properties?: Partial<SVGEllipseElement>) => SVGEllipseElement;
-  feBlend: (properties?: Partial<SVGFEBlendElement>) => SVGFEBlendElement;
-  feColorMatrix: (properties?: Partial<SVGFEColorMatrixElement>) => SVGFEColorMatrixElement;
-  feComponentTransfer: (properties?: Partial<SVGFEComponentTransferElement>) => SVGFEComponentTransferElement;
-  feComposite: (properties?: Partial<SVGFECompositeElement>) => SVGFECompositeElement;
-  feConvolveMatrix: (properties?: Partial<SVGFEConvolveMatrixElement>) => SVGFEConvolveMatrixElement;
-  feDiffuseLighting: (properties?: Partial<SVGFEDiffuseLightingElement>) => SVGFEDiffuseLightingElement;
-  feDisplacementMap: (properties?: Partial<SVGFEDisplacementMapElement>) => SVGFEDisplacementMapElement;
-  feDistantLight: (properties?: Partial<SVGFEDistantLightElement>) => SVGFEDistantLightElement;
-  feDropShadow: (properties?: Partial<SVGFEDropShadowElement>) => SVGFEDropShadowElement;
-  feFlood: (properties?: Partial<SVGFEFloodElement>) => SVGFEFloodElement;
-  feFuncA: (properties?: Partial<SVGFEFuncAElement>) => SVGFEFuncAElement;
-  feFuncB: (properties?: Partial<SVGFEFuncBElement>) => SVGFEFuncBElement;
-  feFuncG: (properties?: Partial<SVGFEFuncGElement>) => SVGFEFuncGElement;
-  feFuncR: (properties?: Partial<SVGFEFuncRElement>) => SVGFEFuncRElement;
-  feGaussianBlur: (properties?: Partial<SVGFEGaussianBlurElement>) => SVGFEGaussianBlurElement;
-  feImage: (properties?: Partial<SVGFEImageElement>) => SVGFEImageElement;
-  feMerge: (properties?: Partial<SVGFEMergeElement>) => SVGFEMergeElement;
-  feMergeNode: (properties?: Partial<SVGFEMergeNodeElement>) => SVGFEMergeNodeElement;
-  feMorphology: (properties?: Partial<SVGFEMorphologyElement>) => SVGFEMorphologyElement;
-  feOffset: (properties?: Partial<SVGFEOffsetElement>) => SVGFEOffsetElement;
-  fePointLight: (properties?: Partial<SVGFEPointLightElement>) => SVGFEPointLightElement;
-  feSpecularLighting: (properties?: Partial<SVGFESpecularLightingElement>) => SVGFESpecularLightingElement;
-  feSpotLight: (properties?: Partial<SVGFESpotLightElement>) => SVGFESpotLightElement;
-  feTile: (properties?: Partial<SVGFETileElement>) => SVGFETileElement;
-  feTurbulence: (properties?: Partial<SVGFETurbulenceElement>) => SVGFETurbulenceElement;
-  filter: (properties?: Partial<SVGFilterElement>) => SVGFilterElement;
-  foreignObject: (properties?: Partial<SVGForeignObjectElement>) => SVGForeignObjectElement;
-  g: (properties?: Partial<SVGGElement>) => SVGGElement;
-  image: (properties?: Partial<SVGImageElement>) => SVGImageElement;
-  line: (properties?: Partial<SVGLineElement>) => SVGLineElement;
-  linearGradient: (properties?: Partial<SVGLinearGradientElement>) => SVGLinearGradientElement;
-  marker: (properties?: Partial<SVGMarkerElement>) => SVGMarkerElement;
-  mask: (properties?: Partial<SVGMaskElement>) => SVGMaskElement;
-  metadata: (properties?: Partial<SVGMetadataElement>) => SVGMetadataElement;
-  mpath: (properties?: Partial<SVGMPathElement>) => SVGMPathElement;
-  path: (properties?: Partial<SVGPathElement>) => SVGPathElement;
-  pattern: (properties?: Partial<SVGPatternElement>) => SVGPatternElement;
-  polygon: (properties?: Partial<SVGPolygonElement>) => SVGPolygonElement;
-  polyline: (properties?: Partial<SVGPolylineElement>) => SVGPolylineElement;
-  radialGradient: (properties?: Partial<SVGRadialGradientElement>) => SVGRadialGradientElement;
-  rect: (properties?: Partial<SVGRectElement>) => SVGRectElement;
-  script: (properties?: Partial<SVGScriptElement>) => SVGScriptElement;
-  set: (properties?: Partial<SVGSetElement>) => SVGSetElement;
-  stop: (properties?: Partial<SVGStopElement>) => SVGStopElement;
-  style: (properties?: Partial<SVGStyleElement>) => SVGStyleElement;
-  svg: (properties?: Partial<SVGSVGElement>) => SVGSVGElement;
-  switch: (properties?: Partial<SVGSwitchElement>) => SVGSwitchElement;
-  symbol: (properties?: Partial<SVGSymbolElement>) => SVGSymbolElement;
-  text: (properties?: Partial<SVGTextElement>) => SVGTextElement;
-  textPath: (properties?: Partial<SVGTextPathElement>) => SVGTextPathElement;
-  title: (properties?: Partial<SVGTitleElement>) => SVGTitleElement;
-  tspan: (properties?: Partial<SVGTSpanElement>) => SVGTSpanElement;
-  use: (properties?: Partial<SVGUseElement>) => SVGUseElement;
-  view: (properties?: Partial<SVGViewElement>) => SVGViewElement;
+  a: (properties?: SvgCamel<SVGAElement>) => SVGAElement;
+  animate: (properties?: SvgCamel<SVGAnimateElement>) => SVGAnimateElement;
+  animateMotion: (properties?: SvgCamel<SVGAnimateMotionElement>) => SVGAnimateMotionElement;
+  animateTransform: (properties?: SvgCamel<SVGAnimateTransformElement>) => SVGAnimateTransformElement;
+  circle: (properties?: SvgCamel<SVGCircleElement>) => SVGCircleElement;
+  clipPath: (properties?: SvgCamel<SVGClipPathElement>) => SVGClipPathElement;
+  defs: (properties?: SvgCamel<SVGDefsElement>) => SVGDefsElement;
+  desc: (properties?: SvgCamel<SVGDescElement>) => SVGDescElement;
+  ellipse: (properties?: SvgCamel<SVGEllipseElement>) => SVGEllipseElement;
+  feBlend: (properties?: SvgCamel<SVGFEBlendElement>) => SVGFEBlendElement;
+  feColorMatrix: (properties?: SvgCamel<SVGFEColorMatrixElement>) => SVGFEColorMatrixElement;
+  feComponentTransfer: (properties?: SvgCamel<SVGFEComponentTransferElement>) => SVGFEComponentTransferElement;
+  feComposite: (properties?: SvgCamel<SVGFECompositeElement>) => SVGFECompositeElement;
+  feConvolveMatrix: (properties?: SvgCamel<SVGFEConvolveMatrixElement>) => SVGFEConvolveMatrixElement;
+  feDiffuseLighting: (properties?: SvgCamel<SVGFEDiffuseLightingElement>) => SVGFEDiffuseLightingElement;
+  feDisplacementMap: (properties?: SvgCamel<SVGFEDisplacementMapElement>) => SVGFEDisplacementMapElement;
+  feDistantLight: (properties?: SvgCamel<SVGFEDistantLightElement>) => SVGFEDistantLightElement;
+  feDropShadow: (properties?: SvgCamel<SVGFEDropShadowElement>) => SVGFEDropShadowElement;
+  feFlood: (properties?: SvgCamel<SVGFEFloodElement>) => SVGFEFloodElement;
+  feFuncA: (properties?: SvgCamel<SVGFEFuncAElement>) => SVGFEFuncAElement;
+  feFuncB: (properties?: SvgCamel<SVGFEFuncBElement>) => SVGFEFuncBElement;
+  feFuncG: (properties?: SvgCamel<SVGFEFuncGElement>) => SVGFEFuncGElement;
+  feFuncR: (properties?: SvgCamel<SVGFEFuncRElement>) => SVGFEFuncRElement;
+  feGaussianBlur: (properties?: SvgCamel<SVGFEGaussianBlurElement>) => SVGFEGaussianBlurElement;
+  feImage: (properties?: SvgCamel<SVGFEImageElement>) => SVGFEImageElement;
+  feMerge: (properties?: SvgCamel<SVGFEMergeElement>) => SVGFEMergeElement;
+  feMergeNode: (properties?: SvgCamel<SVGFEMergeNodeElement>) => SVGFEMergeNodeElement;
+  feMorphology: (properties?: SvgCamel<SVGFEMorphologyElement>) => SVGFEMorphologyElement;
+  feOffset: (properties?: SvgCamel<SVGFEOffsetElement>) => SVGFEOffsetElement;
+  fePointLight: (properties?: SvgCamel<SVGFEPointLightElement>) => SVGFEPointLightElement;
+  feSpecularLighting: (properties?: SvgCamel<SVGFESpecularLightingElement>) => SVGFESpecularLightingElement;
+  feSpotLight: (properties?: SvgCamel<SVGFESpotLightElement>) => SVGFESpotLightElement;
+  feTile: (properties?: SvgCamel<SVGFETileElement>) => SVGFETileElement;
+  feTurbulence: (properties?: SvgCamel<SVGFETurbulenceElement>) => SVGFETurbulenceElement;
+  filter: (properties?: SvgCamel<SVGFilterElement>) => SVGFilterElement;
+  foreignObject: (properties?: SvgCamel<SVGForeignObjectElement>) => SVGForeignObjectElement;
+  g: (properties?: SvgCamel<SVGGElement>) => SVGGElement;
+  image: (properties?: SvgCamel<SVGImageElement>) => SVGImageElement;
+  line: (properties?: SvgCamel<SVGLineElement>) => SVGLineElement;
+  linearGradient: (properties?: SvgCamel<SVGLinearGradientElement>) => SVGLinearGradientElement;
+  marker: (properties?: SvgCamel<SVGMarkerElement>) => SVGMarkerElement;
+  mask: (properties?: SvgCamel<SVGMaskElement>) => SVGMaskElement;
+  metadata: (properties?: SvgCamel<SVGMetadataElement>) => SVGMetadataElement;
+  mpath: (properties?: SvgCamel<SVGMPathElement>) => SVGMPathElement;
+  path: (properties?: SvgCamel<SVGPathElement>) => SVGPathElement;
+  pattern: (properties?: SvgCamel<SVGPatternElement>) => SVGPatternElement;
+  polygon: (properties?: SvgCamel<SVGPolygonElement>) => SVGPolygonElement;
+  polyline: (properties?: SvgCamel<SVGPolylineElement>) => SVGPolylineElement;
+  radialGradient: (properties?: SvgCamel<SVGRadialGradientElement>) => SVGRadialGradientElement;
+  rect: (properties?: SvgCamel<SVGRectElement>) => SVGRectElement;
+  script: (properties?: SvgCamel<SVGScriptElement>) => SVGScriptElement;
+  set: (properties?: SvgCamel<SVGSetElement>) => SVGSetElement;
+  stop: (properties?: SvgCamel<SVGStopElement>) => SVGStopElement;
+  style: (properties?: SvgCamel<SVGStyleElement>) => SVGStyleElement;
+  svg: (properties?: SvgCamel<SVGSVGElement>) => SVGSVGElement;
+  switch: (properties?: SvgCamel<SVGSwitchElement>) => SVGSwitchElement;
+  symbol: (properties?: SvgCamel<SVGSymbolElement>) => SVGSymbolElement;
+  text: (properties?: SvgCamel<SVGTextElement>) => SVGTextElement;
+  textPath: (properties?: SvgCamel<SVGTextPathElement>) => SVGTextPathElement;
+  title: (properties?: SvgCamel<SVGTitleElement>) => SVGTitleElement;
+  tspan: (properties?: SvgCamel<SVGTSpanElement>) => SVGTSpanElement;
+  use: (properties?: SvgCamel<SVGUseElement>) => SVGUseElement;
+  view: (properties?: SvgCamel<SVGViewElement>) => SVGViewElement;
 }

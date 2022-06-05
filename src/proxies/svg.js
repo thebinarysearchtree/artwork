@@ -1,12 +1,25 @@
+import isEvent from './camel.js';
+
 const elementCreators = {};
 
 const createElement = (tag, properties) => {
-  const element = document.createElementNS(tag, 'http://www.w3.org/2000/svg');
+  const element = document.createElementNS('http://www.w3.org/2000/svg', tag);
   if (!properties) {
     return element;
   }
   for (const [key, value] of Object.entries(properties)) {
-    element.setAttribute(key, value);
+    if (key === 'class') {
+      element.setAttribute('className', value);
+    }
+    else if (key.startsWith('on') && key.length > 2) {
+      if (isEvent(key)) {
+        const event = key.substring(2).toLowerCase();
+        element.addEventListener(event, value);
+      }
+    }
+    else {
+      element.setAttribute(key, value);
+    }
   }
   return element;
 }

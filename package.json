@@ -1,10 +1,14 @@
 {
   "name": "artworkjs",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A front-end framework.",
   "author": "Andrew Jones",
   "license": "MIT",
   "type": "module",
   "main": "./src/index.js",
-  "types": "./src/index.d.ts"
+  "types": "./src/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thebinarysearchtree/artwork.git"
+  }
 }
