@@ -18,11 +18,9 @@ const createElement = (tag, properties) => {
     else if (key === 'text') {
       element.innerText = value;
     }
-    else if (key.startsWith('on') && key.length > 2) {
-      if (isEvent(key)) {
-        const event = key.substring(2).toLowerCase();
-        element.addEventListener(event, value);
-      }
+    else if (key.startsWith('on') && key.length > 2 && isEvent(key)) {
+      const event = key.substring(2).toLowerCase();
+      element.addEventListener(event, value);
     }
     else {
       element[key] = value;

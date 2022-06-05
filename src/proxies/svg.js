@@ -11,11 +11,9 @@ const createElement = (tag, properties) => {
     if (key === 'class') {
       element.setAttribute('className', value);
     }
-    else if (key.startsWith('on') && key.length > 2) {
-      if (isEvent(key)) {
-        const event = key.substring(2).toLowerCase();
-        element.addEventListener(event, value);
-      }
+    else if (key.startsWith('on') && key.length > 2 && isEvent(key)) {
+      const event = key.substring(2).toLowerCase();
+      element.addEventListener(event, value);
     }
     else {
       element.setAttribute(key, value);
