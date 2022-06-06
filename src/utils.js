@@ -30,7 +30,7 @@ const append = (parent, children) => {
   }
   else {
     const element = parent();
-    parent.append(...children);
+    element.append(...children);
     return element;
   }
 }
