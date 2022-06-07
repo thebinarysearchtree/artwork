@@ -7,9 +7,16 @@ const createElement = (tag, properties) => {
   if (!properties) {
     return element;
   }
+  if (Array.isArray(properties)) {
+    element.append(...properties);
+    return element;
+  }
   for (const [key, value] of Object.entries(properties)) {
     if (key === 'class') {
       element.setAttribute('className', value);
+    }
+    else if (key === 'children') {
+      element.append(...value);
     }
     else if (key.startsWith('on') && key.length > 2 && isEvent(key)) {
       const event = key.substring(2).toLowerCase();

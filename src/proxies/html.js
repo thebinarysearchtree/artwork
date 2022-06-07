@@ -8,6 +8,10 @@ const createElement = (tag, properties) => {
     element.innerText = properties;
     return element;
   }
+  if (Array.isArray(properties)) {
+    element.append(...properties);
+    return element;
+  }
   if (!properties) {
     return element;
   }
@@ -17,6 +21,9 @@ const createElement = (tag, properties) => {
     }
     else if (key === 'text') {
       element.innerText = value;
+    }
+    else if (key === 'children') {
+      element.append(...value);
     }
     else if (key.startsWith('on') && key.length > 2 && isEvent(key)) {
       const event = key.substring(2).toLowerCase();

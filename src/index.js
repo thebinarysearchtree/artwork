@@ -9,8 +9,7 @@ import setters from './proxies/setter.js';
 import events from './proxies/event.js';
 import { 
   htmlFor, 
-  makeElements,
-  append 
+  makeElements
 } from './utils.js';
 import { 
   makeAsyncArt, 
@@ -34,7 +33,6 @@ export {
   events,
   htmlFor,
   makeElements,
-  append,
   makeAsyncArt,
   makeArt,
   pushState,

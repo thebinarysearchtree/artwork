@@ -694,16 +694,18 @@ export const elements: {
 interface HtmlShortcuts {
   class?: string;
   text?: string;
+  children?: HTMLElement[];
 }
 
 interface SvgShortcuts {
   class?: string;
+  children?: HTMLElement[];
 }
 
 type ExistingEventHandlers = GlobalEventHandlers & DocumentAndElementEventHandlers;
 
-type Camel<T> = Omit<Partial<T> & HtmlShortcuts & CamelDocumentAndElementEventHandlers & CamelGlobalEventHandlers, keyof ExistingEventHandlers> | string | number;
-type SvgCamel<T> = Omit<Partial<T> & SvgShortcuts & CamelDocumentAndElementEventHandlers & CamelGlobalEventHandlers, keyof ExistingEventHandlers>;
+type Camel<T> = Omit<Partial<T> & HtmlShortcuts & CamelDocumentAndElementEventHandlers & CamelGlobalEventHandlers, keyof ExistingEventHandlers> | string | number | HTMLElement[];
+type SvgCamel<T> = Omit<Partial<T> & SvgShortcuts & CamelDocumentAndElementEventHandlers & CamelGlobalEventHandlers, keyof ExistingEventHandlers> | HTMLElement[];
 
 export const html: {
   [key: string]: any;
