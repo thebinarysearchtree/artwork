@@ -236,7 +236,6 @@ return ul({
 });
 ```
 
-
 ## Styles
 
 Every component can have css that is scoped to that component, to avoid clashes with other components.
