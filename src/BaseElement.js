@@ -1,6 +1,5 @@
 class BaseElement extends HTMLElement {
   styles;
-  state;
   connected;
   disconnected;
 

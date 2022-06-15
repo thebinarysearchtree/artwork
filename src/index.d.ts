@@ -1,7 +1,7 @@
 export class BaseElement extends HTMLElement {
   styles?: CSSStyleDeclaration | string;
-  connected: () => void;
-  disconnected: () => void;
+  connected?: () => void;
+  disconnected?: () => void;
 }
 
 export class ElementArt extends BaseElement {
@@ -41,19 +41,6 @@ export class Router {
 
 export function routerLink(properties: Camel<HTMLAnchorElement> & { state?: any }): HTMLAnchorElement;
 
-interface ExistingDocumentEventHandlers {
-  onfullscreenchange: ((this: Document, ev: Event) => any) | null;
-  onfullscreenerror: ((this: Document, ev: Event) => any) | null;
-  onpointerlockchange: ((this: Document, ev: Event) => any) | null;
-  onpointerlockerror: ((this: Document, ev: Event) => any) | null;
-  /**
-   * Fires when the state of the object has changed.
-   * @param ev The event
-   */
-  onreadystatechange: ((this: Document, ev: Event) => any) | null;
-  onvisibilitychange: ((this: Document, ev: Event) => any) | null;
-}
-
 interface ExistingAudioEventHandlers {
   onencrypted: ((this: HTMLMediaElement, ev: MediaEncryptedEvent) => any) | null;
   onwaitingforkey: ((this: HTMLMediaElement, ev: Event) => any) | null;
@@ -72,19 +59,6 @@ interface ExistingVideoEventHandlers {
 interface CamelVideoEventHandlers {
   onEnterPictureInPicture?: (e: Event) => any;
   onLeavePictureInPicture?: (e: Event) => any;
-}
-
-interface CamelDocumentEventHandlers {
-  onFullScreenChange?: (e: Event) => any;
-  onFullScreenError?: (e: Event) => any;
-  onPointerLockChange?: (e: Event) => any;
-  onPointerLockError?: (e: Event) => any;
-  /**
-   * Fires when the state of the object has changed.
-   * @param ev The event
-   */
-  onReadyStateChange?: (e: Event) => any;
-  onVisibilityChange?: (e: Event) => any;
 }
 
 interface CamelDocumentAndElementEventHandlers {
@@ -774,7 +748,7 @@ export const html: {
   var: (properties?: Camel<HTMLElement>) => HTMLElement;
   wbr: (properties?: Camel<HTMLElement>) => HTMLElement;
   area: (properties?: Camel<HTMLAreaElement>) => HTMLAreaElement;
-  audio: (properties?: Omit<Camel<HTMLAudioElement> & CamelAudioEventHandlers, keyof ExistingAudioEventHandlers) => HTMLAudioElement;
+  audio: (properties?: Omit<Camel<HTMLAudioElement> & CamelAudioEventHandlers, keyof ExistingAudioEventHandlers>) => HTMLAudioElement;
   img: (properties?: Camel<HTMLImageElement>) => HTMLImageElement;
   map: (properties?: Camel<HTMLMapElement>) => HTMLMapElement;
   track: (properties?: Camel<HTMLTrackElement>) => HTMLTrackElement;

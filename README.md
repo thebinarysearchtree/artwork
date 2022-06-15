@@ -123,7 +123,7 @@ const helloWorld = makeArt('hello-world', HelloWorld);
 If you are using TypeScript, you can type the ```makeArt``` function like this:
 
 ```ts
-const helloWorld = makeArt<HelloWorld, (name: string) => HelloWorld>('hello-world', HelloWorld);
+const helloWorld = makeArt('hello-world', HelloWorld) as (name: string) => HelloWorld;
 ```
 
 The first argument to ```makeArt``` is the name that will be given to the web component. The name must have at least two words in it that are separated by a ```-```.
@@ -203,6 +203,39 @@ div.innerText = 'Brisbane';
 ```
 
 All of these proxies are backed by objects with getters, so they can be used in loops and so on, as each property access creates a new element.
+
+## Appending child elements
+
+```js
+render(menuItems) {
+  const { ul, li } = html;
+  const items = menuItems.map(item => {
+    const { text, onClick } = item;
+    return li({
+      text,
+      onClick
+    });
+  });
+  return ul(items);
+}
+```
+
+There are three different ways to add child elements to a container element. You can use the built-in append method 
+```js
+list.append(...items);
+```
+you can pass the children in as an array to the html functions 
+```js
+return ul(items);
+```
+or you can pass the children in as one of the properties of the html function 
+```js
+return ul({ 
+  class: 'list', 
+  children: items 
+});
+```
+
 
 ## Styles
 
