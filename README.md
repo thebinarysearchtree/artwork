@@ -226,11 +226,11 @@ list.append(...items);
 ```
 you can pass the children in as an array to the html functions 
 ```js
-return ul(items);
+const list = ul(items);
 ```
 or you can pass the children in as one of the properties of the html function 
 ```js
-return ul({ 
+const list = ul({ 
   class: 'list', 
   children: items 
 });
@@ -255,7 +255,7 @@ class MovieThumbnail extends ElementArt {
 }
 ```
 
-You can also use strings containing css.
+```this.styles``` can also be set to an array of styles if you have more than one. Subclasses can only add more styles, not remove existing styles. You can also use strings containing css.
 
 ```js
 class MovieThumbnail extends ElementArt {

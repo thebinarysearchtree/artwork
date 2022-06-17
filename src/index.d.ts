@@ -1,7 +1,8 @@
 export class BaseElement extends HTMLElement {
-  styles?: CSSStyleDeclaration | string;
   connected?: () => void;
   disconnected?: () => void;
+  set styles(styles: CSSStyleSheet | string | CSSStyleSheet[] | string[]);
+  get styles(): CSSStyleSheet[] | string[];
 }
 
 export class ElementArt extends BaseElement {
