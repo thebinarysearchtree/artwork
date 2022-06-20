@@ -16,7 +16,7 @@ class BaseElement extends HTMLElement {
       }
     }
     else if (styles instanceof CSSStyleSheet) {
-      this.adoptedStyles.push(style);
+      this.adoptedStyles.push(styles);
     }
     else {
       if (styles.length > 0) {
