@@ -1,77 +1,34 @@
 class BaseElement extends HTMLElement {
   connected;
   disconnected;
-  stringStyles = [];
-  adoptedStyles = [];
-
-  set styles(styles) {
-    if (typeof styles === 'string') {
-      if ('adoptedStyleSheets' in document) {
-        const sheet = new CSSStyleSheet();
-        sheet.replaceSync(styles);
-        this.adoptedStyles.push(sheet);
-      }
-      else {
-        this.stringStyles.push(styles);
-      }
-    }
-    else if (styles instanceof CSSStyleSheet) {
-      this.adoptedStyles.push(styles);
-    }
-    else {
-      if (styles.length > 0) {
-        if (typeof styles[0] === 'string') {
-          if ('adoptedStyleSheets' in document) {
-            const adoptedStyles = styles.map(style => {
-              const sheet = new CSSStyleSheet();
-              sheet.replaceSync(style);
-              return sheet;
-            });
-            this.adoptedStyles = this.adoptedStyles.concat(adoptedStyles);
-          }
-          else {
-            this.stringStyles = this.stringStyles.concat(styles);
-          }
-        }
-        else {
-          this.adoptedStyles = this.adoptedStyles.concat(styles);
-        }
-      }
-    }
-  }
-
-  get styles() {
-    if (this.stringStyles.length > 0) {
-      return this.stringStyles;
-    }
-    return this.adoptedStyles;
-  }
+  root;
+  props;
 
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
   }
 
-  afterRender() {
-    return null;
-  }
-
-  appendToShadow(element) {
-    this.afterRender();
-    for (const css of this.stringStyles) {
-      const style = document.createElement('style');
-      style.innerText = css;
-      this.shadowRoot.append(style);
+  load(root, connected, props) {
+    if (this.root) {
+      this.root.remove();
     }
-    if (this.adoptedStyles.length > 0) {
-      this.shadowRoot.adoptedStyleSheets = this.adoptedStyles;
+    this.root = root;
+    this.connected = connected;
+    this.props = props;
+    this.shadowRoot.append(root);
+    if (props) {
+      for (const [key, value] of Object.entries(props)) {
+        if (typeof value === 'function') {
+          this[key] = value;
+        }
+      }
     }
-    this.shadowRoot.append(element);
   }
 
   connectedCallback() {
     if (this.connected) {
-      const disconnected = this.connected();
+      const disconnected = connected();
       if (disconnected) {
         this.disconnected = disconnected;
       }

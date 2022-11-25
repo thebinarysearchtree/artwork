@@ -4,18 +4,17 @@ const typesThatBlock = new Set(['text', 'search', 'url', 'tel', 'email', 'passwo
 
 class FormInput extends ElementArt {
   static formAssociated = true;
-  input;
 
   get type() {
-    return this.input.type;
+    return this.props.type;
   }
 
   get value() {
-    return this.input.value;
+    return this.props.value;
   }
 
   set value(v) {
-    this.input.value = v;
+    this.props.value = v;
   }
 
   constructor() {
