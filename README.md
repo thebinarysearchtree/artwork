@@ -206,23 +206,27 @@ router.add(/\/movies/, () => {
 
 Artwork lets you create as many routers as you want. The router that is created last will override the earlier routers when it has a match that is also in the other routers. Usually, you will have one router that starts when the application begins, and then other routers that are started inside components. When the component loads, the router will become active. Make sure to remove the router once the component is removed from the DOM.
 
-In the example below, the ```connected``` method is used to create a new router that intercepts routes and only replaces the title of the movie instead of reloading the side panel. ```connected``` is a method that is available to both ```ElementArt``` and ```AsyncElementArt``` classes, and is run when the web component is connected to the DOM. The return value is a function that is run when the component is removed from the DOM.
+In the example below, the ```connected``` method is used to create a new router that intercepts routes and only replaces the title of the movie instead of reloading the side panel.
 
 ```js
-async render() {
-  const { root, sidePanel, content } = html.createStyled('div');
+const routes = async () => {
+  const { root, sidePanel, content, video } = html.createMany('div');
 
   const movies = await getMovies();
-  sidePanel.append(...movies);
+  const thumbnails = movies.map(m => thumbnail(m));
+  sidePanel.append(...thumbnails);
 
-  this.connected = () => {
-    const router = new Router(content);
+  const connected = () => {
+    const router = new Router();
 
-    router.add('/movies', ({ v }) => {
+    router.add('/routes', ({ v }) => {
       const videoId = parseInt(v, 10);
-      const { name } = movies.find(m => m.id === videoId);
+      const movie = movies.find(m => m.id === videoId);
 
-      return html.create('h3', name);
+      thumbnails.forEach(t => t.toggleSelected(videoId));
+
+      const title = html.create('h3', movie.name);
+      content.replaceChildren(video, title);
     });
     
     router.start();
@@ -230,6 +234,12 @@ async render() {
   }
 
   root.append(content, sidePanel);
-  return root;
+
+  return html.register({
+    root,
+    connected,
+    styles,
+    name: 'movie-routes'
+  });
 }
 ```
