@@ -22,13 +22,26 @@ class BaseElement extends HTMLElement {
         if (typeof value === 'function') {
           this[key] = value;
         }
+        else if (!(key in this)) {
+          Object.defineProperty(this, key, {
+            get() {
+              return this.props[key];
+            },
+            set(v) {
+              this.props[key] = v;
+            }
+          });
+        }
       }
+    }
+    if (this.afterLoad) {
+      this.afterLoad();
     }
   }
 
   connectedCallback() {
     if (this.connected) {
-      const disconnected = connected();
+      const disconnected = this.connected();
       if (disconnected) {
         this.disconnected = disconnected;
       }

@@ -25,6 +25,7 @@ const create = (tag, innerText) => {
       element[key] = value;
     }
   }
+  return element;
 }
 
 const createMany = (tag) => {

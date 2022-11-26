@@ -1,5 +1,5 @@
 # Artwork
-A front-end library for people who see their code as artwork. Artwork is 100% real JavaScript and CSS. There are no asychronous state updates, reactivity, template languages, hybrid languages, hidden rules, or anything else. Artwork runs as fast as a client-side library can run, with less code than React and Vue.
+A small front-end framework that lets you easily write pure JavaScript and css, without any HTML. Unlike documents, where logic and dynamic elements are minimal, applications do not benefit from markup languages such as HTML. Artwork lets you write applications the way they were made before web applications came along. This results in much faster loading and execution times, less code to write, and no translation layers to get in the way.
 
 Go to the [art-project](https://github.com/thebinarysearchtree/art-project) repository if you want to run the examples below or need a template for creating a new project.
 
@@ -9,7 +9,7 @@ npm install artworkjs
 
 ## Examples
 
-A very basic example.
+A very basic example that simply returns a native HTML element instead of a web component.
 ```js
 import { html } from 'artworkjs';
 
