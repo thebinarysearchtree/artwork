@@ -147,6 +147,8 @@ const { div, input, form, ul, h3, label, button } = html.create();
 
 ```props```: An optional object that contains properties and functions that will be available to consumers of the web component. See the ```Thumbnail.js``` and ```Login.js``` examples in the ```art-project``` to see how this works.
 
+```name```: The name of the web component. It should have a dash in it.
+
 ```extends```: An optional class that the web component will inherit from.
 
 By default, web components do not participate in forms. To allow them to work in forms, so that for example, pressing enter on an input will submit a form, you can inherit from the ```FormInput``` class.
@@ -196,6 +198,9 @@ const thumbnail = () => {
 Artwork includes a router that has some pretty interesting features. When creating a router, you can pass in the ```root``` element, and the router will replace the child element of the root with whatever is returned by the route handler. In the example below, the child element will be the ```HelloWorld``` component from earlier. If you don't provide a root element, your route handler should not return anything, as it is left up to you to determine what happens when the route is hit.
 
 ```js
+import { Router, html } from 'artworkjs';
+import hello from './examples/Hello.js';
+
 const root = document.getElementById('root');
 
 const router = new Router(root);
@@ -222,17 +227,25 @@ but this requires more code from the libraries perspective, is less flexible, an
 The anchor tags in a single page application need to be handled correctly to prevent the page reloading. When you want to use the ```a``` tag, you can import the ```routerLink``` function, which takes the same arguments as the ```a``` function, and adds a ```state``` property that represents the history state.
 
 ```js
-import { routerLink } from 'artworkjs';
+import { html, routerLink } from 'artworkjs';
 
 render() {
-  const { div } = elements;
+  const div = html.create('div');
 
-  const a1 = routerLink({ href: '/hello?name=World', text: 'Hello World' });
+  const a1 = routerLink({ href: '/hello?name=World', innerText: 'Hello World' });
 
   div.append(a1);
 
   return div;
 }
+```
+
+To manually navigate to a different rout, you can use ```pushState```.
+
+```js
+import { pushState } from 'artworkjs';
+
+pushState('/');
 ```
 
 When you are loading an asynchronous component, you often want to display a loading indicator. You can do this by returning the loading indicator in the route handler, and then replacing the indicator once the asynchronous component has loaded. These are all standard DOM API methods.
