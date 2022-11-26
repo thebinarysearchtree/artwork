@@ -98,7 +98,7 @@ const createStyles = (styles) => {
 
 const register = (options) => {
   const { name, root, connected, styles, props } = options;
-  let registered = components[name];
+  const registered = components[name];
   if (registered) {
     const clone = registered.cloneNode();
     clone.load(root, connected, props);

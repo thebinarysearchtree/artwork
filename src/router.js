@@ -64,7 +64,7 @@ const start = () => {
   processRoute(window.location.href);
 };
 
-const setNotFound = () => {
+const setNotFound = (element) => {
   notFound = () => element;
 };
 
