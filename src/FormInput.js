@@ -22,7 +22,8 @@ class FormInput extends BaseElement {
     this.internals = this.attachInternals();
   }
 
-  afterLoad() {
+  load(root, connected, props) {
+    super.load(root, connected, props);
     this.props.input.addEventListener('keydown', (e) => {
       if (e.keyCode === 13) {
         const form = this.internals.form;

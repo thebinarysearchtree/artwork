@@ -34,9 +34,6 @@ class BaseElement extends HTMLElement {
         }
       }
     }
-    if (this.afterLoad) {
-      this.afterLoad();
-    }
   }
 
   connectedCallback() {

@@ -11,6 +11,14 @@ const create = (tag, innerText) => {
     }
     return element;
   }
+  if (!tag) {
+    const handler = {
+      get: (target, prop, receiver) => {
+        return document.createElement(prop);
+      }
+    }
+    return new Proxy({}, handler);
+  }
   const properties = tag;
   const element = document.createElement(properties.tag);
   for (const [key, value] of Object.entries(properties)) {

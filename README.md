@@ -49,24 +49,19 @@ A todo list.
 ```js
 import { html, htmlFor } from 'artworkjs';
 
-const text = {
-  title: 'Todo',
-  label: 'What needs to be done?',
-  button: 'Add #1'
-}
-
 const todo = () => {
-  const div = html.create('div');
+  const { div, input, form, ul, h3, label, button } = html.create();
 
-  const title = html.create('h3', text.title);
-  const label = html.create('label', text.label);
-  const button = html.create('button', text.button);
+  h3.innerText = 'Todo';
+  label.innerText = 'What needs to be done?';
+  button.innerText = 'Add #1';
 
   htmlFor(label, input, 'new-todo');
 
   form.append(label, input, button);
 
   form.addEventListener('submit', (e) => {
+    e.preventDefault();
     const todo = input.value;
     if (todo.length === 0) {
       return;
@@ -78,7 +73,7 @@ const todo = () => {
     input.value = '';
   });
 
-  div.append(title, ul, form);
+  div.append(h3, ul, form);
 
   return html.register({
     root: div,
@@ -210,7 +205,7 @@ In the example below, the ```connected``` method is used to create a new router 
 
 ```js
 const routes = async () => {
-  const { root, sidePanel, content, video } = html.createMany('div');
+  const { root, sidePanel, content, video } = html.createStyled('div');
 
   const movies = await getMovies();
   const thumbnails = movies.map(m => thumbnail(m));
