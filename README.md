@@ -142,8 +142,11 @@ const { div, input, form, ul, h3, label, button } = html.create();
 ```html.register``` is used to register a component if it doesn't already exist, and then return a new instance of that component. It takes the following arguments:
 
 ```root```: The root element that you want to append to the shadow DOM.
+
 ```styles```: This is an optional argument that can be either a string, an ```CSSStyleSheet```:, or an array of either of these if need to combine styles.
+
 ```props```: An optional object that contains properties and functions that will be available to consumers of the web component. See the ```Thumbnail.js``` and ```Login.js``` examples in the ```art-project``` to see how this works.
+
 ```extends```: An optional class that the web component will inherit from.
 
 By default, web components do not participate in forms. To allow them to work in forms, so that for example, pressing enter on an input will submit a form, you can inherit from the ```FormInput``` class.
@@ -154,7 +157,7 @@ import { html, FormInput } from 'artworkjs';
 const input = (labelText) => {
   const { div, label, input } = html.create();
   label.innerText = labelText;
-  
+
   div.append(label, input);
 
   return html.register({
