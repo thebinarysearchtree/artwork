@@ -19,7 +19,9 @@ const create = (tag, innerText) => {
     }
     return new Proxy({}, handler);
   }
-  const properties = tag;
+}
+
+const createProps = (properties) => {
   const element = document.createElement(properties.tag);
   for (const [key, value] of Object.entries(properties)) {
     if (key === 'children') {
@@ -131,6 +133,7 @@ const register = (options) => {
 
 const html = {
   create,
+  createProps,
   createMany,
   createStyled,
   register

@@ -386,7 +386,7 @@ interface RegisterWithExtendsAndProps<P, E extends BaseElement> {
 interface HTMLFunctions {
   create(): HTMLElementTagNameMap;
   create<K extends keyof HTMLElementTagNameMap>(tag: K, innerText?: string): HTMLElementTagNameMap[K];
-  create<K extends keyof HTMLElementTagNameMap>(properties: Tag<K> & Camel<HTMLElementTagNameMap[K]>): HTMLElementTagNameMap[K];
+  createProps<K extends keyof HTMLElementTagNameMap>(properties: Tag<K> & Camel<HTMLElementTagNameMap[K]>): HTMLElementTagNameMap[K];
   createMany<K extends keyof HTMLElementTagNameMap>(tag: K): { [key: string]: HTMLElementTagNameMap[K] };
   createStyled<K extends keyof HTMLElementTagNameMap>(tag: K): { [key: string]: HTMLElementTagNameMap[K] };
   register<T extends BaseElement>(options: Register): T;
@@ -398,7 +398,7 @@ interface HTMLFunctions {
 interface SVGFunctions {
   create(): SVGElementTagNameMap;
   create<K extends keyof SVGElementTagNameMap>(tag: K, innerText?: string): SVGElementTagNameMap[K];
-  create<K extends keyof SVGElementTagNameMap>(properties: Tag<K> & Camel<SVGElementTagNameMap[K]>): SVGElementTagNameMap[K];
+  createProps<K extends keyof SVGElementTagNameMap>(properties: Tag<K> & Camel<SVGElementTagNameMap[K]>): SVGElementTagNameMap[K];
   createMany<K extends keyof SVGElementTagNameMap>(tag: K): { [key: string]: SVGElementTagNameMap[K] };
   createStyled<K extends keyof SVGElementTagNameMap>(tag: K): { [key: string]: SVGElementTagNameMap[K] };
 }

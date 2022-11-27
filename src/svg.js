@@ -1,19 +1,23 @@
 import isEvent from './camel.js';
 
+const uri = 'http://www.w3.org/2000/svg';
+
 const create = (tag) => {
   if (typeof tag === 'string') {
-    return document.createElementNS('http://www.w3.org/2000/svg', tag);
+    return document.createElementNS(uri, tag);
   }
   if (!tag) {
     const handler = {
       get: (target, prop, receiver) => {
-        return document.createElementNS('http://www.w3.org/2000/svg', prop);
+        return document.createElementNS(uri, prop);
       }
     }
     return new Proxy({}, handler);
   }
-  const properties = tag;
-  const element = document.createElementNS('http://www.w3.org/2000/svg', properties.tag);
+}
+
+const createProps = (properties) => {
+  const element = document.createElementNS(uri, properties.tag);
   for (const [key, value] of Object.entries(properties)) {
     if (key === 'children') {
       element.append(...value);
@@ -31,7 +35,7 @@ const create = (tag) => {
 
 const createMany = (tag) => {
   const handler = {
-    get: () => document.createElementNS('http://www.w3.org/2000/svg', tag)
+    get: () => document.createElementNS(uri, tag)
   }
   return new Proxy({}, handler);
 }
@@ -39,7 +43,7 @@ const createMany = (tag) => {
 const createStyled = (tag) => {
   const handler = {
     get: (target, prop, receiver) => {
-      const element = document.createElementNS('http://www.w3.org/2000/svg', tag);
+      const element = document.createElementNS(uri, tag);
       element.className = prop.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
       return element;
     }
@@ -49,6 +53,7 @@ const createStyled = (tag) => {
 
 const svg = {
   create,
+  createProps,
   createMany,
   createStyled
 };
