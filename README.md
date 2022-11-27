@@ -87,12 +87,12 @@ const todo = () => {
 
 Components will often be composed of one or more HTML elements. Artwork provides multiple convenience methods for creating elements so that you don't have to do ```document.createElement('div');``` each time.
 
-Which method you use will depend on what you are trying to do and the way you write components. If you want to create an element with lots of attributes, it is often best to pass in a list of properties to ```html.createProps```.
+Which method you use will depend on what you are trying to do and the way you write components. If you want to create an element with lots of attributes, it is often best to pass in a list of properties to ```html.create```.
 
 ```js
 import { html } from 'artworkjs';
 
-const city = html.createProps({
+const city = html.create({
   tag: 'div',
   className: 'city',
   innerText: 'Brisbane',
@@ -252,7 +252,7 @@ When you are loading an asynchronous component, you often want to display a load
 
 ```js
 router.add(/\/movies/, () => {
-  const loading = html.create('div', 'Loading...');
+  const loading = div('Loading...');
   movies().then((m) => loading.replaceWith(m));
   return loading;
 });

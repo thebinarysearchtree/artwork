@@ -126,7 +126,7 @@ class Router {
 }
 
 const routerLink = (properties) => {
-  const anchor = html.createProps({ tag: 'a', ...properties });
+  const anchor = html.create({ tag: 'a', ...properties });
   const href = anchor.href;
   anchor.addEventListener('click', (e) => {
     const leftClick = e.button === 0;
