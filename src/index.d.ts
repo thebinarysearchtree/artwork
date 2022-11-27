@@ -361,7 +361,7 @@ interface RegisterWithExtends<E extends BaseElement> {
   root: HTMLElement;
   connected?: Function;
   styles?: string | string[] | CSSStyleSheet | CSSStyleSheet[];
-  extends: E;
+  extends: new (...args: any[]) => E;
 }
 
 interface RegisterWithExtendsAndProps<P, E extends BaseElement> {
@@ -370,7 +370,7 @@ interface RegisterWithExtendsAndProps<P, E extends BaseElement> {
   connected?: Function;
   styles?: string | string[] | CSSStyleSheet | CSSStyleSheet[];
   props: P;
-  extends: E;
+  extends: new (...args: any[]) => E;
 }
 
 interface HTMLFunctions {
