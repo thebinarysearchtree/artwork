@@ -344,8 +344,8 @@ interface Shortcuts {
 
 type ExistingEventHandlers = GlobalEventHandlers & DocumentAndElementEventHandlers;
 
-type Camel<T> = Omit<Partial<T> & Shortcuts & CamelDocumentAndElementEventHandlers & CamelGlobalEventHandlers, keyof ExistingEventHandlers> | string | number | HTMLElement[];
-type SvgCamel<T> = Omit<Partial<T> & Shortcuts & CamelDocumentAndElementEventHandlers & CamelGlobalEventHandlers, keyof ExistingEventHandlers> | HTMLElement[];
+type Camel<T> = Partial<T> & Shortcuts & CamelDocumentAndElementEventHandlers & CamelGlobalEventHandlers;
+type SvgCamel<T> = Partial<T> & Shortcuts & CamelDocumentAndElementEventHandlers & CamelGlobalEventHandlers;
 
 interface Tag<K> {
   tag: K
@@ -392,7 +392,7 @@ interface HTMLFunctions {
   register<T extends BaseElement>(options: Register): T;
   register<T extends BaseElement, P>(options: RegisterWithProps<P>): T & P;
   register<E extends BaseElement>(options: RegisterWithExtends<E>): E;
-  register<P, E>(options: RegisterWithExtendsAndProps<P, E>): P & E;
+  register<P, E extends BaseElement>(options: RegisterWithExtendsAndProps<P, E>): P & E;
 }
 
 interface SVGFunctions {
