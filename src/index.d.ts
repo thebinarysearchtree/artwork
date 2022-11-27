@@ -28,19 +28,9 @@ export class Router {
 
 export function routerLink(properties: Camel<HTMLAnchorElement> & { state?: any }): HTMLAnchorElement;
 
-interface ExistingAudioEventHandlers {
-  onencrypted: ((this: HTMLMediaElement, ev: MediaEncryptedEvent) => any) | null;
-  onwaitingforkey: ((this: HTMLMediaElement, ev: Event) => any) | null;
-}
-
 interface CamelAudioEventHandlers {
   onEncrypted?: (e: MediaEncryptedEvent) => any;
   onWaitingForKey?: (e: Event) => any;
-}
-
-interface ExistingVideoEventHandlers {
-  onenterpictureinpicture: ((this: HTMLVideoElement, ev: Event) => any) | null;
-  onleavepictureinpicture: ((this: HTMLVideoElement, ev: Event) => any) | null;
 }
 
 interface CamelVideoEventHandlers {
