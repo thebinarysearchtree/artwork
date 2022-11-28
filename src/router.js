@@ -52,8 +52,6 @@ const processRoute = (url) => {
 
 window.addEventListener('popstate', (e) => {
   processRoute(window.location.href);
-  const { x, y } = e.state.scroll;
-  window.scrollTo(x, y);
 });
 
 window.addEventListener('clickart', (e) => {
@@ -135,11 +133,6 @@ const routerLink = (properties) => {
 
     if (leftClick && relevantTarget && !modifierPressed) {
       e.preventDefault();
-      const scroll = {
-        x: window.scrollX,
-        y: window.scrollY
-      };
-      history.replaceState({...history.state, scroll }, '');
       history.pushState(properties.state, '', href);
       const event = new Event('clickart');
       event.href = href;
