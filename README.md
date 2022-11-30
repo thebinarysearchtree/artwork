@@ -1,5 +1,5 @@
 # Artwork
-A small front-end framework that lets you easily write pure JavaScript and css, without any HTML. Unlike documents, where logic and dynamic elements are minimal, applications do not benefit from markup languages such as HTML. Artwork lets you write applications the way they were made before web applications came along. This results in much faster loading and execution times, less code to write, and no translation layers to get in the way.
+A small front-end framework that lets you easily write pure JavaScript and CSS, without any HTML. Artwork lets you write applications the way they were made before web applications came along. This results in much faster loading and execution times, less code to write, and no translation layers to get in the way.
 
 Go to the [art-project](https://github.com/thebinarysearchtree/art-project) repository if you want to run the examples below or need a template for creating a new project.
 
@@ -106,7 +106,7 @@ const city = html.create({
 <div class="city" title="Australia">Brisbane</div>
 ```
 
-Often, a component will have a bunch of div elements that are used for nothing other than styling and layout. In this case, you can use the ```createStyled```. This function returns elements with their ```className``` set to the name of the variable after it is converted from camel case to dashes.
+Often, a component will have a bunch of div elements that are used for nothing other than styling and layout. In this case, you can use the ```createStyled``` function. This function returns elements with their ```className``` set to the name of the variable after it is converted from camel case to dashes.
 
 ```js
 import { html } from 'artworkjs';
@@ -143,9 +143,9 @@ const { div, input, form, ul, h3, label, button } = html.create();
 
 ```root```: The root element that you want to append to the shadow DOM.
 
-```styles```: This is an optional argument that can be either a string, an ```CSSStyleSheet```:, or an array of either of these if need to combine styles.
+```styles```: This is an optional argument that can be either a string, an ```CSSStyleSheet```, or an array of either of these if you need to combine styles.
 
-```props```: An optional object that contains properties and functions that will be available to consumers of the web component. See the ```Thumbnail.js``` and ```Login.js``` examples in the ```art-project``` to see how this works.
+```props```: An optional object that contains properties and functions that will be available to consumers of the web component. See the ```thumbnail.js``` and ```login.js``` examples in the ```art-project``` to see how this works.
 
 ```name```: The name of the web component. It should have a dash in it.
 
@@ -175,11 +175,11 @@ You should provide ```html.register``` with the ```input``` element. This will t
 
 ## Styles
 
-Every component can have css that is scoped to that component, to avoid clashes with other components.
+Every component can have CSS that is scoped to that component, to avoid clashes with other components.
 
 ```js
 import { html } from 'artworkjs';
-import styles from './Thumbnail.css' assert { type: 'css' };
+import styles from './thumbnail.css' assert { type: 'css' };
 
 const thumbnail = () => {
   const root = html.create('p', 'Star Wars');
@@ -191,15 +191,15 @@ const thumbnail = () => {
 }
 ```
 
-```styles``` can also be set to an array of styles if you have more than one. Subclasses can only add more styles, not remove existing styles. You can also use strings containing css.
+```styles``` can also be set to an array of styles if you have more than one. Subclasses can only add more styles, not remove existing styles. You can also use strings containing CSS.
 
 ## Routes
 
-Artwork includes a router that has some pretty interesting features. When creating a router, you can pass in the ```root``` element, and the router will replace the child element of the root with whatever is returned by the route handler. In the example below, the child element will be the ```HelloWorld``` component from earlier. If you don't provide a root element, your route handler should not return anything, as it is left up to you to determine what happens when the route is hit.
+Artwork includes a router for handling requests. When creating a router, you can pass in the ```root``` element, and the router will replace the child element of the root with whatever is returned by the route handler. In the example below, the child element will be the ```hello``` component from earlier. If you don't provide a root element, your route handler should not return anything, as it is left up to you to determine what happens when the route is hit.
 
 ```js
 import { Router, html } from 'artworkjs';
-import hello from './examples/Hello.js';
+import hello from './examples/hello.js';
 
 const root = document.getElementById('root');
 
@@ -240,7 +240,7 @@ render() {
 }
 ```
 
-To manually navigate to a different rout, you can use ```pushState```.
+To manually navigate to a different route, you can use ```pushState```.
 
 ```js
 import { pushState } from 'artworkjs';
@@ -252,7 +252,7 @@ When you are loading an asynchronous component, you often want to display a load
 
 ```js
 router.add(/\/movies/, () => {
-  const loading = div('Loading...');
+  const loading = html.create('div', 'Loading...');
   movies().then((m) => loading.replaceWith(m));
   return loading;
 });
@@ -260,7 +260,7 @@ router.add(/\/movies/, () => {
 
 Artwork lets you create as many routers as you want. The router that is created last will override the earlier routers when it has a match that is also in the other routers. Usually, you will have one router that starts when the application begins, and then other routers that are started inside components. When the component loads, the router will become active. Make sure to remove the router once the component is removed from the DOM.
 
-In the example below, the ```connected``` method is used to create a new router that intercepts routes and only replaces the title of the movie instead of reloading the side panel.
+In the example below, the ```connected``` function is used to create a new router that intercepts routes and only replaces the title of the movie instead of reloading the side panel.
 
 ```js
 const routes = async () => {
