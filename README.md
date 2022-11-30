@@ -62,11 +62,10 @@ const todo = () => {
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const todo = input.value;
-    if (todo.length === 0) {
+    if (input.value.length === 0) {
       return;
     }
-    const item = html.create('li', todo);
+    const item = html.create('li', input.value);
     ul.append(item);
     
     button.innerText = `Add #${ul.childElementCount + 1}`;
