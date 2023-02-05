@@ -3,7 +3,7 @@ import BaseElement from './BaseElement.js';
 
 const components = {};
 
-const create = (tag = 'div', innerText) => {
+const create = (tag, innerText) => {
   if (typeof tag === 'string') {
     const element = document.createElement(tag);
     if (innerText) {

@@ -375,7 +375,6 @@ interface RegisterWithExtendsAndProps<P, E extends BaseElement> {
 
 interface HTMLFunctions {
   create(): HTMLElementTagNameMap;
-  create(): HTMLDivElement;
   create<K extends keyof HTMLElementTagNameMap>(tag: K, innerText?: string): HTMLElementTagNameMap[K];
   create<K extends keyof HTMLElementTagNameMap>(properties: Tag<K> & Camel<HTMLElementTagNameMap[K]>): HTMLElementTagNameMap[K];
   createMany(tag: K): { [key: string]: HTMLDivElement };
