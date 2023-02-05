@@ -3,7 +3,7 @@ import BaseElement from './BaseElement.js';
 
 const components = {};
 
-const create = (tag, innerText) => {
+const create = (tag = 'div', innerText) => {
   if (typeof tag === 'string') {
     const element = document.createElement(tag);
     if (innerText) {
@@ -36,14 +36,14 @@ const create = (tag, innerText) => {
   return element;
 }
 
-const createMany = (tag) => {
+const createMany = (tag = 'div') => {
   const handler = {
     get: () => document.createElement(tag)
   }
   return new Proxy({}, handler);
 }
 
-const createStyled = (tag) => {
+const createStyled = (tag = 'div') => {
   const handler = {
     get: (target, prop, receiver) => {
       const element = document.createElement(tag);
