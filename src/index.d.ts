@@ -377,9 +377,9 @@ interface HTMLFunctions {
   create(): HTMLElementTagNameMap;
   create<K extends keyof HTMLElementTagNameMap>(tag: K, innerText?: string): HTMLElementTagNameMap[K];
   create<K extends keyof HTMLElementTagNameMap>(properties: Tag<K> & Camel<HTMLElementTagNameMap[K]>): HTMLElementTagNameMap[K];
-  createMany(tag: K): { [key: string]: HTMLDivElement };
+  createMany(): { [key: string]: HTMLDivElement };
   createMany<K extends keyof HTMLElementTagNameMap>(tag: K): { [key: string]: HTMLElementTagNameMap[K] };
-  createStyled(tag: K): { [key: string]: HTMLDivElement };
+  createStyled(): { [key: string]: HTMLDivElement };
   createStyled<K extends keyof HTMLElementTagNameMap>(tag: K): { [key: string]: HTMLElementTagNameMap[K] };
   register<T extends BaseElement>(options: Register): T;
   register<T extends BaseElement, P>(options: RegisterWithProps<P>): T & P;
