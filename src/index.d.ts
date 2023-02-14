@@ -28,133 +28,133 @@ export class Router {
 
 export function routerLink(properties: Camel<HTMLAnchorElement> & { state?: any }): HTMLAnchorElement;
 
-interface CamelAudioEventHandlers {
-  onEncrypted?: (e: MediaEncryptedEvent) => any;
-  onWaitingForKey?: (e: Event) => any;
+interface CamelAudioEventHandlers<T> {
+  onEncrypted?: (e: MediaEncryptedEvent, element: T) => any;
+  onWaitingForKey?: (e: Event, element: T) => any;
 }
 
-interface CamelVideoEventHandlers {
-  onEnterPictureInPicture?: (e: Event) => any;
-  onLeavePictureInPicture?: (e: Event) => any;
+interface CamelVideoEventHandlers<T> {
+  onEnterPictureInPicture?: (e: Event, element: T) => any;
+  onLeavePictureInPicture?: (e: Event, element: T) => any;
 }
 
-interface CamelDocumentAndElementEventHandlers {
-  onCopy?: (e: ClipboardEvent) => any;
-  onCut?: (e: ClipboardEvent) => any;
-  onPaste?: (e: ClipboardEvent) => any;
+interface CamelDocumentAndElementEventHandlers<T> {
+  onCopy?: (e: ClipboardEvent, element: T) => any;
+  onCut?: (e: ClipboardEvent, element: T) => any;
+  onPaste?: (e: ClipboardEvent, element: T) => any;
 }
 
-interface CamelWindowEventHandlers {
-  onAfterPrint?: (e: Event) => any;
-  onBeforePrint?: (e: Event) => any;
-  onBeforeUnload?: (e: BeforeUnloadEvent) => any;
-  onGamepadConnected?: (e: GamepadEvent) => any;
-  onGamepadDisconnected?: (e: GamepadEvent) => any;
-  onHashChange?: (e: HashChangeEvent) => any;
-  onLanguageChange?: (e: Event) => any;
-  onMessage?: (e: MessageEvent) => any;
-  onMessageError?: (e: MessageEvent) => any;
-  onOffline?: (e: Event) => any;
-  onOnline?: (e: Event) => any;
-  onPageHide?: (e: PageTransitionEvent) => any;
-  onPageShow?: (e: PageTransitionEvent) => any;
-  onPopState?: (e: PopStateEvent) => any;
-  onRejectionHandled?: (e: PromiseRejectionEvent) => any;
-  onStorage?: (e: StorageEvent) => any;
-  onUnhandledRejection?: (e: PromiseRejectionEvent) => any;
-  onUnload?: (e: Event) => any;
+interface CamelWindowEventHandlers<T> {
+  onAfterPrint?: (e: Event, element: T) => any;
+  onBeforePrint?: (e: Event, element: T) => any;
+  onBeforeUnload?: (e: BeforeUnloadEvent, element: T) => any;
+  onGamepadConnected?: (e: GamepadEvent, element: T) => any;
+  onGamepadDisconnected?: (e: GamepadEvent, element: T) => any;
+  onHashChange?: (e: HashChangeEvent, element: T) => any;
+  onLanguageChange?: (e: Event, element: T) => any;
+  onMessage?: (e: MessageEvent, element: T) => any;
+  onMessageError?: (e: MessageEvent, element: T) => any;
+  onOffline?: (e: Event, element: T) => any;
+  onOnline?: (e: Event, element: T) => any;
+  onPageHide?: (e: PageTransitionEvent, element: T) => any;
+  onPageShow?: (e: PageTransitionEvent, element: T) => any;
+  onPopState?: (e: PopStateEvent, element: T) => any;
+  onRejectionHandled?: (e: PromiseRejectionEvent, element: T) => any;
+  onStorage?: (e: StorageEvent, element: T) => any;
+  onUnhandledRejection?: (e: PromiseRejectionEvent, element: T) => any;
+  onUnload?: (e: Event, element: T) => any;
 }
 
-interface CamelGlobalEventHandlers {
+interface CamelGlobalEventHandlers<T> {
   /**
    * Fires when the user aborts the download.
    * @param e The event.
    */
-  onAbort?: (e: UIEvent) => any;
-  onAnimationCancel?: (e: AnimationEvent) => any;
-  onAnimationEnd?: (e: AnimationEvent) => any;
-  onAnimationIteration?: (e: AnimationEvent) => any;
-  onAnimationStart?: (e: AnimationEvent) => any;
-  onAuxClick?: (e: MouseEvent) => any;
+  onAbort?: (e: UIEvent, element: T) => any;
+  onAnimationCancel?: (e: AnimationEvent, element: T) => any;
+  onAnimationEnd?: (e: AnimationEvent, element: T) => any;
+  onAnimationIteration?: (e: AnimationEvent, element: T) => any;
+  onAnimationStart?: (e: AnimationEvent, element: T) => any;
+  onAuxClick?: (e: MouseEvent, element: T) => any;
   /**
    * Fires when the object loses the input focus.
    * @param e The focus event.
    */
-  onBlur?: (e: FocusEvent) => any;
+  onBlur?: (e: FocusEvent, element: T) => any;
   /**
    * Occurs when playback is possible, but would require further buffering.
    * @param e The event.
    */
-  onCanPlay?: (e: Event) => any;
-  onCanPlayThrough?: (e: Event) => any;
+  onCanPlay?: (e: Event, element: T) => any;
+  onCanPlayThrough?: (e: Event, element: T) => any;
   /**
    * Fires when the contents of the object or selection have changed.
    * @param e The event.
    */
-  onChange?: (e: Event) => any;
+  onChange?: (e: Event, element: T) => any;
   /**
    * Fires when the user clicks the left mouse button on the object
    * @param e The mouse event.
    */
-  onClick?: (e: MouseEvent) => any;
-  onClose?: (e: Event) => any;
+  onClick?: (e: MouseEvent, element: T) => any;
+  onClose?: (e: Event, element: T) => any;
   /**
    * Fires when the user clicks the right mouse button in the client area, opening the context menu.
    * @param e The mouse event.
    */
-  onContextMenu?: (e: MouseEvent) => any;
-  onCueChange?: (e: Event) => any;
+  onContextMenu?: (e: MouseEvent, element: T) => any;
+  onCueChange?: (e: Event, element: T) => any;
   /**
    * Fires when the user double-clicks the object.
    * @param e The mouse event.
    */
-  onDblClick?: (e: MouseEvent) => any;
+  onDblClick?: (e: MouseEvent, element: T) => any;
   /**
    * Fires on the source object continuously during a drag operation.
    * @param e The event.
    */
-  onDrag?: (e: DragEvent) => any;
+  onDrag?: (e: DragEvent, element: T) => any;
   /**
    * Fires on the source object when the user releases the mouse at the close of a drag operation.
    * @param e The event.
    */
-  onDragEnd?: (e: DragEvent) => any;
+  onDragEnd?: (e: DragEvent, element: T) => any;
   /**
    * Fires on the target element when the user drags the object to a valid drop target.
    * @param e The drag event.
    */
-  onDragEnter?: (e: DragEvent) => any;
+  onDragEnter?: (e: DragEvent, element: T) => any;
   /**
    * Fires on the target object when the user moves the mouse out of a valid drop target during a drag operation.
    * @param e The drag event.
    */
-  onDragLeave?: (e: DragEvent) => any;
+  onDragLeave?: (e: DragEvent, element: T) => any;
   /**
    * Fires on the target element continuously while the user drags the object over a valid drop target.
    * @param e The event.
    */
-  onDragOver?: (e: DragEvent) => any;
+  onDragOver?: (e: DragEvent, element: T) => any;
   /**
    * Fires on the source object when the user starts to drag a text selection or selected object.
    * @param e The event.
    */
-  onDragStart?: (e: DragEvent) => any;
-  onDrop?: (e: DragEvent) => any;
+  onDragStart?: (e: DragEvent, element: T) => any;
+  onDrop?: (e: DragEvent, element: T) => any;
   /**
    * Occurs when the duration attribute is updated.
    * @param e The event.
    */
-  onDurationChange?: (e: Event) => any;
+  onDurationChange?: (e: Event, element: T) => any;
   /**
    * Occurs when the media element is reset to its initial state.
    * @param e The event.
    */
-  onEmptied?: (e: Event) => any;
+  onEmptied?: (e: Event, element: T) => any;
   /**
    * Occurs when the end of playback is reached.
    * @param e The event
    */
-  onEnded?: (e: Event) => any;
+  onEnded?: (e: Event, element: T) => any;
   /**
    * Fires when an error occurs during object loading.
    * @param e The event.
@@ -164,168 +164,168 @@ interface CamelGlobalEventHandlers {
    * Fires when the object receives focus.
    * @param e The event.
    */
-  onFocus?: (e: FocusEvent) => any;
-  onFormData?: (e: FormDataEvent) => any;
-  onGotPointerCapture?: (e: PointerEvent) => any;
-  onInput?: (e: Event) => any;
-  onInvalid?: (e: Event) => any;
+  onFocus?: (e: FocusEvent, element: T) => any;
+  onFormData?: (e: FormDataEvent, element: T) => any;
+  onGotPointerCapture?: (e: PointerEvent, element: T) => any;
+  onInput?: (e: Event, element: T) => any;
+  onInvalid?: (e: Event, element: T) => any;
   /**
    * Fires when the user presses a key.
    * @param e The keyboard event
    */
-  onKeyDown?: (e: KeyboardEvent) => any;
+  onKeyDown?: (e: KeyboardEvent, element: T) => any;
   /**
    * Fires when the user releases a key.
    * @param e The keyboard event
    */
-  onKeyUp?: (e: KeyboardEvent) => any;
+  onKeyUp?: (e: KeyboardEvent, element: T) => any;
   /**
    * Fires immediately after the browser loads the object.
    * @param e The event.
    */
-  onLoad?: (e: Event) => any;
+  onLoad?: (e: Event, element: T) => any;
   /**
    * Occurs when media data is loaded at the current playback position.
    * @param e The event.
    */
-  onLoadedData?: (e: Event) => any;
+  onLoadedData?: (e: Event, element: T) => any;
   /**
    * Occurs when the duration and dimensions of the media have been determined.
    * @param e The event.
    */
-  onLoadedMetadata?: (e: Event) => any;
+  onLoadedMetadata?: (e: Event, element: T) => any;
   /**
    * Occurs when Internet Explorer begins looking for media data.
    * @param e The event.
    */
-  onLoadStart?: (e: Event) => any;
-  onLostPointerCapture?: (e: PointerEvent) => any;
+  onLoadStart?: (e: Event, element: T) => any;
+  onLostPointerCapture?: (e: PointerEvent, element: T) => any;
   /**
    * Fires when the user clicks the object with either mouse button.
    * @param e The mouse event.
    */
-  onMouseDown?: (e: MouseEvent) => any;
-  onMouseEnter?: (e: MouseEvent) => any;
-  onMouseLeave?: (e: MouseEvent) => any;
+  onMouseDown?: (e: MouseEvent, element: T) => any;
+  onMouseEnter?: (e: MouseEvent, element: T) => any;
+  onMouseLeave?: (e: MouseEvent, element: T) => any;
   /**
    * Fires when the user moves the mouse over the object.
    * @param e The mouse event.
    */
-  onMouseMove?: (e: MouseEvent) => any;
+  onMouseMove?: (e: MouseEvent, element: T) => any;
   /**
    * Fires when the user moves the mouse pointer outside the boundaries of the object.
    * @param e The mouse event.
    */
-  onMouseOut?: (e: MouseEvent) => any;
+  onMouseOut?: (e: MouseEvent, element: T) => any;
   /**
    * Fires when the user moves the mouse pointer into the object.
    * @param e The mouse event.
    */
-  onMouseOver?: (e: MouseEvent) => any;
+  onMouseOver?: (e: MouseEvent, element: T) => any;
   /**
    * Fires when the user releases a mouse button while the mouse is over the object.
    * @param e The mouse event.
    */
-  onMouseUp?: (e: MouseEvent) => any;
+  onMouseUp?: (e: MouseEvent, element: T) => any;
   /**
    * Occurs when playback is paused.
    * @param e The event.
    */
-  onPause?: (e: Event) => any;
+  onPause?: (e: Event, element: T) => any;
   /**
    * Occurs when the play method is requested.
    * @param e The event.
    */
-  onPlay?: (e: Event) => any;
+  onPlay?: (e: Event, element: T) => any;
   /**
    * Occurs when the audio or video has started playing.
    * @param e The event.
    */
-  onPlaying?: (e: Event) => any;
-  onPointerCancel?: (e: PointerEvent) => any;
-  onPointerDown?: (e: PointerEvent) => any;
-  onPointerEnter?: (e: PointerEvent) => any;
-  onPointerLeave?: (e: PointerEvent) => any;
-  onPointerMove?: (e: PointerEvent) => any;
-  onPointerOut?: (e: PointerEvent) => any;
-  onPointerOver?: (e: PointerEvent) => any;
-  onPointerUp?: (e: PointerEvent) => any;
+  onPlaying?: (e: Event, element: T) => any;
+  onPointerCancel?: (e: PointerEvent, element: T) => any;
+  onPointerDown?: (e: PointerEvent, element: T) => any;
+  onPointerEnter?: (e: PointerEvent, element: T) => any;
+  onPointerLeave?: (e: PointerEvent, element: T) => any;
+  onPointerMove?: (e: PointerEvent, element: T) => any;
+  onPointerOut?: (e: PointerEvent, element: T) => any;
+  onPointerOver?: (e: PointerEvent, element: T) => any;
+  onPointerUp?: (e: PointerEvent, element: T) => any;
   /**
    * Occurs to indicate progress while downloading media data.
    * @param e The event.
    */
-  onProgress?: (e: ProgressEvent) => any;
+  onProgress?: (e: ProgressEvent, element: T) => any;
   /**
    * Occurs when the playback rate is increased or decreased.
    * @param e The event.
    */
-  onRateChange?: (e: Event) => any;
+  onRateChange?: (e: Event, element: T) => any;
   /**
    * Fires when the user resets a form.
    * @param e The event.
    */
-  onReset?: (e: Event) => any;
-  onResize?: (e: UIEvent) => any;
+  onReset?: (e: Event, element: T) => any;
+  onResize?: (e: UIEvent, element: T) => any;
   /**
    * Fires when the user repositions the scroll box in the scroll bar on the object.
    * @param e The event.
    */
-  onScroll?: (e: Event) => any;
-  onSecurityPolicyViolation?: (e: SecurityPolicyViolationEvent) => any;
+  onScroll?: (e: Event, element: T) => any;
+  onSecurityPolicyViolation?: (e: SecurityPolicyViolationEvent, element: T) => any;
   /**
    * Occurs when the seek operation ends.
    * @param e The event.
    */
-  onSeeked?: (e: Event) => any;
+  onSeeked?: (e: Event, element: T) => any;
   /**
    * Occurs when the current playback position is moved.
    * @param e The event.
    */
-  onSeeking?: (e: Event) => any;
+  onSeeking?: (e: Event, element: T) => any;
   /**
    * Fires when the current selection changes.
    * @param e The event.
    */
-  onSelect?: (e: Event) => any;
-  onSelectionChange?: (e: Event) => any;
-  onSelectStart?: (e: Event) => any;
-  onSlotChange?: (e: Event) => any;
+  onSelect?: (e: Event, element: T) => any;
+  onSelectionChange?: (e: Event, element: T) => any;
+  onSelectStart?: (e: Event, element: T) => any;
+  onSlotChange?: (e: Event, element: T) => any;
   /**
    * Occurs when the download has stopped.
    * @param e The event.
    */
-  onStalled?: (e: Event) => any;
-  onSubmit?: (e: SubmitEvent) => any;
+  onStalled?: (e: Event, element: T) => any;
+  onSubmit?: (e: SubmitEvent, element: T) => any;
   /**
    * Occurs if the load operation has been intentionally halted.
    * @param e The event.
    */
-  onSuspend?: (e: Event) => any;
+  onSuspend?: (e: Event, element: T) => any;
   /**
    * Occurs to indicate the current playback position.
    * @param e The event.
    */
-  onTimeUpdate?: (e: Event) => any;
-  onToggle?: (e: Event) => any;
-  onTouchCancel?: (e: TouchEvent) => any;
-  onTouchEnd?: (e: TouchEvent) => any;
-  onTouchMove?: (e: TouchEvent) => any;
-  onTouchStart?: (e: TouchEvent) => any;
-  onTransitionCancel?: (e: TransitionEvent) => any;
-  onTransitionEnd?: (e: TransitionEvent) => any;
-  onTransitionRun?: (e: TransitionEvent) => any;
-  onTransitionStart?: (e: TransitionEvent) => any;
+  onTimeUpdate?: (e: Event, element: T) => any;
+  onToggle?: (e: Event, element: T) => any;
+  onTouchCancel?: (e: TouchEvent, element: T) => any;
+  onTouchEnd?: (e: TouchEvent, element: T) => any;
+  onTouchMove?: (e: TouchEvent, element: T) => any;
+  onTouchStart?: (e: TouchEvent, element: T) => any;
+  onTransitionCancel?: (e: TransitionEvent, element: T) => any;
+  onTransitionEnd?: (e: TransitionEvent, element: T) => any;
+  onTransitionRun?: (e: TransitionEvent, element: T) => any;
+  onTransitionStart?: (e: TransitionEvent, element: T) => any;
   /**
    * Occurs when the volume is changed, or playback is muted or unmuted.
    * @param e The event.
    */
-  onVolumeChange?: (e: Event) => any;
+  onVolumeChange?: (e: Event, element: T) => any;
   /**
    * Occurs when playback stops because the next frame of a video resource is not available.
    * @param e The event.
    */
-  onWaiting?: (e: Event) => any;
-  onWheel?: (e: WheelEvent) => any;
+  onWaiting?: (e: Event, element: T) => any;
+  onWheel?: (e: WheelEvent, element: T) => any;
 }
 
 interface Shortcuts {
@@ -334,8 +334,8 @@ interface Shortcuts {
 
 type ExistingEventHandlers = GlobalEventHandlers & DocumentAndElementEventHandlers;
 
-type Camel<T> = Partial<T> & Shortcuts & CamelDocumentAndElementEventHandlers & CamelGlobalEventHandlers;
-type SvgCamel<T> = Partial<T> & Shortcuts & CamelDocumentAndElementEventHandlers & CamelGlobalEventHandlers;
+type Camel<T> = Partial<T> & Shortcuts & CamelDocumentAndElementEventHandlers<T> & CamelGlobalEventHandlers<T>;
+type SvgCamel<T> = Partial<T> & Shortcuts & CamelDocumentAndElementEventHandlers<T> & CamelGlobalEventHandlers<T>;
 
 interface Tag<K> {
   tag: K
