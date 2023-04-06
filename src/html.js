@@ -22,6 +22,9 @@ const create = (tag, innerText) => {
   const properties = tag;
   const element = document.createElement(properties.tag);
   for (const [key, value] of Object.entries(properties)) {
+    if (key === 'tag') {
+      continue;
+    }
     if (key === 'children') {
       element.append(...value);
     }

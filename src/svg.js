@@ -15,6 +15,9 @@ const create = (tag) => {
   const properties = tag;
   const element = document.createElementNS('http://www.w3.org/2000/svg', properties.tag);
   for (const [key, value] of Object.entries(properties)) {
+    if (key === 'tag') {
+      continue;
+    }
     if (key === 'children') {
       element.append(...value);
     }
