@@ -26,7 +26,8 @@ const create = (tag) => {
       element.addEventListener(event, value);
     }
     else {
-      element.setAttribute(key, value);
+      const adjusted = key.replaceAll(/([a-z])([A-Z])/g, (m, l, u) => l + '-' + u.toLowerCase());
+      element.setAttribute(adjusted, value);
     }
   }
   return element;
