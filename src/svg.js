@@ -1,4 +1,5 @@
 import isEvent from './camel.js';
+import dashed from './dashed.js';
 
 const create = (tag) => {
   if (typeof tag === 'string') {
@@ -26,8 +27,8 @@ const create = (tag) => {
       element.addEventListener(event, value);
     }
     else {
-      const adjusted = key.replaceAll(/([a-z])([A-Z])/g, (m, l, u) => l + '-' + u.toLowerCase());
-      element.setAttribute(adjusted, value);
+      const adjusted = dashed.get(key);
+      element.setAttribute(adjusted || key, value);
     }
   }
   return element;
