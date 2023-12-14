@@ -22,7 +22,7 @@ const create = (tag) => {
     if (key === 'children') {
       element.append(...value);
     }
-    else if (key.startsWith('on') && key.length > 2 && isEvent(key)) {
+    else if (key.startsWith('on') && key.length > 2 && isEvent(key) && value) {
       const event = key.substring(2).toLowerCase();
       element.addEventListener(event, value);
     }

@@ -28,7 +28,7 @@ const create = (tag, innerText) => {
     if (key === 'children') {
       element.append(...value);
     }
-    else if (key.startsWith('on') && key.length > 2 && isEvent(key)) {
+    else if (key.startsWith('on') && key.length > 2 && isEvent(key) && value) {
       const event = key.substring(2).toLowerCase();
       element.addEventListener(event, (e) => value(element, e));
     }
