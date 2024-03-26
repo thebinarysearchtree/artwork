@@ -34,14 +34,7 @@ const create = (tag) => {
   return element;
 }
 
-const createMany = (tag) => {
-  const handler = {
-    get: () => document.createElementNS('http://www.w3.org/2000/svg', tag)
-  }
-  return new Proxy({}, handler);
-}
-
-const createStyled = (tag) => {
+const styled = (tag) => {
   const handler = {
     get: (target, prop, receiver) => {
       const element = document.createElementNS('http://www.w3.org/2000/svg', tag);
@@ -52,10 +45,27 @@ const createStyled = (tag) => {
   return new Proxy({}, handler);
 }
 
-const svg = {
-  create,
-  createMany,
-  createStyled
-};
+const predefined = new Map([
+  ['create', create],
+  ['styled', styled]
+]);
 
-export default svg;
+const elementCreators = {};
+
+const handler = {
+  get: function(target, tag, receiver) {
+    const existing = predefined.get(tag);
+    if (existing) {
+      return existing;
+    }
+    if (elementCreators[tag]) {
+      return elementCreators[tag];
+    }
+    elementCreators[tag] = (properties) => create(tag, properties);
+    return elementCreators[tag];
+  }
+}
+
+const proxy = new Proxy(elementCreators, handler);
+
+export default proxy;

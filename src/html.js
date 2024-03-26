@@ -39,14 +39,7 @@ const create = (tag, innerText) => {
   return element;
 }
 
-const createMany = (tag = 'div') => {
-  const handler = {
-    get: () => document.createElement(tag)
-  }
-  return new Proxy({}, handler);
-}
-
-const createStyled = (tag = 'div') => {
+const styled = (tag = 'div') => {
   const handler = {
     get: (target, prop, receiver) => {
       const element = document.createElement(tag);
@@ -132,11 +125,28 @@ const register = (options) => {
   return element;
 }
 
-const html = {
-  create,
-  createMany,
-  createStyled,
-  register
+const predefined = new Map([
+  ['create', create],
+  ['styled', styled],
+  ['register', register]
+]);
+
+const elementCreators = {};
+
+const handler = {
+  get: function(target, tag, receiver) {
+    const existing = predefined.get(tag);
+    if (existing) {
+      return existing;
+    }
+    if (elementCreators[tag]) {
+      return elementCreators[tag];
+    }
+    elementCreators[tag] = (properties) => create(tag, properties);
+    return elementCreators[tag];
+  }
 }
 
-export default html;
+const proxy = new Proxy(elementCreators, handler);
+
+export default proxy;

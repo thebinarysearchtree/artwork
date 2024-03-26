@@ -332,8 +332,6 @@ interface Shortcuts {
   children?: HTMLElement[];
 }
 
-type ExistingEventHandlers = GlobalEventHandlers & DocumentAndElementEventHandlers;
-
 type Camel<T> = Partial<T> & Shortcuts & CamelDocumentAndElementEventHandlers<T> & CamelGlobalEventHandlers<T>;
 type SvgCamel<T> = Partial<T> & Shortcuts & CamelDocumentAndElementEventHandlers<T> & CamelGlobalEventHandlers<T>;
 
@@ -373,14 +371,14 @@ interface RegisterWithExtendsAndProps<P, E extends BaseElement> {
   extends: new (...args: any[]) => E;
 }
 
+type HtmlFactory = {
+  [K in keyof HTMLElementTagNameMap]: (properties?: Camel<HTMLElementTagNameMap[K]> | string) => HTMLElementTagNameMap[K];
+};
+
 interface HTMLFunctions {
   create(): HTMLElementTagNameMap;
-  create<K extends keyof HTMLElementTagNameMap>(tag: K, innerText?: string): HTMLElementTagNameMap[K];
-  create<K extends keyof HTMLElementTagNameMap>(properties: Tag<K> & Camel<HTMLElementTagNameMap[K]>): HTMLElementTagNameMap[K];
-  createMany(): { [key: string]: HTMLDivElement };
-  createMany<K extends keyof HTMLElementTagNameMap>(tag: K): { [key: string]: HTMLElementTagNameMap[K] };
-  createStyled(): { [key: string]: HTMLDivElement };
-  createStyled<K extends keyof HTMLElementTagNameMap>(tag: K): { [key: string]: HTMLElementTagNameMap[K] };
+  styled(): { [key: string]: HTMLDivElement };
+  styled<K extends keyof HTMLElementTagNameMap>(tag: K): { [key: string]: HTMLElementTagNameMap[K] };
   register<T extends BaseElement>(options: Register): T;
   register<T extends BaseElement, P>(options: RegisterWithProps<P>): T & P;
   register<E extends BaseElement>(options: RegisterWithExtends<E>): E;
@@ -389,14 +387,8 @@ interface HTMLFunctions {
 
 interface SVGFunctions {
   create(): SVGElementTagNameMap;
-  create<K extends keyof SVGElementTagNameMap>(tag: K, innerText?: string): SVGElementTagNameMap[K];
-  create<K extends keyof SVGElementTagNameMap>(properties: Tag<K> & Camel<SVGElementTagNameMap[K]>): SVGElementTagNameMap[K];
-  createMany<K extends keyof SVGElementTagNameMap>(tag: K): { [key: string]: SVGElementTagNameMap[K] };
-  createStyled<K extends keyof SVGElementTagNameMap>(tag: K): { [key: string]: SVGElementTagNameMap[K] };
+  styled<K extends keyof SVGElementTagNameMap>(tag: K): { [key: string]: SVGElementTagNameMap[K] };
 }
-
-export const html: HTMLFunctions;
-export const svg: SVGFunctions;
 
 interface SVGElementTagNameMap {
   "a": SVGAElement;
@@ -462,4 +454,11 @@ interface SVGElementTagNameMap {
   "tspan": SVGTSpanElement;
   "use": SVGUseElement;
   "view": SVGViewElement;
-}
+};
+
+type SvgFactory = {
+  [K in keyof SVGElementTagNameMap]: (properties?: Camel<SVGElementTagNameMap[K]>) => SVGElementTagNameMap[K];
+};
+
+export const html: HTMLFunctions & HtmlFactory;
+export const svg: SVGFunctions & SvgFactory;

@@ -13,7 +13,7 @@ A very basic example that simply returns a native HTML element instead of a web 
 ```js
 import { html } from 'artworkjs';
 
-const hello = (name) => html.create('div', `Hello ${name}`);
+const hello = (name) => html.div(`Hello ${name}`);
 ```
 
 A timer that uses `connected`, which is a function run when the custom element is added to the DOM. The return value is run when the element is removed from the DOM.
@@ -23,7 +23,7 @@ import { html } from 'artworkjs';
 const timer = () => {
   let seconds = 0;
 
-  const div = html.create('div');
+  const div = html.div();
 
   const tick = () => {
     div.innerText = `Seconds: ${seconds}`;
@@ -65,7 +65,7 @@ const todo = () => {
     if (input.value.length === 0) {
       return;
     }
-    const item = html.create('li', input.value);
+    const item = html.li(input.value);
     ul.append(item);
     
     button.innerText = `Add #${ul.childElementCount + 1}`;
@@ -86,13 +86,12 @@ const todo = () => {
 
 Components will often be composed of one or more HTML elements. Artwork provides multiple convenience methods for creating elements so that you don't have to do ```document.createElement('div');``` each time.
 
-Which method you use will depend on what you are trying to do and the way you write components. If you want to create an element with lots of attributes, it is often best to pass in a list of properties to ```html.create```.
+Which method you use will depend on what you are trying to do and the way you write components. If you want to create an element with lots of attributes, it is often best to pass in a list of properties to ```html.tagName```.
 
 ```js
 import { html } from 'artworkjs';
 
-const city = html.create({
-  tag: 'div',
+const city = html.div({
   className: 'city',
   innerText: 'Brisbane',
   title: 'Australia'
@@ -105,12 +104,12 @@ const city = html.create({
 <div class="city" title="Australia">Brisbane</div>
 ```
 
-Often, a component will have a bunch of div elements that are used for nothing other than styling and layout. In this case, you can use the ```createStyled``` function. This function returns elements with their ```className``` set to the name of the variable after it is converted from camel case to dashes.
+Often, a component will have a bunch of div elements that are used for nothing other than styling and layout. In this case, you can use the ```styled``` function. This function returns elements with their ```className``` set to the name of the variable after it is converted from camel case to dashes.
 
 ```js
 import { html } from 'artworkjs';
 
-const { root, sidePanel, content } = html.createStyled('div');
+const { root, sidePanel, content } = html.styled('div');
 
 root.append(content, sidePanel);
 ```
@@ -122,12 +121,6 @@ root.append(content, sidePanel);
   <div class="content"></div>
   <div class="side-panel"></div>
 </div>
-```
-
-If you want many of the same type of element, you can do:
-
-```js
-const { root, sidePanel, content, video } = html.createMany('div');
 ```
 
 If you want many different elements, you can use ```html.create``` without any arguments. The name of the properties will be the type of the element.
@@ -181,7 +174,7 @@ import { html } from 'artworkjs';
 import styles from './thumbnail.css' assert { type: 'css' };
 
 const thumbnail = () => {
-  const root = html.create('p', 'Star Wars');
+  const root = html.p('Star Wars');
   return html.register({
     root,
     styles,
@@ -229,7 +222,7 @@ The anchor tags in a single page application need to be handled correctly to pre
 import { html, routerLink } from 'artworkjs';
 
 render() {
-  const div = html.create('div');
+  const div = html.div();
 
   const a1 = routerLink({ href: '/hello?name=World', innerText: 'Hello World' });
 
@@ -251,7 +244,7 @@ When you are loading an asynchronous component, you often want to display a load
 
 ```js
 router.add(/\/movies/, () => {
-  const loading = html.create('div', 'Loading...');
+  const loading = html.div('Loading...');
   movies().then((m) => loading.replaceWith(m));
   return loading;
 });
@@ -263,7 +256,7 @@ In the example below, the ```connected``` function is used to create a new route
 
 ```js
 const routes = async () => {
-  const { root, sidePanel, content, video } = html.createStyled('div');
+  const { root, sidePanel, content, video } = html.styled('div');
 
   const movies = await getMovies();
   const thumbnails = movies.map(m => thumbnail(m));
@@ -278,7 +271,7 @@ const routes = async () => {
 
       thumbnails.forEach(t => t.toggleSelected(videoId));
 
-      const title = html.create('h3', movie.name);
+      const title = html.h3(movie.name);
       content.replaceChildren(video, title);
     });
     
