@@ -1,10 +1,7 @@
 import isEvent from './camel.js';
 import dashed from './dashed.js';
 
-const create = (tag) => {
-  if (typeof tag === 'string') {
-    return document.createElementNS('http://www.w3.org/2000/svg', tag);
-  }
+const create = (tag, properties) => {
   if (!tag) {
     const handler = {
       get: (target, prop, receiver) => {
@@ -13,12 +10,8 @@ const create = (tag) => {
     }
     return new Proxy({}, handler);
   }
-  const properties = tag;
-  const element = document.createElementNS('http://www.w3.org/2000/svg', properties.tag);
+  const element = document.createElementNS('http://www.w3.org/2000/svg', tag);
   for (const [key, value] of Object.entries(properties)) {
-    if (key === 'tag') {
-      continue;
-    }
     if (key === 'children') {
       element.append(...value);
     }

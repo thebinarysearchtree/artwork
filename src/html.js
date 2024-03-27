@@ -19,12 +19,9 @@ const create = (tag, innerText) => {
     }
     return new Proxy({}, handler);
   }
-  const properties = tag;
-  const element = document.createElement(properties.tag);
+  const properties = innerText;
+  const element = document.createElement(tag);
   for (const [key, value] of Object.entries(properties)) {
-    if (key === 'tag') {
-      continue;
-    }
     if (key === 'children') {
       element.append(...value);
     }
