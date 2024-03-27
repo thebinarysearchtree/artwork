@@ -171,7 +171,7 @@ Every component can have CSS that is scoped to that component, to avoid clashes 
 
 ```js
 import { html } from 'artworkjs';
-import styles from './thumbnail.css' assert { type: 'css' };
+import styles from './thumbnail.css' with { type: 'css' };
 
 const thumbnail = () => {
   const root = html.p('Star Wars');
