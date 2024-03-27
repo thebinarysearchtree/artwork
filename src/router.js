@@ -4,7 +4,7 @@ const routers = [];
 
 history.scrollRestoration = 'manual';
 
-let notFound = () => html.create('p', 'Page not found');
+let notFound = () => html.p('Page not found');
 
 const getRoute = (url) => {
   for (let i = routers.length - 1; i >= 0; i--) {
@@ -124,7 +124,7 @@ class Router {
 }
 
 const routerLink = (properties) => {
-  const anchor = html.create({ tag: 'a', ...properties });
+  const anchor = html.a({ ...properties });
   const href = anchor.href;
   anchor.addEventListener('click', (e) => {
     const leftClick = e.button === 0;
