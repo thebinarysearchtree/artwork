@@ -11,6 +11,9 @@ const create = (tag, properties) => {
     return new Proxy({}, handler);
   }
   const element = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  if (!properties) {
+    return element;
+  }
   for (const [key, value] of Object.entries(properties)) {
     if (key === 'children') {
       element.append(...value);

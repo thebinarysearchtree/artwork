@@ -4,7 +4,7 @@ import BaseElement from './BaseElement.js';
 const components = {};
 
 const create = (tag, innerText) => {
-  if (typeof tag === 'string') {
+  if (typeof innerText === 'string') {
     const element = document.createElement(tag);
     if (innerText) {
       element.innerText = innerText;
@@ -18,6 +18,9 @@ const create = (tag, innerText) => {
       }
     }
     return new Proxy({}, handler);
+  }
+  if (!innerText) {
+    return document.createElement(tag);
   }
   const properties = innerText;
   const element = document.createElement(tag);
