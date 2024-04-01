@@ -1,5 +1,5 @@
 # Artwork
-A small front-end framework that lets you easily write pure JavaScript and CSS, without any HTML. Artwork lets you write applications the way they were made before web applications came along. This results in much faster loading and execution times, less code to write, and no translation layers to get in the way.
+A fast and efficient front-end framework built on top of Web Components that allows you to quickly write JavaScript and CSS to create web and desktop applications.
 
 Go to the [art-project](https://github.com/thebinarysearchtree/art-project) repository if you want to run the examples below or need a template for creating a new project.
 
