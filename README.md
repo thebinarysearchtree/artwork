@@ -109,7 +109,7 @@ Often, a component will have a bunch of div elements that are used for nothing o
 ```js
 import { html } from 'artworkjs';
 
-const { root, sidePanel, content } = html.styled('div');
+const { root, sidePanel, content } = html.styled();
 
 root.append(content, sidePanel);
 ```
@@ -256,7 +256,7 @@ In the example below, the ```connected``` function is used to create a new route
 
 ```js
 const routes = async () => {
-  const { root, sidePanel, content, video } = html.styled('div');
+  const { root, sidePanel, content, video } = html.styled();
 
   const movies = await getMovies();
   const thumbnails = movies.map(m => thumbnail(m));

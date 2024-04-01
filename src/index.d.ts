@@ -373,7 +373,7 @@ interface RegisterWithExtendsAndProps<P, E extends BaseElement> {
 
 type HtmlFactory = {
   [K in keyof HTMLElementTagNameMap]: (properties?: Camel<HTMLElementTagNameMap[K]> | string) => HTMLElementTagNameMap[K];
-};
+}
 
 interface HTMLFunctions {
   create(): HTMLElementTagNameMap;
@@ -454,11 +454,11 @@ interface SVGElementTagNameMap {
   "tspan": SVGTSpanElement;
   "use": SVGUseElement;
   "view": SVGViewElement;
-};
+}
 
 type SvgFactory = {
   [K in keyof SVGElementTagNameMap]: (properties?: Camel<SVGElementTagNameMap[K]>) => SVGElementTagNameMap[K];
-};
+}
 
 export const html: HTMLFunctions & HtmlFactory;
 export const svg: SVGFunctions & SvgFactory;
