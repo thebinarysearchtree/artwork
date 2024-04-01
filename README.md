@@ -16,7 +16,7 @@ import { html } from 'artworkjs';
 const hello = (name) => html.div(`Hello ${name}`);
 ```
 
-A timer that uses `connected`, which is a function run when the custom element is added to the DOM. The return value is run when the element is removed from the DOM.
+A timer that uses `connected`, which is a function run when the custom element is added to the DOM. The return value of ```connected``` is run when the element is removed from the DOM.
 ```js
 import { html } from 'artworkjs';
 
